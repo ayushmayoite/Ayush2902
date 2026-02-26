@@ -57,8 +57,8 @@ export interface Product {
     series_id: string;
     series_name: string;
     created_at: string;
-    images?: string[];
-    category_id?: string;
+    images: string[];
+    category_id: string;
 }
 
 // ── Compatibility types that match the old catalog.ts shape ─────────────────
@@ -123,14 +123,18 @@ export async function getProducts(): Promise<Product[]> {
         console.error("[getProducts] Supabase error:", error.message);
         return [];
     }
-    return (data as Product[]) ?? [];
+    return ((data ?? []) as Product[]).map(p => ({
+        ...p,
+        images: p.images ?? [],
+        category_id: p.category_id ?? p.category,
+    }));
 }
 
-/** Fetch products filtered by category id */
+/** Fetch products filtered by category id, with category join */
 export async function getProductsByCategory(categoryId: string): Promise<Product[]> {
     const { data, error } = await supabase
         .from("products")
-        .select("*")
+        .select("*, categories(name)")
         .eq("category", categoryId)
         .order("name", { ascending: true });
 
@@ -138,7 +142,11 @@ export async function getProductsByCategory(categoryId: string): Promise<Product
         console.error("[getProductsByCategory] Supabase error:", error.message);
         return [];
     }
-    return (data as Product[]) ?? [];
+    return ((data ?? []) as Product[]).map(p => ({
+        ...p,
+        images: p.images ?? [],
+        category_id: p.category_id ?? p.category,
+    }));
 }
 
 /** Fetch a single product by its slug */
@@ -167,7 +175,7 @@ export async function getCatalog(): Promise<CompatCategory[]> {
     // Fetch categories and products in parallel
     const [catRes, prodRes] = await Promise.all([
         supabase.from("categories").select("*"),
-        supabase.from("products").select("*").order("name", { ascending: true }),
+        supabase.from("products").select("*, categories(name)").order("name", { ascending: true }),
     ]);
 
     if (catRes.error) {
@@ -244,6 +252,6 @@ export async function getCategoryIds(): Promise<string[]> {
         return [];
     }
 
-    const unique = [...new Set((data ?? []).map((r: { category: string }) => r.category))];
+    const unique: string[] = [...new Set((data ?? []).map((r: { category: string }) => r.category))];
     return unique;
 }

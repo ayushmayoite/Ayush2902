@@ -26,8 +26,11 @@ export async function generateMetadata({
   const description =
     product.description ||
     `${product.name} — premium office furniture from One and Only Furniture.`;
+  const images = Array.isArray(product.images) ? product.images : [];
   const image =
-    product.flagship_image || "/images/products/imported/fluid/image-1.webp";
+    (images.length > 0 ? images[0] : null) ||
+    product.flagship_image ||
+    "/images/fallback/category.webp";
   const url = `${BASE_URL}/products/${categoryId}/${slug}`;
 
   return {

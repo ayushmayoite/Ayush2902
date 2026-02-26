@@ -87,11 +87,11 @@ async function main() {
     console.log("🚀  Loading catalog data…");
     const catalog = await loadCatalog();
 
-    const categoryRows: { id: string; name: string }[] = [];
+    const categoryRows: { id: string; name: string; description: string }[] = [];
     const rows: ProductRow[] = [];
 
     for (const category of catalog) {
-        categoryRows.push({ id: category.id, name: category.name });
+        categoryRows.push({ id: category.id, name: category.name, description: category.description });
 
         for (const series of category.series) {
             for (const product of series.products) {
@@ -202,6 +202,17 @@ async function main() {
     }
 
     console.log(`\n🎉  Done! ${inserted}/${rows.length} products seeded into Supabase.`);
+
+    // Image path distribution summary
+    console.log("\n📊  Image path distribution per category:");
+    const distro = new Map<string, number>();
+    for (const r of rows) {
+        const cat = r.category_id || r.category;
+        distro.set(cat, (distro.get(cat) || 0) + (r.images?.length || 0));
+    }
+    for (const [cat, count] of distro) {
+        console.log(`   ${cat}: ${count} image paths`);
+    }
 
     if (inserted < rows.length) {
         console.log("⚠️  Some batches failed. Check errors above.");
