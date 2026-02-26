@@ -199,7 +199,7 @@ export async function getCatalog(): Promise<CompatCategory[]> {
     }
 
     for (const p of products) {
-        const catId = p.category_id || p.category;
+        const catId = p.category_id;
         if (!catMap.has(catId)) {
             // Should not happen if data is clean, but handle gracefully
             continue;
