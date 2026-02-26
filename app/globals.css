@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: #1434cb;
+  --color-primary-hover: #f7b600;
+
+  --font-sans: var(--font-inter), "Inter", "Helvetica Neue", sans-serif;
+  --font-serif: var(--font-inter), "Inter", "Helvetica Neue", sans-serif;
+
+  --radius-default: 0px;
+  --radius-none: 0px;
+
+  --color-neutral-50: #fafafa;
+  --color-neutral-100: #f4f4f5;
+  --color-neutral-200: #e4e4e7;
+  --color-neutral-300: #d4d4d8;
+  --color-neutral-400: #a1a1aa;
+  --color-neutral-500: #71717a;
+  --color-neutral-600: #52525b;
+  --color-neutral-700: #3f3f46;
+  --color-neutral-800: #27272a;
+  --color-neutral-900: #18181b;
+  --color-neutral-950: #09090b;
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -400px 0;
+    }
+    100% {
+      background-position: 400px 0;
+    }
+  }
+
+  --breakpoint-2xl: 1720px;
+}
+
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #212529;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+    @apply antialiased bg-white text-neutral-900 font-light leading-relaxed;
+    font-family: var(--font-sans);
+    text-rendering: optimizeLegibility;
+  }
+
+  :focus-visible {
+    outline: 2px solid #1434cb;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-light tracking-tight text-neutral-900;
+    font-family: var(--font-sans);
+    font-weight: 300;
+  }
+
+  a {
+    transition: color 0.3s ease;
+  }
+
+  img {
+    transition:
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      opacity 0.3s ease;
+  }
+}
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  @media (min-width: 768px) {
+    padding-inline: 3rem;
+  }
+  max-width: 1720px;
+}
+
+.container-wide {
+  @apply container;
+}
+
+@layer components {
+  .font-slogan {
+    font-family: var(--font-sans);
+    font-weight: 300;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+  }
+  .btn {
+    @apply inline-flex items-center justify-center gap-3 px-8 py-4 transition-all duration-200;
+  }
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-3 px-8 py-4 transition-all duration-200 bg-neutral-900 text-white border border-neutral-900 hover:bg-neutral-800 hover:shadow-lg active:scale-[0.98];
+  }
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-3 px-8 py-4 transition-all duration-200 border border-neutral-300 text-neutral-900 hover:border-neutral-900 hover:shadow-sm active:scale-[0.98];
+  }
+  .typ-h1 {
+    @apply text-[40px] md:text-[56px] lg:text-[64px] leading-[1.05] font-light tracking-tight;
+  }
+  .typ-h2 {
+    @apply text-[32px] md:text-[40px] lg:text-[48px] leading-tight font-light tracking-tight;
+  }
+  .typ-h3 {
+    @apply text-[24px] md:text-[28px] lg:text-[32px] leading-tight font-light;
+  }
+  .typ-eyebrow {
+    @apply text-[10px] uppercase tracking-[0.3em] font-bold text-neutral-400;
+  }
+  .typ-cta {
+    @apply text-[12px] uppercase tracking-[0.2em] font-bold;
+  }
+  .typ-subtle {
+    @apply text-neutral-500;
+  }
+
+  /* Card lift micro-interaction */
+  .card-lift {
+    @apply transition-all duration-300;
+  }
+  .card-lift:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Skeleton shimmer */
+  .skeleton {
+    background: linear-gradient(90deg, #f4f4f5 25%, #e4e4e7 50%, #f4f4f5 75%);
+    background-size: 400px 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+
+  /* Hide scrollbar */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    @supports (scrollbar-width: none) {
+      scrollbar-width: none;
+    }
+  }
+
+  /* Product grid fade-in animation */
+  .animate-fadein {
+    animation: fadein 0.25s ease-out both;
+  }
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hover scale utility (Tailwind doesn't include scale-103 by default) */
+.hover\:scale-103:hover {
+  transform: scale(1.03);
+}
+.group:hover .group-hover\:scale-103 {
+  transform: scale(1.03);
+}
