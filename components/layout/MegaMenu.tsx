@@ -44,6 +44,7 @@ export function MegaMenu({ isOpen, items, cards, onClose }: MegaMenuProps) {
                     <li key={item.label}>
                       <Link
                         href={item.href}
+                        prefetch={false}
                         className="text-[15px] font-normal text-neutral-800 hover:text-primary transition-colors block"
                       >
                         {item.label}
@@ -60,6 +61,7 @@ export function MegaMenu({ isOpen, items, cards, onClose }: MegaMenuProps) {
                     <Link
                       key={card.title}
                       href={card.href}
+                      prefetch={false}
                       className="group block"
                     >
                       <div className="relative aspect-[16/9] bg-neutral-100 mb-3 overflow-hidden">

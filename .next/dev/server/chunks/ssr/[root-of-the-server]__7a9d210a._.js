@@ -51,11 +51,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
     return {
         id: p.id,
         name: p.name,
-        description: p.description,
-        flagshipImage: p.flagship_image,
-        sceneImages: p.scene_images ?? [],
-        variants: p.variants ?? [],
-        detailedInfo: p.detailed_info ?? {
+        description: p.description || "",
+        flagshipImage: p.flagship_image || "",
+        sceneImages: [],
+        variants: [],
+        detailedInfo: {
             overview: "",
             features: [],
             dimensions: "",
@@ -76,17 +76,25 @@ async function getProducts() {
         console.error("[getProducts] Supabase error:", error.message);
         return [];
     }
-    return data ?? [];
+    return (data ?? []).map((p)=>({
+            ...p,
+            images: p.images ?? [],
+            category_id: p.category_id
+        }));
 }
 async function getProductsByCategory(categoryId) {
-    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").eq("category", categoryId).order("name", {
+    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*, categories(name)").eq("category_id", categoryId).order("name", {
         ascending: true
     });
     if (error) {
         console.error("[getProductsByCategory] Supabase error:", error.message);
         return [];
     }
-    return data ?? [];
+    return (data ?? []).map((p)=>({
+            ...p,
+            images: p.images ?? [],
+            category_id: p.category_id
+        }));
 }
 async function getProductBySlug(slug) {
     const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").eq("slug", slug).single();
@@ -100,7 +108,7 @@ async function getCatalog() {
     // Fetch categories and products in parallel
     const [catRes, prodRes] = await Promise.all([
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("categories").select("*"),
-        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").order("name", {
+        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*, categories(name)").order("name", {
             ascending: true
         })
     ]);
@@ -123,7 +131,7 @@ async function getCatalog() {
         });
     }
     for (const p of products){
-        const catId = p.category_id || p.category;
+        const catId = p.category_id;
         if (!catMap.has(catId)) {
             continue;
         }
@@ -259,7 +267,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$home$2f$Hero$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/home/Hero.tsx [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$app$2f$products$2f5b$category$5d2f$FilterGrid$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/app/products/[category]/FilterGrid.tsx [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.react-server.js [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/db.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react.js [app-rsc] (ecmascript)");
+;
 ;
 ;
 ;
@@ -301,75 +311,15 @@ const CATEGORY_HEROES = {
     "oando-educational": "/images/products/imported/adam/image-1.webp",
     "oando-collaborative": "/images/products/imported/pod/image-2.webp"
 };
-const validCategories = [
-    "chairs",
-    "other-seating",
-    "tables",
-    "storage",
-    "workstations",
-    "soft-seating",
-    "educational",
-    "collaborative",
-    "oando-chairs",
-    "oando-other-seating",
-    "oando-tables",
-    "oando-storage",
-    "oando-workstations",
-    "oando-soft-seating",
-    "oando-educational",
-    "oando-collaborative"
-];
 async function generateStaticParams() {
-    return [
-        {
-            category: "chairs"
-        },
-        {
-            category: "other-seating"
-        },
-        {
-            category: "tables"
-        },
-        {
-            category: "storage"
-        },
-        {
-            category: "workstations"
-        },
-        {
-            category: "soft-seating"
-        },
-        {
-            category: "educational"
-        },
-        {
-            category: "collaborative"
-        },
-        {
-            category: "oando-chairs"
-        },
-        {
-            category: "oando-other-seating"
-        },
-        {
-            category: "oando-tables"
-        },
-        {
-            category: "oando-storage"
-        },
-        {
-            category: "oando-workstations"
-        },
-        {
-            category: "oando-soft-seating"
-        },
-        {
-            category: "oando-educational"
-        },
-        {
-            category: "oando-collaborative"
-        }
-    ];
+    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("categories").select("name");
+    if (error || !data) {
+        console.error("Error fetching categories for static params:", error);
+        return [];
+    }
+    return data.map((c)=>({
+            category: c.name
+        }));
 }
 // Loading skeleton for the grid while Supabase data resolves
 function GridSkeleton() {
@@ -383,23 +333,22 @@ function GridSkeleton() {
                     className: "animate-pulse bg-neutral-100 rounded-sm aspect-4/3"
                 }, i, false, {
                     fileName: "[project]/app/products/[category]/page.tsx",
-                    lineNumber: 90,
+                    lineNumber: 60,
                     columnNumber: 11
                 }, this))
         }, void 0, false, {
             fileName: "[project]/app/products/[category]/page.tsx",
-            lineNumber: 88,
+            lineNumber: 58,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/products/[category]/page.tsx",
-        lineNumber: 87,
+        lineNumber: 57,
         columnNumber: 5
     }, this);
 }
 async function CategoryPage({ params }) {
     const { category: categoryId } = await params;
-    if (!validCategories.includes(categoryId)) return (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$components$2f$navigation$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["notFound"])();
     const catalog = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$getProducts$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCatalog"])();
     const category = catalog.find((c)=>c.id === categoryId);
     if (catalog.length === 0) {
@@ -411,7 +360,7 @@ async function CategoryPage({ params }) {
                     children: "Workspace Engineering Engine - Offline"
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/page.tsx",
-                    lineNumber: 113,
+                    lineNumber: 82,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -424,14 +373,14 @@ async function CategoryPage({ params }) {
                             children: "NEXT_PUBLIC_SUPABASE_URL"
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/page.tsx",
-                            lineNumber: 119,
+                            lineNumber: 88,
                             columnNumber: 11
                         }, this),
                         "is configured in your environment variables."
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/products/[category]/page.tsx",
-                    lineNumber: 116,
+                    lineNumber: 85,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -442,18 +391,18 @@ async function CategoryPage({ params }) {
                         children: "Return Home"
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/page.tsx",
-                        lineNumber: 125,
+                        lineNumber: 94,
                         columnNumber: 11
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/page.tsx",
-                    lineNumber: 124,
+                    lineNumber: 93,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/products/[category]/page.tsx",
-            lineNumber: 112,
+            lineNumber: 81,
             columnNumber: 7
         }, this);
     }
@@ -472,13 +421,13 @@ async function CategoryPage({ params }) {
                 backgroundImage: heroImage
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/page.tsx",
-                lineNumber: 146,
+                lineNumber: 115,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Suspense"], {
                 fallback: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(GridSkeleton, {}, void 0, false, {
                     fileName: "[project]/app/products/[category]/page.tsx",
-                    lineNumber: 153,
+                    lineNumber: 122,
                     columnNumber: 27
                 }, void 0),
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$products$2f5b$category$5d2f$FilterGrid$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["FilterGrid"], {
@@ -486,18 +435,18 @@ async function CategoryPage({ params }) {
                     categoryId: categoryId
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/page.tsx",
-                    lineNumber: 154,
+                    lineNumber: 123,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/page.tsx",
-                lineNumber: 153,
+                lineNumber: 122,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/products/[category]/page.tsx",
-        lineNumber: 145,
+        lineNumber: 114,
         columnNumber: 5
     }, this);
 }

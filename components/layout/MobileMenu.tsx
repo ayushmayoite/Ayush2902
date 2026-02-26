@@ -103,6 +103,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                       >
                         <Link
                           href={link.href}
+                          prefetch={false}
                           onClick={onClose}
                           className="block group py-3"
                         >
@@ -132,6 +133,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                     <Link
                       key={category.href}
                       href={category.href}
+                      prefetch={false}
                       onClick={onClose}
                       className="text-sm text-neutral-700 hover:text-primary transition-colors py-2"
                     >
@@ -156,6 +158,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                       >
                         <Link
                           href={link.href}
+                          prefetch={false}
                           onClick={onClose}
                           className="text-base text-neutral-600 hover:text-neutral-900 transition-colors"
                         >
@@ -173,6 +176,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
           <div className="bg-white border-t border-neutral-100 shrink-0 sticky bottom-0 z-50 px-6 py-4 flex items-center justify-between shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
             <Link
               href="/contact"
+              prefetch={false}
               onClick={onClose}
               className="bg-neutral-900 text-white font-semibold text-sm h-12 px-6 rounded-sm flex items-center justify-center hover:bg-neutral-800 transition-colors w-full sm:w-auto"
             >

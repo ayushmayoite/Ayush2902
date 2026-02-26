@@ -1,11 +1,1 @@
-{
-  "version": 4,
-  "routes": {},
-  "dynamicRoutes": {},
-  "notFoundRoutes": [],
-  "preview": {
-    "previewModeId": "a301446a67fee32a09c204bff56872fc",
-    "previewModeSigningKey": "8f0a0fff3575e7626f2db18d5c7388e345a46030a81500a86ff735b15ca10514",
-    "previewModeEncryptionKey": "6d624e2fe57f390736ab14c9a7fe8442302bd070b03cd8988aa0342abefc2127"
-  }
-}
+{"version":4,"routes":{"/products/Chairs":{},"/products/Other Seating":{},"/products/Seating":{},"/products/Workstations":{},"/products/Tables":{},"/products/Storage":{},"/products/Soft Seating":{},"/products/Educational":{},"/products/Collaborative":{}},"dynamicRoutes":{"/products/[category]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/products/[category]","routeRegex":"^\\/products\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"a301446a67fee32a09c204bff56872fc","previewModeSigningKey":"8f0a0fff3575e7626f2db18d5c7388e345a46030a81500a86ff735b15ca10514","previewModeEncryptionKey":"6d624e2fe57f390736ab14c9a7fe8442302bd070b03cd8988aa0342abefc2127"}}

@@ -43,12 +43,12 @@ const CATEGORY_HEROES: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-  const { data, error } = await supabase.from("categories").select("id");
+  const { data, error } = await supabase.from("categories").select("name");
   if (error || !data) {
     console.error("Error fetching categories for static params:", error);
     return [];
   }
-  return data.map((c) => ({ category: c.id }));
+  return data.map((c) => ({ category: c.name }));
 }
 
 // Loading skeleton for the grid while Supabase data resolves
