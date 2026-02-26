@@ -20,7 +20,7 @@ export default function ImprintPage() {
                     <p>
                         <strong>Contact:</strong><br />
                         Phone: +49 (0) 5156 979-0<br />
-                        Email: info@oando.in
+                        Email: info@oando.co.in
                     </p>
                     <p>
                         <strong>Register Entry:</strong><br />

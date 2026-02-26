@@ -80,7 +80,7 @@ export function HeroSlider() {
       {/* Dark gradient overlay — stronger at bottom like OandO */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
 
-      {/* Content — bottom-left aligned like oando.in */}
+      {/* Content — bottom-left aligned like oando.co.in */}
       <div
         className="relative z-10 h-full flex flex-col justify-end"
         style={{ opacity: isTransitioning ? 0 : 1, transition: "opacity 0.4s ease" }}

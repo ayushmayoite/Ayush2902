@@ -43,7 +43,7 @@ const IVR_TREE = {
                     action: {
                         type: "contact",
                         value: "+49 (0) 5156 979-0",
-                        detail: "sales-de@oando.in"
+                        detail: "sales-de@oando.co.in"
                     }
                 },
                 {
@@ -52,7 +52,7 @@ const IVR_TREE = {
                     action: {
                         type: "contact",
                         value: "+49 (0) 5156 979-xxx",
-                        detail: "export@oando.in"
+                        detail: "export@oando.co.in"
                     }
                 },
                 {
@@ -91,7 +91,7 @@ const IVR_TREE = {
                     label: "Complaints & Claims",
                     action: {
                         type: "contact",
-                        value: "service@oando.in",
+                        value: "service@oando.co.in",
                         detail: "Attach photos for faster processing"
                     }
                 },
@@ -141,7 +141,7 @@ const IVR_TREE = {
                     label: "Press & Marketing",
                     action: {
                         type: "contact",
-                        value: "marketing@oando.in"
+                        value: "marketing@oando.co.in"
                     }
                 }
             ]
