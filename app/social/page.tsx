@@ -69,7 +69,7 @@ export default async function SocialPage() {
           {MOCK_POSTS.map((post) => {
             const product = products.find((p) => p.slug === post.product_slug);
             const redirectUrl = product
-              ? `/products/${product.category}/${product.series_id}/${product.id}`
+              ? `/products/${product.category_id}/${product.series_id}/${product.id}`
               : "/products";
 
             return (
