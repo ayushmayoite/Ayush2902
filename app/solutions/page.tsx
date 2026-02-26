@@ -53,7 +53,7 @@ export default function SolutionsPage() {
         <div className="container px-6 2xl:px-0">
           <Reveal>
             <h2 className="text-4xl md:text-6xl font-slogan text-white mb-20">
-              The WINI <span className="text-primary italic">Process.</span>
+              The OandO <span className="text-primary italic">Process.</span>
             </h2>
           </Reveal>
         </div>
@@ -98,7 +98,7 @@ export default function SolutionsPage() {
           </Reveal>
           <p className="text-xl md:text-2xl text-neutral-500 font-light max-w-2xl mx-auto">
             Join hundreds of companies that have created inspiring workplaces
-            with WINI.
+            with OandO.
           </p>
           <div className="pt-8">
             <a

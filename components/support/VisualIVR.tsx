@@ -32,12 +32,12 @@ const IVR_TREE: IVRNode = {
                 {
                     id: "sales_de",
                     label: "Domestic (Germany)",
-                    action: { type: "contact", value: "+49 (0) 5156 979-0", detail: "sales-de@wini.de" }
+                    action: { type: "contact", value: "+49 (0) 5156 979-0", detail: "sales-de@oando.in" }
                 },
                 {
                     id: "sales_int",
                     label: "International Sales",
-                    action: { type: "contact", value: "+49 (0) 5156 979-xxx", detail: "export@wini.de" }
+                    action: { type: "contact", value: "+49 (0) 5156 979-xxx", detail: "export@oando.in" }
                 },
                 {
                     id: "dealer",
@@ -60,7 +60,7 @@ const IVR_TREE: IVRNode = {
                 {
                     id: "claims",
                     label: "Complaints & Claims",
-                    action: { type: "contact", value: "service@wini.de", detail: "Attach photos for faster processing" }
+                    action: { type: "contact", value: "service@oando.in", detail: "Attach photos for faster processing" }
                 },
                 {
                     id: "spare_parts",
@@ -88,7 +88,7 @@ const IVR_TREE: IVRNode = {
                 {
                     id: "press",
                     label: "Press & Marketing",
-                    action: { type: "contact", value: "marketing@wini.de" }
+                    action: { type: "contact", value: "marketing@oando.in" }
                 }
             ]
         }

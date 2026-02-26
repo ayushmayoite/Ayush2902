@@ -21,7 +21,7 @@ const req = http.request(options, (res) => {
         // Validation Checks
         const checks = [
             { name: 'Status 200', pass: res.statusCode === 200 },
-            { name: 'Contains "WINI"', pass: data.includes('WINI') },
+            { name: 'Contains "OandO"', pass: data.includes('OandO') },
             { name: 'Contains "Office Furniture"', pass: data.includes('Office Furniture') },
             { name: 'Contains "font-slogan" (Crimson Pro)', pass: data.includes('font-slogan') },
             //   { name: 'Contains Video Section', pass: data.includes('<video') || data.includes('VideoSection') } // Content might be minified/rendered differently

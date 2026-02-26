@@ -43,7 +43,7 @@ const IVR_TREE = {
                     action: {
                         type: "contact",
                         value: "+49 (0) 5156 979-0",
-                        detail: "sales-de@wini.de"
+                        detail: "sales-de@oando.in"
                     }
                 },
                 {
@@ -52,7 +52,7 @@ const IVR_TREE = {
                     action: {
                         type: "contact",
                         value: "+49 (0) 5156 979-xxx",
-                        detail: "export@wini.de"
+                        detail: "export@oando.in"
                     }
                 },
                 {
@@ -91,7 +91,7 @@ const IVR_TREE = {
                     label: "Complaints & Claims",
                     action: {
                         type: "contact",
-                        value: "service@wini.de",
+                        value: "service@oando.in",
                         detail: "Attach photos for faster processing"
                     }
                 },
@@ -141,7 +141,7 @@ const IVR_TREE = {
                     label: "Press & Marketing",
                     action: {
                         type: "contact",
-                        value: "marketing@wini.de"
+                        value: "marketing@oando.in"
                     }
                 }
             ]

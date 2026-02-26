@@ -46,7 +46,7 @@ export function ProductCategories() {
   return (
     <section className="py-24 md:py-32">
       <div className="container mx-auto px-6 lg:px-12">
-        {/* Section header — Wini style */}
+        {/* Section header — OandO style */}
         <div className="mb-16">
           <p className="text-sm tracking-[0.3em] uppercase text-neutral-400 mb-4">
             Our range
@@ -56,7 +56,7 @@ export function ProductCategories() {
           </h2>
         </div>
 
-        {/* Wini-style grid: full-image cards with hover overlay text */}
+        {/* OandO-style grid: full-image cards with hover overlay text */}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-neutral-200">
           {categories.map((category) => (
             <Link

@@ -22,7 +22,7 @@ export default function CompanyPage() {
                             Quality made in <span className="text-primary italic">Germany.</span>
                         </h2>
                         <p className="text-xl font-light text-neutral-600 leading-relaxed">
-                            WINI Büromöbel is a medium-sized family business with over 100 years of history.
+                            One and Only Furniture is a medium-sized family business with over 100 years of history.
                             We stand for high-quality office furniture and holistic furnishing concepts that adapt to people - not the other way around.
                         </p>
                         <p className="text-lg font-light text-neutral-500 leading-relaxed">
@@ -33,7 +33,7 @@ export default function CompanyPage() {
                     <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
                         <img
                             src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=1000"
-                            alt="WINI Production"
+                            alt="OandO Production"
                             className="w-full h-full object-cover"
                         />
                     </div>

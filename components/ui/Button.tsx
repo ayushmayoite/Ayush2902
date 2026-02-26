@@ -21,7 +21,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ({ className, variant = "primary", size = "default", asChild = false, ...props }, ref) => {
         const Comp = asChild ? Slot : "button";
 
-        // Wini Design: Sharp edges (rounded-none), uppercase/tracking for buttons usually, 
+        // OandO Design: Sharp edges (rounded-none), uppercase/tracking for buttons usually, 
         // but sometimes standard sans. Let's aim for the Hero button style as default.
         return (
             <Comp

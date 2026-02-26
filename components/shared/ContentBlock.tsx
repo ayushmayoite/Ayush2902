@@ -22,7 +22,7 @@ export function ContentBlock({
     subtitle,
     description,
     imageSrc,
-    imageAlt = "WINI Office Solution",
+    imageAlt = "OandO Office Solution",
     align = "left",
     linkText,
     linkHref,

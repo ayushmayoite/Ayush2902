@@ -8,7 +8,7 @@ export default function ImprintPage() {
                 <div className="space-y-6 text-neutral-600 font-light">
                     <h2 className="text-xl font-medium text-neutral-900">Legal Information</h2>
                     <p>
-                        <strong>WINI Büromöbel Georg Schmidt GmbH & Co. KG</strong><br />
+                        <strong>One and Only Furniture</strong><br />
                         Auhagenstraße 79<br />
                         31863 Coppenbrügge<br />
                         Germany
@@ -20,7 +20,7 @@ export default function ImprintPage() {
                     <p>
                         <strong>Contact:</strong><br />
                         Phone: +49 (0) 5156 979-0<br />
-                        Email: info@wini.de
+                        Email: info@oando.in
                     </p>
                     <p>
                         <strong>Register Entry:</strong><br />

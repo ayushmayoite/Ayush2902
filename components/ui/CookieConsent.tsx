@@ -7,7 +7,7 @@ export function CookieConsent() {
     const [show, setShow] = useState(false);
 
     useEffect(() => {
-        const consent = localStorage.getItem("wini-cookie-consent");
+        const consent = localStorage.getItem("oando-cookie-consent");
         if (!consent) {
              
             setShow(true);
@@ -16,7 +16,7 @@ export function CookieConsent() {
     }, []);
 
     const handleAccept = () => {
-        localStorage.setItem("wini-cookie-consent", "true");
+        localStorage.setItem("oando-cookie-consent", "true");
         setShow(false);
     };
 

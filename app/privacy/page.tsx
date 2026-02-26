@@ -16,7 +16,7 @@ export default function PrivacyPage() {
                     </p>
                     <h2 className="text-xl font-medium text-neutral-900 mt-8">2. General Information and Mandatory Information</h2>
                     <p>
-                        The responsible body for data processing on this website is: WINI Büromöbel Georg Schmidt GmbH & Co. KG.
+                        The responsible body for data processing on this website is: One and Only Furniture.
                     </p>
                     <p>
                         (This is a placeholder for the full privacy policy text.)

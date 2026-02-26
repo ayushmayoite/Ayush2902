@@ -77,10 +77,10 @@ export function HeroSlider() {
         </div>
       ))}
 
-      {/* Dark gradient overlay — stronger at bottom like Wini */}
+      {/* Dark gradient overlay — stronger at bottom like OandO */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/25 to-black/10" />
 
-      {/* Content — bottom-left aligned like Wini.de */}
+      {/* Content — bottom-left aligned like oando.in */}
       <div
         className="relative z-10 h-full flex flex-col justify-end"
         style={{ opacity: isTransitioning ? 0 : 1, transition: "opacity 0.4s ease" }}
@@ -104,7 +104,7 @@ export function HeroSlider() {
             {slide.subheading}
           </p>
 
-          {/* CTA button — Wini style: outlined, sharp corners */}
+          {/* CTA button — OandO style: outlined, sharp corners */}
           <Link
             href={slide.cta.href}
             className="inline-flex items-center gap-2 text-white text-base font-medium border border-white/60 px-8 py-3.5 rounded-none hover:bg-white hover:text-neutral-900 transition-all duration-300"

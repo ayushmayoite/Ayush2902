@@ -9,7 +9,7 @@ export default function ReferencesPage() {
       <Hero
         variant="small"
         title="References"
-        subtitle="See how companies around the world use WINI furniture to create inspiring workplaces."
+        subtitle="See how companies around the world use OandO furniture to create inspiring workplaces."
         showButton={false}
         backgroundImage="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=2000"
       />

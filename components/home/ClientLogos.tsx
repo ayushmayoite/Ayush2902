@@ -47,7 +47,7 @@ export function ClientLogos() {
         </div>
       </div>
 
-      {/* Value pillars — 3 columns with top border like Wini */}
+      {/* Value pillars — 3 columns with top border like OandO */}
       <div className="container mx-auto px-6 lg:px-12 pt-16 pb-24">
         <div className="grid md:grid-cols-3 gap-12 md:gap-0 md:divide-x divide-neutral-200">
           {valuePillars.map((pillar) => (

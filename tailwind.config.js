@@ -10,12 +10,12 @@ module.exports = {
             colors: {
                 background: "var(--background)",
                 foreground: "var(--foreground)",
-                // Wini Brand Red
+                // OandO Brand Red
                 primary: {
-                    DEFAULT: "#BF0D17", // WINI Red
+                    DEFAULT: "#BF0D17", // OandO Red
                     hover: "#A60B14",
                 },
-                // WINI Neutral Scale
+                // OandO Neutral Scale
                 neutral: {
                     50: "#FAFAFA",
                     100: "#F5F5F5",
@@ -45,7 +45,7 @@ module.exports = {
                 center: true,
                 padding: "1rem", // 1rem padding default
                 screens: {
-                    "2xl": "1720px", // Wini uses wide containers
+                    "2xl": "1720px", // OandO uses wide containers
                 },
             },
             animation: {
