@@ -5,7 +5,18 @@ import type { Metadata } from "next";
 import { Suspense } from "react";
 import type { Product, CompatProduct } from "@/lib/getProducts";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.oando.co.in";
+
+export async function generateStaticParams() {
+  const { data, error } = await supabase
+    .from("products")
+    .select("slug, category_id");
+  if (error || !data) {
+    console.error("Error fetching products for static params:", error);
+    return [];
+  }
+  return data.map((p) => ({ category: p.category_id, slug: p.slug }));
+}
 
 export async function generateMetadata({
   params,

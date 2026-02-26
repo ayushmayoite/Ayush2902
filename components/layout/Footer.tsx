@@ -37,7 +37,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
           {/* Brand + contact */}
           <div className="md:col-span-1 flex flex-col gap-6">
-            <Link href="/" className="block">
+            <Link href="/" prefetch={false} className="block">
               <span className="text-xl font-semibold tracking-tight text-white">
                 One and Only
               </span>
@@ -91,6 +91,7 @@ export function Footer() {
                     <li key={href}>
                       <Link
                         href={href}
+                        prefetch={false}
                         className="text-sm text-neutral-400 hover:text-white transition-colors"
                       >
                         {label}
@@ -110,18 +111,21 @@ export function Footer() {
           <div className="flex gap-6">
             <Link
               href="/imprint"
+              prefetch={false}
               className="hover:text-neutral-400 transition-colors"
             >
               Imprint
             </Link>
             <Link
               href="/privacy"
+              prefetch={false}
               className="hover:text-neutral-400 transition-colors"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
+              prefetch={false}
               className="hover:text-neutral-400 transition-colors"
             >
               Terms

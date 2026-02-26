@@ -144,6 +144,7 @@ export function Header() {
             <div className="flex items-center shrink-0">
               <Link
                 href="/"
+                prefetch={false}
                 className="flex items-center py-2"
                 aria-label="One and Only Home"
               >
@@ -198,6 +199,7 @@ export function Header() {
             <div className="hidden lg:flex items-center gap-6">
               <Link
                 href="/contact"
+                prefetch={false}
                 className={clsx(
                   "text-xs font-semibold tracking-widest uppercase px-5 py-2.5 border transition-colors duration-200",
                   "border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white",

@@ -8,7 +8,7 @@ import { supabase } from "@/lib/db";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.oando.co.in";
 
 export async function generateMetadata({
   params,
@@ -43,12 +43,12 @@ const CATEGORY_HEROES: Record<string, string> = {
 };
 
 export async function generateStaticParams() {
-  const { data, error } = await supabase.from("categories").select("name");
+  const { data, error } = await supabase.from("categories").select("id");
   if (error || !data) {
     console.error("Error fetching categories for static params:", error);
     return [];
   }
-  return data.map((c) => ({ category: c.name }));
+  return data.map((c) => ({ category: c.id }));
 }
 
 // Loading skeleton for the grid while Supabase data resolves
