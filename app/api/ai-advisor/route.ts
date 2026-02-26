@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
             .slice(0, 80) // limit context size
             .map(
                 (p) =>
-                    `- ID: ${p.slug} | Name: ${p.name} | Category: ${p.category} | Tier: ${p.performance_tier ?? "standard"} | ${p.description?.slice(0, 80)}`
+                    `- ID: ${p.slug} | Name: ${p.name} | Category: ${p.category_id} | ${p.description?.slice(0, 80)}`
             )
             .join("\n");
 

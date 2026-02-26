@@ -38,16 +38,19 @@ export interface ProductMetadata {
 
 export interface Product {
     id: string;
+    category_id: string;
+    series: string;
     name: string;
     slug: string;
-    category: string;
-    performance_tier: string | null;
-    flagship_image: string;
-    description: string;
-    scene_images: string[];
-    variants: ProductVariant[];
-    detailed_info: ProductDetailedInfo;
-    metadata: ProductMetadata;
+    description?: string;
+    images: string[];
+    flagship_image?: string;
+    // Fallback map layout
+    map_layout?: string;
+    features?: string[];
+    finishes?: string[];
+    "3d_model"?: string; // Optional 3D model path (e.g. .glb)
+    metadata?: ProductMetadata;
     specs: {
         dimensions: string;
         materials: string[];
@@ -57,8 +60,6 @@ export interface Product {
     series_id: string;
     series_name: string;
     created_at: string;
-    images: string[];
-    category_id: string;
 }
 
 // ── Compatibility types that match the old catalog.ts shape ─────────────────
@@ -97,11 +98,11 @@ function toCompatProduct(p: Product): CompatProduct {
     return {
         id: p.id,
         name: p.name,
-        description: p.description,
-        flagshipImage: p.flagship_image,
-        sceneImages: p.scene_images ?? [],
-        variants: p.variants ?? [],
-        detailedInfo: p.detailed_info ?? { overview: "", features: [], dimensions: "", materials: [] },
+        description: p.description || "",
+        flagshipImage: p.flagship_image || "",
+        sceneImages: [],
+        variants: [],
+        detailedInfo: { overview: "", features: [], dimensions: "", materials: [] },
         metadata: {
             ...(p.metadata ?? {}),
             sustainabilityScore: p.specs?.sustainability_score ?? 5, // fallback if missing
@@ -126,7 +127,7 @@ export async function getProducts(): Promise<Product[]> {
     return ((data ?? []) as Product[]).map(p => ({
         ...p,
         images: p.images ?? [],
-        category_id: p.category_id ?? p.category,
+        category_id: p.category_id,
     }));
 }
 
@@ -135,7 +136,7 @@ export async function getProductsByCategory(categoryId: string): Promise<Product
     const { data, error } = await supabase
         .from("products")
         .select("*, categories(name)")
-        .eq("category", categoryId)
+        .eq("category_id", categoryId)
         .order("name", { ascending: true });
 
     if (error) {
@@ -145,7 +146,7 @@ export async function getProductsByCategory(categoryId: string): Promise<Product
     return ((data ?? []) as Product[]).map(p => ({
         ...p,
         images: p.images ?? [],
-        category_id: p.category_id ?? p.category,
+        category_id: p.category_id,
     }));
 }
 

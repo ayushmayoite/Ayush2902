@@ -17,7 +17,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import clsx from "clsx";
-import { ThreeDViewer } from "@/components/3DViewer";
+import ThreeViewer from "@/components/ThreeViewer";
 import { Reviews } from "@/components/Reviews";
 import { ProductGallery } from "@/components/ProductGallery";
 
@@ -50,9 +50,11 @@ export function ProductViewer({
       : null,
   );
 
-  const is3DSupported = Boolean(
-    selectedVariant?.threeDModelUrl || (product as any).threeDModelUrl,
-  );
+  const modelPath =
+    selectedVariant?.threeDModelUrl ||
+    (product as any)["3d_model"] ||
+    (product as any).threeDModelUrl;
+  const is3DSupported = Boolean(modelPath);
 
   const allImages = [
     ...(product.images || []),
@@ -142,14 +144,36 @@ export function ProductViewer({
               </div>
 
               {is3DMode ? (
-                <div className="w-full h-full absolute inset-0 z-10">
-                  <ThreeDViewer
-                    src={
-                      selectedVariant?.threeDModelUrl ||
-                      (product as any).threeDModelUrl
-                    }
-                    fallbackImage={uniqueImages[0]}
-                  />
+                <div className="w-full h-full absolute inset-0 z-10 flex items-center justify-center bg-transparent">
+                  <div className="hidden md:block w-full h-full">
+                    <ThreeViewer
+                      modelUrl={modelPath}
+                      fallback={
+                        <img
+                          src={uniqueImages[0]}
+                          alt={product.name}
+                          className="w-full h-full object-contain"
+                        />
+                      }
+                    />
+                  </div>
+                  <div className="block md:hidden w-full h-full">
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: `
+                      <model-viewer
+                        src="${modelPath}"
+                        ar
+                        ios-src="${modelPath.replace(".glb", ".usdz")}"
+                        camera-controls
+                        shadow-intensity="1"
+                        alt="3D model of ${product.name}"
+                        style="width: 100%; height: 100%;"
+                      ></model-viewer>
+                    `,
+                      }}
+                    ></div>
+                  </div>
                 </div>
               ) : null}
             </div>

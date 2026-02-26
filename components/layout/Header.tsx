@@ -104,18 +104,21 @@ export function Header() {
               </span>
               <Link
                 href="/service"
+                prefetch={false}
                 className="hover:text-primary transition-colors"
               >
                 Service
               </Link>
               <Link
                 href="/showrooms"
+                prefetch={false}
                 className="hover:text-primary transition-colors"
               >
                 Showrooms
               </Link>
               <Link
                 href="/contact"
+                prefetch={false}
                 className="hover:text-primary transition-colors"
               >
                 Contact us
@@ -170,6 +173,7 @@ export function Header() {
                 >
                   <Link
                     href={item.href}
+                    prefetch={false}
                     className={clsx(
                       "h-full flex items-center text-sm font-medium transition-colors duration-200",
                       "text-neutral-700 hover:text-primary",

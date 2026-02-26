@@ -87,12 +87,12 @@ async function ProductContent({
   const compatProduct: CompatProduct = {
     id: p.id,
     name: p.name,
-    description: p.description,
-    flagshipImage: p.flagship_image,
-    sceneImages: p.scene_images || [],
+    description: p.description || "",
+    flagshipImage: p.flagship_image || "",
+    sceneImages: [],
     images: p.images || [],
-    variants: p.variants || [],
-    detailedInfo: p.detailed_info || {
+    variants: [],
+    detailedInfo: {
       overview: "",
       features: [],
       dimensions: "",
@@ -106,8 +106,8 @@ async function ProductContent({
     "@context": "https://schema.org",
     "@type": "Product",
     name: p.name,
-    description: p.description,
-    image: p.flagship_image,
+    description: (rawProduct as any).alt_text || p.description,
+    image: p.images || [p.flagship_image],
     url,
     brand: { "@type": "Brand", name: "One and Only Furniture" },
     offers: {
@@ -116,7 +116,7 @@ async function ProductContent({
       priceCurrency: "INR",
       seller: { "@type": "Organization", name: "One and Only Furniture" },
     },
-    category: p.category_id || p.category,
+    category: p.category_id,
   };
 
   return (

@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { Hero } from "@/components/home/Hero";
 import { FilterGrid } from "./FilterGrid";
 import Link from "next/link";
+import { supabase } from "@/lib/db";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 
@@ -41,44 +42,13 @@ const CATEGORY_HEROES: Record<string, string> = {
   "oando-collaborative": "/images/products/imported/pod/image-2.webp",
 };
 
-const validCategories = [
-  "chairs",
-  "other-seating",
-  "tables",
-  "storage",
-  "workstations",
-  "soft-seating",
-  "educational",
-  "collaborative",
-  "oando-chairs",
-  "oando-other-seating",
-  "oando-tables",
-  "oando-storage",
-  "oando-workstations",
-  "oando-soft-seating",
-  "oando-educational",
-  "oando-collaborative",
-];
-
 export async function generateStaticParams() {
-  return [
-    { category: "chairs" },
-    { category: "other-seating" },
-    { category: "tables" },
-    { category: "storage" },
-    { category: "workstations" },
-    { category: "soft-seating" },
-    { category: "educational" },
-    { category: "collaborative" },
-    { category: "oando-chairs" },
-    { category: "oando-other-seating" },
-    { category: "oando-tables" },
-    { category: "oando-storage" },
-    { category: "oando-workstations" },
-    { category: "oando-soft-seating" },
-    { category: "oando-educational" },
-    { category: "oando-collaborative" },
-  ];
+  const { data, error } = await supabase.from("categories").select("id");
+  if (error || !data) {
+    console.error("Error fetching categories for static params:", error);
+    return [];
+  }
+  return data.map((c) => ({ category: c.id }));
 }
 
 // Loading skeleton for the grid while Supabase data resolves
@@ -103,7 +73,6 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>;
 }) {
   const { category: categoryId } = await params;
-  if (!validCategories.includes(categoryId)) return notFound();
   const catalog = await getCatalog();
   const category = catalog.find((c: CompatCategory) => c.id === categoryId);
 
