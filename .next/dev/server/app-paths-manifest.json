@@ -1,20 +1,7 @@
 {
   "/_not-found/page": "app/_not-found/page.js",
-  "/about/page": "app/about/page.js",
   "/api/ai-advisor/route": "app/api/ai-advisor/route.js",
   "/api/categories/route": "app/api/categories/route.js",
-  "/contact/page": "app/contact/page.js",
-  "/gallery/page": "app/gallery/page.js",
-  "/imprint/page": "app/imprint/page.js",
   "/page": "app/page.js",
-  "/privacy/page": "app/privacy/page.js",
-  "/products/[category]/[slug]/page": "app/products/[category]/[slug]/page.js",
-  "/products/[category]/page": "app/products/[category]/page.js",
-  "/products/page": "app/products/page.js",
-  "/projects/page": "app/projects/page.js",
-  "/service/page": "app/service/page.js",
-  "/showrooms/page": "app/showrooms/page.js",
-  "/support-ivr/page": "app/support-ivr/page.js",
-  "/sustainability/page": "app/sustainability/page.js",
-  "/terms/page": "app/terms/page.js"
+  "/support-ivr/page": "app/support-ivr/page.js"
 }

@@ -119,11 +119,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
     return {
         id: p.id,
         name: p.name,
-        description: p.description,
-        flagshipImage: p.flagship_image,
-        sceneImages: p.scene_images ?? [],
-        variants: p.variants ?? [],
-        detailedInfo: p.detailed_info ?? {
+        description: p.description || "",
+        flagshipImage: p.flagship_image || "",
+        sceneImages: [],
+        variants: [],
+        detailedInfo: {
             overview: "",
             features: [],
             dimensions: "",
@@ -144,17 +144,25 @@ async function getProducts() {
         console.error("[getProducts] Supabase error:", error.message);
         return [];
     }
-    return data ?? [];
+    return (data ?? []).map((p)=>({
+            ...p,
+            images: p.images ?? [],
+            category_id: p.category_id
+        }));
 }
 async function getProductsByCategory(categoryId) {
-    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").eq("category", categoryId).order("name", {
+    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*, categories(name)").eq("category_id", categoryId).order("name", {
         ascending: true
     });
     if (error) {
         console.error("[getProductsByCategory] Supabase error:", error.message);
         return [];
     }
-    return data ?? [];
+    return (data ?? []).map((p)=>({
+            ...p,
+            images: p.images ?? [],
+            category_id: p.category_id
+        }));
 }
 async function getProductBySlug(slug) {
     const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").eq("slug", slug).single();
@@ -168,7 +176,7 @@ async function getCatalog() {
     // Fetch categories and products in parallel
     const [catRes, prodRes] = await Promise.all([
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("categories").select("*"),
-        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").order("name", {
+        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*, categories(name)").order("name", {
             ascending: true
         })
     ]);
@@ -191,7 +199,7 @@ async function getCatalog() {
         });
     }
     for (const p of products){
-        const catId = p.category_id || p.category;
+        const catId = p.category_id;
         if (!catMap.has(catId)) {
             continue;
         }

@@ -75,11 +75,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
     return {
         id: p.id,
         name: p.name,
-        description: p.description,
-        flagshipImage: p.flagship_image,
-        sceneImages: p.scene_images ?? [],
-        variants: p.variants ?? [],
-        detailedInfo: p.detailed_info ?? {
+        description: p.description || "",
+        flagshipImage: p.flagship_image || "",
+        sceneImages: [],
+        variants: [],
+        detailedInfo: {
             overview: "",
             features: [],
             dimensions: "",
@@ -100,17 +100,25 @@ async function getProducts() {
         console.error("[getProducts] Supabase error:", error.message);
         return [];
     }
-    return data ?? [];
+    return (data ?? []).map((p)=>({
+            ...p,
+            images: p.images ?? [],
+            category_id: p.category_id
+        }));
 }
 async function getProductsByCategory(categoryId) {
-    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").eq("category", categoryId).order("name", {
+    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*, categories(name)").eq("category_id", categoryId).order("name", {
         ascending: true
     });
     if (error) {
         console.error("[getProductsByCategory] Supabase error:", error.message);
         return [];
     }
-    return data ?? [];
+    return (data ?? []).map((p)=>({
+            ...p,
+            images: p.images ?? [],
+            category_id: p.category_id
+        }));
 }
 async function getProductBySlug(slug) {
     const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").eq("slug", slug).single();
@@ -124,7 +132,7 @@ async function getCatalog() {
     // Fetch categories and products in parallel
     const [catRes, prodRes] = await Promise.all([
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["supabase"].from("categories").select("*"),
-        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").order("name", {
+        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*, categories(name)").order("name", {
             ascending: true
         })
     ]);
@@ -147,7 +155,7 @@ async function getCatalog() {
         });
     }
     for (const p of products){
-        const catId = p.category_id || p.category;
+        const catId = p.category_id;
         if (!catMap.has(catId)) {
             continue;
         }
@@ -248,7 +256,7 @@ async function POST(req) {
         const products = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$getProducts$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["getProducts"])();
         // Build a compact product list for the prompt (name, slug, category, description)
         const productList = products.slice(0, 80) // limit context size
-        .map((p)=>`- ID: ${p.slug} | Name: ${p.name} | Category: ${p.category} | Tier: ${p.performance_tier ?? "standard"} | ${p.description?.slice(0, 80)}`).join("\n");
+        .map((p)=>`- ID: ${p.slug} | Name: ${p.name} | Category: ${p.category_id} | ${p.description?.slice(0, 80)}`).join("\n");
         const systemPrompt = `You are an enterprise workspace engineering consultant for One & Only Furniture (Patna, Bihar India — AFC Regional Franchise).
 Your role is to recommend the best workspace systems from our catalog based on the client's requirements.
 Always recommend 3-5 specific products. Consider: team size, industry, budget sensitivity, location (Bihar/India context), and ergonomic needs.

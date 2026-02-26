@@ -1,1 +1,11 @@
-{"version":4,"routes":{"/products/chairs":{},"/products/other-seating":{},"/products/tables":{},"/products/storage":{},"/products/workstations":{},"/products/soft-seating":{},"/products/educational":{},"/products/collaborative":{},"/products/oando-chairs":{},"/products/oando-other-seating":{},"/products/oando-tables":{},"/products/oando-storage":{},"/products/oando-workstations":{},"/products/oando-soft-seating":{},"/products/oando-educational":{},"/products/oando-collaborative":{}},"dynamicRoutes":{"/products/[category]":{"dataRoute":null,"dataRouteRegex":null,"fallback":null,"fallbackRevalidate":false,"fallbackSourceRoute":"/products/[category]","routeRegex":"^\\/products\\/([^/]+?)(?:\\/)?$","allowHeader":[]}},"notFoundRoutes":[],"preview":{"previewModeId":"d27b48ea1ff4f3252c9712db6b29109a","previewModeSigningKey":"190812b2957f3f96e2e61f32a9fdb869daecfbc55259dea6067d52f4e4f03ba6","previewModeEncryptionKey":"66cbf0841f7e9eeb56cee047f60aed5954bc9fda0d51c8629d5ccf565c68b3f9"}}
+{
+  "version": 4,
+  "routes": {},
+  "dynamicRoutes": {},
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "a301446a67fee32a09c204bff56872fc",
+    "previewModeSigningKey": "8f0a0fff3575e7626f2db18d5c7388e345a46030a81500a86ff735b15ca10514",
+    "previewModeEncryptionKey": "6d624e2fe57f390736ab14c9a7fe8442302bd070b03cd8988aa0342abefc2127"
+  }
+}
