@@ -2658,6 +2658,16 @@
     background-color: var(--color-neutral-50);
   }
 
+  .bg-neutral-50\/50 {
+    background-color: #fafafa80;
+  }
+
+  @supports (color: color-mix(in lab, red, red)) {
+    .bg-neutral-50\/50 {
+      background-color: color-mix(in oklab, var(--color-neutral-50) 50%, transparent);
+    }
+  }
+
   .bg-neutral-100 {
     background-color: var(--color-neutral-100);
   }
@@ -5728,6 +5738,12 @@
   }
 
   @media (min-width: 48rem) {
+    .md\:w-48 {
+      width: calc(var(--spacing) * 48);
+    }
+  }
+
+  @media (min-width: 48rem) {
     .md\:w-64 {
       width: calc(var(--spacing) * 64);
     }
@@ -5892,6 +5908,12 @@
   @media (min-width: 48rem) {
     .md\:overflow-y-auto {
       overflow-y: auto;
+    }
+  }
+
+  @media (min-width: 48rem) {
+    .md\:rounded-lg {
+      border-radius: var(--radius-lg);
     }
   }
 
