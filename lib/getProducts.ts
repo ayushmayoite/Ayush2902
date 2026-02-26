@@ -67,6 +67,7 @@ export interface Product {
 
 export interface CompatProduct {
     id: string;
+    slug?: string;
     name: string;
     description: string;
     flagshipImage: string;
@@ -97,6 +98,7 @@ export interface CompatCategory {
 function toCompatProduct(p: Product): CompatProduct {
     return {
         id: p.id,
+        slug: p.slug,
         name: p.name,
         description: p.description || "",
         flagshipImage: p.flagship_image || "",
