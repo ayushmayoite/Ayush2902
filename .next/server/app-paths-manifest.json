@@ -4,6 +4,7 @@
   "/about/page": "app/about/page.js",
   "/api/ai-advisor/route": "app/api/ai-advisor/route.js",
   "/api/categories/route": "app/api/categories/route.js",
+  "/api/generate-alt/route": "app/api/generate-alt/route.js",
   "/api/tracking/route": "app/api/tracking/route.js",
   "/career/page": "app/career/page.js",
   "/catalog/page": "app/catalog/page.js",

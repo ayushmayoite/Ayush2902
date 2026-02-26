@@ -299,6 +299,15 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../app/api/generate-alt/route.ts
+{
+  type __IsExpected<Specific extends RouteHandlerConfig<"/api/generate-alt">> = Specific
+  const handler = {} as typeof import("../../app/api/generate-alt/route.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../app/api/tracking/route.ts
 {
   type __IsExpected<Specific extends RouteHandlerConfig<"/api/tracking">> = Specific
