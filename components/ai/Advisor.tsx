@@ -32,10 +32,17 @@ export function AIAdvisor() {
   const [loading, setLoading] = useState(false);
   const [result, setResult] = useState<AdvisorResult | null>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
+  const focusTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Focus input when opened
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 100);
+    if (focusTimeoutRef.current) clearTimeout(focusTimeoutRef.current);
+    if (open) {
+      focusTimeoutRef.current = setTimeout(() => inputRef.current?.focus(), 100);
+    }
+    return () => {
+      if (focusTimeoutRef.current) clearTimeout(focusTimeoutRef.current);
+    };
   }, [open]);
 
   async function handleSubmit(e?: React.FormEvent, prefill?: string) {

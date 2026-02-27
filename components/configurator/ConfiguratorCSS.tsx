@@ -59,13 +59,15 @@ export function ConfiguratorCSS() {
       rotateY.set(rotateY.get() + movementX * 0.5);
       rotateX.set(Math.min(45, Math.max(5, rotateX.get() - movementY * 0.5)));
     };
+    const handleMouseUp = () => setIsDragging(false);
 
     if (isDragging) {
       window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseup", () => setIsDragging(false));
+      window.addEventListener("mouseup", handleMouseUp);
     }
     return () => {
       window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseup", handleMouseUp);
     };
   }, [isDragging, rotateX, rotateY]);
 

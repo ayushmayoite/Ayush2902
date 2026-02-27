@@ -1,90 +1,148 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
-const { createClient } = require('@supabase/supabase-js');
-require('dotenv').config({ path: '.env.local' });
+const { createClient } = require("@supabase/supabase-js");
+const OpenAI = require("openai");
+require("dotenv").config({ path: ["local.env", ".env.local"] });
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-const openRouterKey = process.env.OPENROUTER_API_KEY;
+const openAiKey = process.env.OPENAI_API_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-  console.error("Missing credentials in .env.local (URL or Service Key)");
+  console.error("Missing Supabase URL or service role key in local.env/.env.local");
   process.exit(1);
 }
 
 const supabase = createClient(supabaseUrl, supabaseKey);
+const openai = openAiKey ? new OpenAI({ apiKey: openAiKey }) : null;
+
+const CATEGORY_CONTEXT = {
+  "oando-workstations": {
+    label: "office workstation desk system",
+    avoid: ["chair", "seating", "sofa"],
+  },
+  "oando-tables": {
+    label: "office conference table",
+    avoid: ["chair", "seating", "sofa", "workstation"],
+  },
+  "oando-storage": {
+    label: "office storage cabinet locker",
+    avoid: ["chair", "seating", "table", "desk"],
+  },
+  "oando-seating": {
+    label: "ergonomic office chair",
+    avoid: ["table", "desk", "storage", "cabinet"],
+  },
+  "oando-chairs": {
+    label: "ergonomic office chair",
+    avoid: ["table", "desk", "storage", "cabinet"],
+  },
+};
+
+function fallbackAlt(product) {
+  const ctx = CATEGORY_CONTEXT[product.category_id] || {
+    label: (product.category_id || "furniture").replace("oando-", "").replace(/-/g, " "),
+    avoid: [],
+  };
+  return `${product.name} ${ctx.label}`.replace(/\s+/g, " ").trim().slice(0, 120);
+}
 
 async function generateAltText(product) {
-    const prompt = `Generate a concise, SEO-friendly alt text (max 15 words) for a product image. Must include the keywords "furniture Patna Bihar" if appropriate.
-Product category: ${product.category_id}
-Product name: ${product.name}
-${product.description ? `Description: ${product.description}` : ""}
+  if (!openai) return fallbackAlt(product);
 
-The alt text should describe the furniture piece accurately for screen readers and SEO. Respond with ONLY the alt text string, no quotes.`;
+  const ctx = CATEGORY_CONTEXT[product.category_id] || {
+    label: (product.category_id || "furniture").replace("oando-", "").replace(/-/g, " "),
+    avoid: [],
+  };
 
-    try {
-        const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${openRouterKey}`,
-                "HTTP-Referer": "http://localhost:3000",
-                "X-Title": "One and Only Furniture",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                model: "openai/gpt-4o-mini", // Use high-speed mini model as requested
-                messages: [{ role: "user", content: prompt }],
-                temperature: 0.3,
-                max_tokens: 50
-            })
-        });
+  const prompt = [
+    "Generate concise alt text for a furniture product image.",
+    "Maximum 15 words. Output only plain text.",
+    `Category: ${ctx.label}`,
+    `Name: ${product.name}`,
+    product.description ? `Description: ${product.description}` : "",
+    ctx.avoid.length ? `Avoid these words: ${ctx.avoid.join(", ")}.` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
 
-        const data = await response.json();
-        return data.choices?.[0]?.message?.content?.trim() || `${product.name} - ${product.category_id}`;
-    } catch (err) {
-        console.error(`Failed to generate for ${product.name}:`, err.message);
-        return `${product.name} - ${product.category_id}`; // Fallback
-    }
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+      temperature: 0.3,
+      max_tokens: 60,
+    });
+    return completion.choices?.[0]?.message?.content?.trim() || fallbackAlt(product);
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    console.warn(`AI alt generation failed for "${product.name}": ${msg}`);
+    return fallbackAlt(product);
+  }
 }
 
-async function batchRun() {
-    console.log("Fetching products...");
-    const { data: products, error } = await supabase
-        .from('products')
-        .select('id, name, category_id, description, alt_text');
+async function run() {
+  let hasAltTextColumn = true;
+  const altProbe = await supabase.from("products").select("alt_text").limit(1);
+  if (altProbe.error && /column .*alt_text.* does not exist/i.test(altProbe.error.message)) {
+    hasAltTextColumn = false;
+  } else if (altProbe.error) {
+    console.error(`Failed to probe alt_text column: ${altProbe.error.message}`);
+    process.exit(1);
+  }
 
-    if (error) {
-        console.error("Error fetching products:", error);
-        process.exit(1);
+  const selectFields = hasAltTextColumn
+    ? "id, name, category_id, description, alt_text, metadata"
+    : "id, name, category_id, description, metadata";
+
+  const { data: products, error } = await supabase
+    .from("products")
+    .select(selectFields);
+
+  if (error) {
+    console.error("Failed to fetch products:", error.message);
+    process.exit(1);
+  }
+
+  if (!products || products.length === 0) {
+    console.log("No products found.");
+    return;
+  }
+
+  console.log(`Generating/updating alt text for ${products.length} products...`);
+  let updated = 0;
+
+  for (let i = 0; i < products.length; i++) {
+    const p = products[i];
+    const altText = await generateAltText(p);
+    const payload = hasAltTextColumn
+      ? { alt_text: altText }
+      : { metadata: { ...(p.metadata || {}), ai_alt_text: altText } };
+
+    const { error: updateError } = await supabase.from("products").update(payload).eq("id", p.id);
+
+    if (updateError) {
+      console.error(`Update failed (${p.name}): ${updateError.message}`);
+      continue;
     }
 
-    console.log(`Found ${products.length} products. Generating Alt text...`);
-    let updatedCount = 0;
-
-    for (let i = 0; i < products.length; i++) {
-        const p = products[i];
-        
-        // Skip if it already has alt text to save API calls, unless we want to force overwrite
-        // Let's force overwrite for SEO keywords based on prompt
-        console.log(`[${i+1}/${products.length}] Generating for ${p.name}...`);
-        const aiAltText = await generateAltText(p);
-        
-        const { error: updateError } = await supabase
-            .from('products')
-            .update({ alt_text: aiAltText })
-            .eq('id', p.id);
-            
-        if (updateError) {
-             console.error(`  -> Failed to update DB for ${p.name}:`, updateError.message);
-        } else {
-             console.log(`  -> Saved: "${aiAltText}"`);
-             updatedCount++;
-        }
-        
-        // Sleep to avoid rate limits
-        await new Promise(r => setTimeout(r, 500));
+    updated += 1;
+    if ((i + 1) % 20 === 0 || i === products.length - 1) {
+      console.log(`Progress: ${i + 1}/${products.length}, updated: ${updated}`);
     }
-    
-    console.log(`\n🎉 Done! Updated ${updatedCount}/${products.length} products with SEO-optimized Alt Texts.`);
+
+    if (openai) {
+      await new Promise((r) => setTimeout(r, 200));
+    }
+  }
+
+  console.log(
+    `Done. Updated alt text for ${updated}/${products.length} products via ${
+      hasAltTextColumn ? "alt_text column" : "metadata.ai_alt_text fallback"
+    }.`
+  );
 }
 
-batchRun();
+run().catch((err) => {
+  console.error("Fatal:", err instanceof Error ? err.message : String(err));
+  process.exit(1);
+});

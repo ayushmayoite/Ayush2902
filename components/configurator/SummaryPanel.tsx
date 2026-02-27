@@ -1,12 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useConfigurator } from "./ConfiguratorContext";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 export function SummaryPanel() {
     const { getSummary } = useConfigurator();
     const [copied, setCopied] = useState(false);
+    const copiedTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     const summary = getSummary();
 
@@ -22,11 +23,18 @@ export function SummaryPanel() {
         try {
             await navigator.clipboard.writeText(summary);
             setCopied(true);
-            setTimeout(() => setCopied(false), 2000);
+            if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+            copiedTimeoutRef.current = setTimeout(() => setCopied(false), 2000);
         } catch {
             setCopied(false);
         }
     };
+
+    useEffect(() => {
+        return () => {
+            if (copiedTimeoutRef.current) clearTimeout(copiedTimeoutRef.current);
+        };
+    }, []);
 
     return (
         <div className="p-6 lg:p-8 space-y-4">

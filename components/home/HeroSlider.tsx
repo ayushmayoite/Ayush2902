@@ -35,11 +35,13 @@ export function HeroSlider() {
   const [current, setCurrent] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const transitionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const goTo = (index: number) => {
     if (isTransitioning || index === current) return;
+    if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
     setIsTransitioning(true);
-    setTimeout(() => {
+    transitionTimeoutRef.current = setTimeout(() => {
       setCurrent(index);
       setIsTransitioning(false);
     }, 400);
@@ -51,6 +53,7 @@ export function HeroSlider() {
     intervalRef.current = setInterval(next, 6000);
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current);
+      if (transitionTimeoutRef.current) clearTimeout(transitionTimeoutRef.current);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);

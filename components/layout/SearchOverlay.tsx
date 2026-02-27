@@ -19,13 +19,18 @@ const SUGGESTIONS = [
 
 export function SearchOverlay({ isOpen, onClose }: SearchOverlayProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const focusTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [query, setQuery] = useState("");
 
   // Focus input when opened
   useEffect(() => {
+    if (focusTimeoutRef.current) clearTimeout(focusTimeoutRef.current);
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 100);
+      focusTimeoutRef.current = setTimeout(() => inputRef.current?.focus(), 100);
     }
+    return () => {
+      if (focusTimeoutRef.current) clearTimeout(focusTimeoutRef.current);
+    };
   }, [isOpen]);
 
   return (

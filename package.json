@@ -79,6 +79,7 @@
     "ts-morph": "^27.0.2",
     "ts-node": "^10.9.2",
     "typescript": "^5",
+    "vercel": "^50.25.1",
     "whatwg-fetch": "^3.6.20"
   }
 }

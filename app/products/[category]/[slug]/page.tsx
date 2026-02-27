@@ -117,7 +117,10 @@ async function ProductContent({
     "@context": "https://schema.org",
     "@type": "Product",
     name: p.name,
-    description: (rawProduct as any).alt_text || p.description,
+    description:
+      (rawProduct as any).alt_text ||
+      (rawProduct as any)?.metadata?.ai_alt_text ||
+      p.description,
     image: p.images || [p.flagship_image],
     url,
     brand: { "@type": "Brand", name: "One and Only Furniture" },

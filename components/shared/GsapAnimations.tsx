@@ -15,6 +15,9 @@ export function GsapAnimations() {
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
   useEffect(() => {
+    let isActive = true;
+    const listenerCleanup: Array<() => void> = [];
+
     // Reset loaded state on route change
     setImagesLoaded(false);
 
@@ -38,6 +41,7 @@ export function GsapAnimations() {
       } else {
         let loadedCount = 0;
         const onLoad = () => {
+          if (!isActive) return;
           loadedCount++;
           if (loadedCount >= incomplete.length) {
             setImagesLoaded(true);
@@ -48,13 +52,21 @@ export function GsapAnimations() {
           // If it load fails, we don't want to hang forever
           img.addEventListener("load", onLoad, { once: true });
           img.addEventListener("error", onLoad, { once: true });
+          listenerCleanup.push(() => {
+            img.removeEventListener("load", onLoad);
+            img.removeEventListener("error", onLoad);
+          });
         });
       }
     };
 
     // Small delay to ensure the DOM for this route is fully parsed into document.images
     const timer = setTimeout(checkImages, 50);
-    return () => clearTimeout(timer);
+    return () => {
+      isActive = false;
+      clearTimeout(timer);
+      listenerCleanup.forEach((cleanup) => cleanup());
+    };
   }, [pathname]);
 
   useGSAP(() => {

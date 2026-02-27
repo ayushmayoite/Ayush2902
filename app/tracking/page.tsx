@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Package, Truck, CheckCircle, FileText, Home } from "lucide-react";
 import { motion } from "framer-motion";
 import { Hero } from "@/components/home/Hero";
@@ -9,15 +9,23 @@ import { ContactTeaser } from "@/components/shared/ContactTeaser";
 export default function TrackingPage() {
     const [orderId, setOrderId] = useState("");
     const [status, setStatus] = useState<"idle" | "loading" | "found" | "error">("idle");
+    const trackTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    useEffect(() => {
+        return () => {
+            if (trackTimeoutRef.current) clearTimeout(trackTimeoutRef.current);
+        };
+    }, []);
 
     const handleTrack = (e: React.FormEvent) => {
         e.preventDefault();
         if (!orderId) return;
 
         setStatus("loading");
+        if (trackTimeoutRef.current) clearTimeout(trackTimeoutRef.current);
 
         // Simulate API call
-        setTimeout(() => {
+        trackTimeoutRef.current = setTimeout(() => {
             if (orderId.toUpperCase().startsWith("DE")) {
                 setStatus("found");
             } else {

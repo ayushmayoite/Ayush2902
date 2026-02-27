@@ -1,190 +1,191 @@
 /**
- * Audit Supabase 'products' table for image mismatches.
- *
- * – Detects cross-category image paths (e.g. chair images in tables)
- * – Fixes mismatches by remapping paths to the correct category folder
- * – Outputs results as JSON to scripts/audit-results.json
- * – Batch-upserts fixed rows back to Supabase
+ * Audit Supabase `products` table for cross-category image mismatches.
  *
  * Usage:
- *   npx tsx scripts/audit-mismatches.ts            # audit only (dry run)
- *   npx tsx scripts/audit-mismatches.ts --fix       # audit + upsert fixes
+ *   npx tsx scripts/audit-mismatches.ts          # dry run
+ *   npx tsx scripts/audit-mismatches.ts --fix    # audit + upsert fixes
  */
 
-import { config } from 'dotenv';
-import { resolve } from 'path';
-config({ path: resolve(process.cwd(), '.env.local') });
+import { config } from "dotenv";
+import { resolve } from "path";
+import * as fs from "fs";
+import { createClient } from "@supabase/supabase-js";
 
-import { createClient } from '@supabase/supabase-js';
-import * as fs from 'fs';
+config({
+  path: [resolve(process.cwd(), "local.env"), resolve(process.cwd(), ".env.local")],
+});
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey =
-    process.env.SUPABASE_SERVICE_ROLE_KEY ||
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
+  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseKey) {
-    console.error('❌ Missing NEXT_PUBLIC_SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY');
-    process.exit(1);
+  console.error("Missing NEXT_PUBLIC_SUPABASE_URL or service key.");
+  process.exit(1);
 }
 
 const supabase = createClient(supabaseUrl, supabaseKey);
-const shouldFix = process.argv.includes('--fix');
+const shouldFix = process.argv.includes("--fix");
 
-// ── Category → expected path segment mapping ────────────────────────────
 const CATEGORY_SEGMENTS: Record<string, string> = {
-    'oando-workstations': 'workstations',
-    'oando-tables': 'tables',
-    'oando-storage': 'storage',
-    'oando-seating': 'seating',
-    'oando-chairs': 'seating',
-    'oando-other-seating': 'seating',
-    'oando-soft-seating': 'soft-seating',
-    'oando-educational': 'educational',
-    'oando-collaborative': 'collaborative',
+  "oando-workstations": "workstations",
+  "oando-tables": "tables",
+  "oando-storage": "storage",
+  "oando-seating": "seating",
+  "oando-chairs": "seating",
+  "oando-other-seating": "seating",
+  "oando-soft-seating": "soft-seating",
+  "oando-educational": "educational",
+  "oando-collaborative": "collaborative",
 };
 
-// Keywords that indicate a category mismatch
 const CATEGORY_KEYWORDS: Record<string, string[]> = {
-    'oando-tables': ['chair', 'seating', 'sofa', 'lounge'],
-    'oando-workstations': ['chair', 'seating', 'sofa', 'table', 'lounge'],
-    'oando-storage': ['chair', 'seating', 'sofa', 'table', 'desk'],
-    'oando-seating': ['table', 'storage', 'cabinet', 'locker', 'workstation'],
-    'oando-chairs': ['table', 'storage', 'cabinet', 'locker', 'workstation'],
-    'oando-soft-seating': ['table', 'storage', 'cabinet', 'locker', 'workstation'],
+  "oando-tables": ["chair", "seating", "sofa", "lounge"],
+  "oando-workstations": ["chair", "seating", "sofa", "table", "lounge"],
+  "oando-storage": ["chair", "seating", "sofa", "table", "desk"],
+  "oando-seating": ["table", "storage", "cabinet", "locker", "workstation"],
+  "oando-chairs": ["table", "storage", "cabinet", "locker", "workstation"],
+  "oando-soft-seating": ["table", "storage", "cabinet", "locker", "workstation"],
 };
 
-interface AuditRow {
-    productName: string;
-    category: string;
-    slug: string;
-    mismatchedImage: string;
-    fixedImage: string;
-    status: 'mismatch' | 'ok';
+type ProductRow = {
+  id: string;
+  name: string;
+  slug: string;
+  category: string | null;
+  category_id: string | null;
+  images: string[] | null;
+};
+
+type AuditRow = {
+  productId: string;
+  productName: string;
+  category: string;
+  slug: string;
+  mismatchedImage: string;
+  fixedImage: string;
+};
+
+function containsKeywordToken(pathValue: string, keyword: string): boolean {
+  const lower = pathValue.toLowerCase();
+  const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const re = new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`, "i");
+  return re.test(lower);
 }
 
-interface FixedProduct {
-    id: string;
-    images: string[];
+function isMismatchedForCategory(categoryId: string, imagePath: string): boolean {
+  const forbidden = CATEGORY_KEYWORDS[categoryId] || [];
+  if (forbidden.length === 0) return false;
+  return forbidden.some((kw) => containsKeywordToken(imagePath, kw));
+}
+
+function expectedSegment(categoryId: string): string {
+  if (CATEGORY_SEGMENTS[categoryId]) return CATEGORY_SEGMENTS[categoryId];
+  return categoryId.replace(/^oando-/, "");
+}
+
+function buildFixedPath(currentPath: string, segment: string): string {
+  const filename = currentPath.split("/").pop() || "image-1.webp";
+  return `/images/${segment}/${filename}`;
 }
 
 async function main() {
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
-    console.log('  IMAGE MISMATCH AUDIT' + (shouldFix ? ' + FIX' : ' (DRY RUN)'));
-    console.log('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
+  console.log(`Image mismatch audit started (${shouldFix ? "fix mode" : "dry run"})`);
 
-    const { data: products, error } = await supabase
-        .from('products')
-        .select('id, name, slug, category, category_id, images, flagship_image')
-        .order('category');
+  const { data, error } = await supabase
+    .from("products")
+    .select("id, name, slug, category, category_id, images")
+    .order("category_id", { ascending: true });
 
-    if (error) {
-        console.error('❌ Supabase error:', error.message);
-        process.exit(1);
-    }
-    if (!products || products.length === 0) {
-        console.log('⚠️  No products found.');
-        process.exit(0);
-    }
+  if (error) {
+    throw new Error(`Supabase read failed: ${error.message}`);
+  }
 
-    const auditResults: AuditRow[] = [];
-    const fixedProducts: FixedProduct[] = [];
-    let totalMismatches = 0;
+  const products = (data || []) as ProductRow[];
+  const auditRows: AuditRow[] = [];
+  const fixedProducts: Array<{ id: string; images: string[] }> = [];
 
-    for (const p of products) {
-        const catId = p.category_id || p.category;
-        const images: string[] = Array.isArray(p.images) ? p.images : [];
-        const forbidden = CATEGORY_KEYWORDS[catId] || [];
-        const expectedSegment = CATEGORY_SEGMENTS[catId] || catId.replace('oando-', '');
-        let hasMismatch = false;
-        const fixedImages: string[] = [];
+  for (const p of products) {
+    const catId = (p.category_id || p.category || "").trim();
+    if (!catId) continue;
 
-        for (const img of images) {
-            // Skip external URLs
-            if (img.startsWith('http')) {
-                fixedImages.push(img);
-                continue;
-            }
+    const images = Array.isArray(p.images) ? p.images : [];
+    if (images.length === 0) continue;
 
-            // Check for forbidden keywords in path
-            const isMismatched = forbidden.some(kw => img.toLowerCase().includes(kw));
+    const fixedImages: string[] = [];
+    let hasMismatch = false;
+    const segment = expectedSegment(catId);
 
-            if (isMismatched) {
-                totalMismatches++;
-                hasMismatch = true;
+    for (const img of images) {
+      if (!img || typeof img !== "string") continue;
+      if (img.startsWith("http://") || img.startsWith("https://")) {
+        fixedImages.push(img);
+        continue;
+      }
 
-                // Fix: remap to the correct category folder
-                const filename = img.split('/').pop() || 'product.webp';
-                const fixedPath = `/images/${expectedSegment}/${filename}`;
+      const mismatch = isMismatchedForCategory(catId, img);
+      if (!mismatch) {
+        fixedImages.push(img);
+        continue;
+      }
 
-                auditResults.push({
-                    productName: p.name,
-                    category: catId,
-                    slug: p.slug,
-                    mismatchedImage: img,
-                    fixedImage: fixedPath,
-                    status: 'mismatch',
-                });
-
-                fixedImages.push(fixedPath);
-            } else {
-                fixedImages.push(img);
-            }
-        }
-
-        if (hasMismatch) {
-            fixedProducts.push({ id: p.id, images: fixedImages });
-        }
+      const fixed = buildFixedPath(img, segment);
+      hasMismatch = true;
+      fixedImages.push(fixed);
+      auditRows.push({
+        productId: p.id,
+        productName: p.name,
+        category: catId,
+        slug: p.slug,
+        mismatchedImage: img,
+        fixedImage: fixed,
+      });
     }
 
-    // ── Output results ────────────────────────────────────────────────────
-    const outputPath = resolve(process.cwd(), 'scripts', 'audit-results.json');
-    fs.writeFileSync(outputPath, JSON.stringify(auditResults, null, 2));
-    console.log(`\n📄 Audit results written to: ${outputPath}`);
-
-    // Print table
-    console.log('\nProduct Name         | Category              | Mismatched Image       | Fixed Image');
-    console.log('─────────────────────+───────────────────────+────────────────────────+─────────────────────────');
-    for (const r of auditResults) {
-        console.log(
-            `${r.productName.padEnd(20)} | ${r.category.padEnd(21)} | ${r.mismatchedImage.padEnd(22)} | ${r.fixedImage}`
-        );
+    if (hasMismatch) {
+      fixedProducts.push({ id: p.id, images: fixedImages });
     }
+  }
 
-    console.log(`\n📊 Total: ${products.length} products scanned, ${totalMismatches} mismatches found.`);
+  const outPath = resolve(process.cwd(), "scripts", "audit-results.json");
+  fs.writeFileSync(outPath, JSON.stringify(auditRows, null, 2), "utf8");
 
-    // ── Batch upsert fixes ────────────────────────────────────────────────
-    if (shouldFix && fixedProducts.length > 0) {
-        console.log(`\n🔧 Fixing ${fixedProducts.length} products via batch upsert...`);
+  console.log(`Scanned: ${products.length} products`);
+  console.log(`Mismatches: ${auditRows.length}`);
+  console.log(`JSON output: ${outPath}`);
 
-        const BATCH = 50;
-        let fixed = 0;
-        for (let i = 0; i < fixedProducts.length; i += BATCH) {
-            const batch = fixedProducts.slice(i, i + BATCH);
-            const { error: upsertError } = await supabase
-                .from('products')
-                .upsert(batch, { onConflict: 'id' });
-
-            if (upsertError) {
-                console.error(`❌ Batch ${i}-${i + batch.length} failed:`, upsertError.message);
-            } else {
-                fixed += batch.length;
-                console.log(`   ✅ Fixed ${fixed}/${fixedProducts.length}`);
-            }
-        }
-        console.log(`\n🎉 Done! ${fixed} products updated.`);
-    } else if (shouldFix) {
-        console.log('\n✅ No mismatches to fix!');
-    } else if (fixedProducts.length > 0) {
-        console.log(`\n💡 Run with --fix to upsert ${fixedProducts.length} corrections.`);
-    } else {
-        console.log('\n✅ AUDIT PASSED — No cross-category image mismatches found.');
+  if (auditRows.length > 0) {
+    console.log("Sample rows:");
+    for (const row of auditRows.slice(0, 10)) {
+      console.log(
+        `${row.category.padEnd(20)} | ${row.productName.padEnd(24)} | ${row.mismatchedImage} -> ${row.fixedImage}`
+      );
     }
+  }
 
-    process.exit(totalMismatches > 0 && !shouldFix ? 1 : 0);
+  if (shouldFix && fixedProducts.length > 0) {
+    const batchSize = 50;
+    let updated = 0;
+
+    for (let i = 0; i < fixedProducts.length; i += batchSize) {
+      const batch = fixedProducts.slice(i, i + batchSize);
+      const { error: upsertError } = await supabase
+        .from("products")
+        .upsert(batch, { onConflict: "id" });
+      if (upsertError) {
+        throw new Error(`Upsert batch ${i}-${i + batch.length} failed: ${upsertError.message}`);
+      }
+      updated += batch.length;
+      console.log(`Updated ${updated}/${fixedProducts.length}`);
+    }
+  }
+
+  if (auditRows.length > 0 && !shouldFix) {
+    process.exitCode = 1;
+  }
 }
 
 main().catch((err) => {
-    console.error('Fatal:', err.message);
-    process.exit(1);
+  console.error(err instanceof Error ? err.message : String(err));
+  process.exitCode = 1;
 });
