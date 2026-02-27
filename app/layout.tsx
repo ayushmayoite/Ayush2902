@@ -35,10 +35,15 @@ const playfair = Playfair_Display({
   variable: "--font-playfair",
 });
 
-const BASE_URL = "http://localhost:3000";
+const FALLBACK_SITE_URL = "https://ourwebsitecopy2026-02-21.vercel.app";
+const RAW_SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  process.env.SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "");
+const SITE_URL = (RAW_SITE_URL || FALLBACK_SITE_URL).replace(/\/+$/, "");
 
 export const metadata: Metadata = {
-  metadataBase: new URL(BASE_URL),
+  metadataBase: new URL(SITE_URL),
   title: {
     default: "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
     template: "%s | One and Only Furniture",
@@ -57,15 +62,15 @@ export const metadata: Metadata = {
     "meeting tables Bihar",
     "storage solutions India",
   ],
-  authors: [{ name: "One and Only Furniture", url: BASE_URL }],
+  authors: [{ name: "One and Only Furniture", url: SITE_URL }],
   creator: "One and Only Furniture",
   publisher: "One and Only Furniture",
   robots: { index: true, follow: true },
-  alternates: { canonical: BASE_URL },
+  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: BASE_URL,
+    url: SITE_URL,
     siteName: "One and Only Furniture",
     title: "One and Only Furniture | Premium Office Solutions",
     description:
@@ -92,8 +97,8 @@ const LOCAL_BUSINESS_JSON_LD = {
   "@context": "https://schema.org",
   "@type": "FurnitureStore",
   name: "One and Only Furniture",
-  url: BASE_URL,
-  logo: `${BASE_URL}/logo.png`,
+  url: SITE_URL,
+  logo: `${SITE_URL}/logo.png`,
   description:
     "Premium ergonomic office furniture in Patna, Bihar, India. Authorized dealer for leading office furniture brands.",
   address: {
@@ -107,7 +112,7 @@ const LOCAL_BUSINESS_JSON_LD = {
   openingHours: "Mo-Sa 09:00-18:00",
   priceRange: "₹₹₹",
   areaServed: ["Bihar", "Jharkhand", "Uttar Pradesh", "Delhi NCR"],
-  sameAs: ["http://localhost:3000"],
+  sameAs: [SITE_URL],
 };
 
 export default function RootLayout({

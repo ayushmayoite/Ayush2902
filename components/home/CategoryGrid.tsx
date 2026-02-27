@@ -1,8 +1,13 @@
 import Link from "next/link";
 import { getCatalog } from "@/lib/getProducts";
 import { CategoryImage } from "@/components/home/CategoryImage";
+import { unstable_cache } from "next/cache";
 
-export const dynamic = "force-dynamic";
+const getCachedCatalog = unstable_cache(
+  async () => getCatalog(),
+  ["home-category-grid"],
+  { revalidate: 3600, tags: ["catalog"] },
+);
 
 const CATEGORY_THUMBNAILS: Record<string, string> = {
   "oando-workstations": "/images/products/imported/cabin/image-1.webp",
@@ -14,7 +19,7 @@ const CATEGORY_THUMBNAILS: Record<string, string> = {
 };
 
 export async function CategoryGrid() {
-  const oandoCatalog = await getCatalog();
+  const oandoCatalog = await getCachedCatalog();
 
   return (
     <section className="w-full bg-white py-20 md:py-28">
