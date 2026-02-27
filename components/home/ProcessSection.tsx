@@ -36,10 +36,10 @@ export function ProcessSection() {
             <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-amber-700 mb-4 block">
               Our Process
             </span>
-            <h2 className="font-serif text-5xl md:text-6xl font-medium mb-6 text-neutral-900 leading-[0.96] tracking-tight">
+            <h2 className="font-serif text-4xl md:text-6xl font-medium mb-6 text-neutral-900 leading-[1.02] tracking-tight text-balance">
               Seamless from Start to Finish
             </h2>
-            <p className="text-neutral-700 text-lg leading-relaxed mb-8">
+            <p className="text-neutral-700 text-base md:text-lg leading-relaxed mb-8">
               We&apos;ve refined our workflow to ensure your office transformation is smooth, on-time, and within budget.
             </p>
             <Link
@@ -65,10 +65,10 @@ export function ProcessSection() {
                   {step.id}
                 </span>
                 <div className="pt-2">
-                  <h3 className="font-serif text-4xl md:text-5xl leading-[0.95] font-medium mb-3 text-neutral-900">
+                  <h3 className="font-serif text-3xl md:text-5xl leading-[1.02] font-medium mb-3 text-neutral-900 text-balance">
                     {step.title}
                   </h3>
-                  <p className="text-neutral-600 text-[22px] leading-relaxed max-w-lg font-light">
+                  <p className="text-neutral-600 text-base md:text-xl leading-relaxed max-w-lg font-light">
                     {step.description}
                   </p>
                 </div>

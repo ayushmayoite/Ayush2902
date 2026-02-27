@@ -64,7 +64,7 @@ export function Teaser({
             )}
 
             <Reveal delay={0.1}>
-              <h2 className="text-[44px] md:text-[56px] lg:text-[72px] font-medium leading-[1.05] tracking-tighter">
+              <h2 className="font-serif text-[34px] md:text-[56px] lg:text-[72px] font-medium leading-[1.04] tracking-tight text-balance">
                 {title}
               </h2>
             </Reveal>
@@ -73,8 +73,8 @@ export function Teaser({
               <Reveal delay={0.2}>
                 <p
                   className={cn(
-                    "text-[17px] leading-relaxed max-w-xl font-light",
-                    lightMode ? "text-neutral-500" : "text-neutral-300",
+                    "text-base md:text-[17px] leading-relaxed max-w-xl font-light",
+                    lightMode ? "text-neutral-700" : "text-neutral-200",
                   )}
                 >
                   {description}

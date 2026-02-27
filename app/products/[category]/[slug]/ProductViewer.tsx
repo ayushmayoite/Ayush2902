@@ -113,6 +113,13 @@ export function ProductViewer({
     typeof product.metadata?.sustainabilityScore === "number"
       ? `Eco Score ${product.metadata.sustainabilityScore}/10`
       : "Sustainability details on request";
+  const shortOverview = (() => {
+    if (!overview) return "";
+    const clean = overview.replace(/\s+/g, " ").trim();
+    const sentenceMatch = clean.match(/^[^.!?]+[.!?]\s*[^.!?]*[.!?]?/);
+    if (sentenceMatch?.[0]) return sentenceMatch[0].trim();
+    return clean.length > 180 ? `${clean.slice(0, 180).trim()}...` : clean;
+  })();
   const specRows = [
     { label: "Dimensions", value: dimensions },
     {
@@ -231,8 +238,8 @@ export function ProductViewer({
               <h1 className="text-4xl sm:text-5xl font-light text-neutral-900 tracking-tight leading-[1.05] mb-5">
                 {cleanName(product.name)}
               </h1>
-              <p className="text-[14px] text-neutral-500 leading-relaxed font-light mb-6">
-                {overview}
+              <p className="text-sm sm:text-base text-neutral-700 leading-relaxed font-light mb-6 max-w-prose line-clamp-3 lg:line-clamp-none">
+                {shortOverview}
               </p>
               <div className="flex flex-wrap gap-2 mb-6">
                 <span className="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] bg-neutral-100 text-neutral-700">
@@ -377,7 +384,7 @@ export function ProductViewer({
                 <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-900">
                   {warrantyText}
                 </span>
-                <p className="text-[10px] text-neutral-500 leading-relaxed font-light">
+                <p className="text-xs text-neutral-600 leading-relaxed font-light">
                   Guaranteed durability and performance.
                 </p>
               </div>
@@ -386,7 +393,7 @@ export function ProductViewer({
                 <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-900">
                   Made in India
                 </span>
-                <p className="text-[10px] text-neutral-500 leading-relaxed font-light">
+                <p className="text-xs text-neutral-600 leading-relaxed font-light">
                   Engineered locally to global standards.
                 </p>
               </div>
@@ -395,13 +402,13 @@ export function ProductViewer({
                 <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-900">
                   {certificationText}
                 </span>
-                <p className="text-[10px] text-neutral-500 leading-relaxed font-light">
+                <p className="text-xs text-neutral-600 leading-relaxed font-light">
                   Certified for extended use.
                 </p>
               </div>
             </div>
 
-                        {/* Specifications */}
+            {/* Specifications */}
             <div className="pt-7 border-t border-neutral-100">
               <h2 className="text-xl font-semibold text-neutral-900 mb-4">
                 Specifications

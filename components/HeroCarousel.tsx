@@ -89,7 +89,7 @@ export function HeroCarousel() {
                 src={slide.src}
                 alt={slide.headline.replace("\n", " ")}
                 fill
-                className="object-cover"
+                className="object-cover animate-hero-pan"
                 priority={i === 0}
                 sizes="100vw"
               />
@@ -100,15 +100,15 @@ export function HeroCarousel() {
               <div className="absolute inset-0 flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-16 lg:px-24">
                 <div className="max-w-[1400px] w-full mx-auto">
                   {i === 0 ? (
-                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight leading-[1.05] whitespace-pre-line mb-4 md:mb-6 max-w-2xl">
+                    <h1 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight leading-[1.05] whitespace-pre-line mb-4 md:mb-6 max-w-2xl text-balance">
                       {slide.headline}
                     </h1>
                   ) : (
-                    <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight leading-[1.05] whitespace-pre-line mb-4 md:mb-6 max-w-2xl">
+                    <h2 className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight leading-[1.05] whitespace-pre-line mb-4 md:mb-6 max-w-2xl text-balance">
                       {slide.headline}
                     </h2>
                   )}
-                  <p className="text-sm md:text-base text-white/75 font-light mb-8 md:mb-10 max-w-md leading-relaxed">
+                  <p className="text-sm md:text-base text-white/85 font-light mb-8 md:mb-10 max-w-md leading-relaxed">
                     {slide.sub}
                   </p>
                   <Link

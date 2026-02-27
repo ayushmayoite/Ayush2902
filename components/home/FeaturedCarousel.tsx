@@ -127,10 +127,10 @@ export function FeaturedCarousel() {
               <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.18em] text-neutral-600 mb-3">
                 {FEATURED_PRODUCTS[0].category}
               </p>
-              <h3 className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-[0.97] mb-4 text-neutral-950">
+              <h3 className="font-serif text-4xl md:text-6xl font-medium tracking-tight leading-[1] mb-4 text-neutral-950 text-balance">
                 {FEATURED_PRODUCTS[0].name}
               </h3>
-              <p className="text-lg md:text-2xl font-light text-neutral-700 leading-snug line-clamp-2 md:line-clamp-none">
+              <p className="text-base md:text-2xl font-light text-neutral-700 leading-snug line-clamp-2 md:line-clamp-none">
                 {FEATURED_PRODUCTS[0].description}
               </p>
             </div>
@@ -168,7 +168,7 @@ export function FeaturedCarousel() {
                   <p className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600 mb-2">
                     {product.category}
                   </p>
-                  <h3 className="font-serif text-4xl md:text-[52px] leading-[0.97] font-medium tracking-tight mb-2 text-neutral-950">
+                  <h3 className="font-serif text-3xl md:text-[52px] leading-[1] font-medium tracking-tight mb-2 text-neutral-950 text-balance">
                     {product.name}
                   </h3>
                 </div>

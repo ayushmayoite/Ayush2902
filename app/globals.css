@@ -195,6 +195,29 @@
   }
 }
 
+@keyframes hero-pan {
+  0% {
+    transform: scale(1.02) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate3d(-1.2%, -1%, 0);
+  }
+  100% {
+    transform: scale(1.12) translate3d(-2%, -1.6%, 0);
+  }
+}
+
+.animate-hero-pan {
+  animation: hero-pan 12s ease-in-out infinite alternate;
+  will-change: transform;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-hero-pan {
+    animation: none;
+  }
+}
+
 /* Hover scale utility (Tailwind doesn't include scale-103 by default) */
 .hover\:scale-103:hover {
   transform: scale(1.03);
