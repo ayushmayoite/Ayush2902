@@ -14,8 +14,9 @@ Date: 2026-02-27
 - [x] Local website server started.
 - [x] Verified `http://localhost:3000` returns HTTP 200.
 - [x] Task 2 local audit/test execution completed.
-- [ ] Task 2 DB write-back completed.
-- [ ] Resolve Vercel auth (`npx vercel login`) and deploy.
+- [x] Task 2 DB write-back completed.
+- [x] Vercel auth and production deploy completed.
+- [x] Pushed latest commit to `Antigravity26022026/main`.
 
 ## Task Checklist: MAX/DWG to GLB Script
 

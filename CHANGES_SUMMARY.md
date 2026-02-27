@@ -103,3 +103,8 @@ I fixed likely hang/memory-leak issues by adding proper cleanup for timers and e
 - Re-ran `scripts/audit-mismatches.ts --fix`: still `0` mismatches.
 - Re-ran `scripts/batch_generate_alt.js`: updated `145/145` products.
 - Since `alt_text` column is absent remotely, alt text is stored in `metadata.ai_alt_text`.
+
+7. Deployment + Git push:
+- Logged in to Vercel CLI and deployed production successfully.
+- Active alias: `https://ourwebsitecopy2026-02-21.vercel.app`
+- Pushed latest commit to `https://github.com/pglcarpets-cmyk/Antigravity26022026.git` on `main`.
