@@ -66,8 +66,7 @@ export function FeaturedCarousel() {
               }}
               className="typ-h2 text-neutral-900"
             >
-              Signature workspace pieces chosen for form, comfort, and daily
-              performance.
+              Signature pieces for everyday performance.
             </motion.h2>
           </div>
           <motion.div
@@ -121,16 +120,16 @@ export function FeaturedCarousel() {
               sizes="(max-width: 768px) 100vw, 66vw"
               className="object-contain p-6 transition-transform duration-1000 group-hover:scale-105"
             />
-            <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-stone-200/50 to-transparent pointer-events-none" />
+            <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/65 via-black/35 to-transparent pointer-events-none" />
 
-            <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full max-w-2xl z-10 text-neutral-900">
-              <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.18em] text-neutral-600 mb-3">
+            <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full max-w-2xl z-10 text-white">
+              <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.18em] text-white/80 mb-3">
                 {FEATURED_PRODUCTS[0].category}
               </p>
-              <h3 className="font-serif text-4xl md:text-6xl font-medium tracking-tight leading-[1] mb-4 text-neutral-950 text-balance">
+              <h3 className="font-serif text-4xl md:text-6xl font-medium tracking-tight leading-[1] mb-4 text-white text-balance">
                 {FEATURED_PRODUCTS[0].name}
               </h3>
-              <p className="text-base md:text-2xl font-light text-neutral-700 leading-snug line-clamp-2 md:line-clamp-none">
+              <p className="text-base md:text-2xl font-light text-white/90 leading-snug line-clamp-2 md:line-clamp-none">
                 {FEATURED_PRODUCTS[0].description}
               </p>
             </div>
@@ -162,13 +161,13 @@ export function FeaturedCarousel() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-contain p-6 transition-transform duration-1000 group-hover:scale-105"
                 />
-                <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-stone-200/50 to-transparent pointer-events-none" />
+                <div className="absolute inset-x-0 bottom-0 h-1/2 bg-linear-to-t from-black/70 via-black/30 to-transparent pointer-events-none" />
 
-                <div className="absolute bottom-0 left-0 p-8 z-10 text-neutral-900">
-                  <p className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600 mb-2">
+                <div className="absolute bottom-0 left-0 p-8 z-10 text-white">
+                  <p className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80 mb-2">
                     {product.category}
                   </p>
-                  <h3 className="font-serif text-3xl md:text-[52px] leading-[1] font-medium tracking-tight mb-2 text-neutral-950 text-balance">
+                  <h3 className="font-serif text-3xl md:text-[52px] leading-[1] font-medium tracking-tight mb-2 text-white text-balance">
                     {product.name}
                   </h3>
                 </div>
