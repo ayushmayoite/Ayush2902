@@ -13,7 +13,7 @@ export function PartnershipSection() {
           <div className="shrink-0">
             <div className="relative w-80 h-32 md:w-96 md:h-48 flex items-center justify-center md:justify-start">
               <Image
-                src="/afc-logo.png"
+                src="/afc-logo.webp"
                 alt="AFC Furniture Solutions"
                 width={480}
                 height={160}

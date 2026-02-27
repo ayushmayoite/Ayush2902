@@ -9,16 +9,6 @@ const getCachedCatalog = unstable_cache(
   { revalidate: 3600, tags: ["catalog"] },
 );
 
-const CATEGORY_THUMBNAILS: Record<string, string> = {
-  "oando-workstations": "/images/afc/oando-workstations--deskpro/image-1.webp",
-  "oando-tables": "/images/afc/oando-tables--convene/image-1.webp",
-  "oando-storage": "/images/afc/oando-storage--metal-locker/image-1.webp",
-  "oando-soft-seating": "/images/afc/oando-soft-seating--cocoon/image-1.webp",
-  "oando-seating": "/images/afc/oando-seating--fluid-x/image-1.webp",
-  "oando-educational": "/images/afc/oando-educational--academia/image-1.webp",
-  "oando-collaborative": "/images/products/imported/cocoon/image-1.webp",
-};
-
 export async function CategoryGrid() {
   const oandoCatalog = await getCachedCatalog();
 
@@ -45,10 +35,13 @@ export async function CategoryGrid() {
               category.id === "oando-seating"
                 ? "/products/oando-chairs"
                 : `/products/${category.id}`;
+            const firstProductWithImage = allProducts.find(
+              (p) => (p.images && p.images.length > 0) || p.flagshipImage,
+            );
             const flagshipImage =
-              CATEGORY_THUMBNAILS[category.id] ||
-              allProducts[0]?.flagshipImage ||
-              "/images/products/60x30-workstation-1.webp";
+              firstProductWithImage?.images?.[0] ||
+              firstProductWithImage?.flagshipImage ||
+              "/images/hero/hero-1.webp";
 
             return (
               <Link

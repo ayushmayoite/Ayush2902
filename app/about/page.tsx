@@ -12,16 +12,25 @@ interface Founder {
   image: string;
 }
 
+function normalizeFounderImage(founder: Founder): string {
+  const image = founder.image || "";
+  const lowered = image.toLowerCase();
+  if (lowered.includes("ayush")) return "/images/team/ayush.webp";
+  if (lowered.includes("arvind")) return "/images/team/arvind.webp";
+  if (image.startsWith("/")) return image;
+  return "/images/brand/logo.webp";
+}
+
 const HARDCODED_FOUNDERS: Founder[] = [
   {
     name: "Ayush Kumar",
     bio: "MBA from SMU-Singapore, 10+ years entrepreneur at One and Only, specializing in innovation and B2B negotiations, with consulting at PwC and EY.",
-    image: "/images/ayush.jpg",
+    image: "/images/team/ayush.webp",
   },
   {
     name: "Arvind Kumar",
     bio: "Managing Director with 20+ years governance, co-founder since 2011.",
-    image: "/images/arvind.jpg",
+    image: "/images/team/arvind.webp",
   },
 ];
 
@@ -53,7 +62,10 @@ export default async function CompanyPage() {
   try {
     const { data, error } = await supabase.from("founders").select("*");
     if (!error && data && data.length > 0) {
-      founders = data as Founder[];
+      founders = (data as Founder[]).map((founder) => ({
+        ...founder,
+        image: normalizeFounderImage(founder),
+      }));
     }
   } catch {
     // use fallback silently
@@ -66,7 +78,7 @@ export default async function CompanyPage() {
         title="Company Profile"
         subtitle="An Indian family business shaping the future of workspaces."
         showButton={false}
-        backgroundImage="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&q=80&w=2000"
+        backgroundImage="/images/hero/hero-1.webp"
       />
 
       <section className="container px-6 2xl:px-0 py-24">
@@ -88,7 +100,7 @@ export default async function CompanyPage() {
           </div>
           <div className="relative aspect-video rounded-2xl overflow-hidden shadow-2xl">
             <Image
-              src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=1000"
+              src="/images/hero/hero-2.webp"
               alt="One and Only Furniture workspace"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"

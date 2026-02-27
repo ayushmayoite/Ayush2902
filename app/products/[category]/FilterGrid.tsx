@@ -128,6 +128,10 @@ function shouldExcludeByCategory(categoryId: string, product: FlatProduct): bool
   return blocked.some((kw) => containsKeywordToken(haystack, kw));
 }
 
+function normalizeOptionValue(value?: string | null): string {
+  return (value || "").trim().replace(/\s+/g, " ").toLowerCase();
+}
+
 // ─── Accordion Section ───────────────────────────────────────────────────────
 
 function AccordionSection({
@@ -456,10 +460,10 @@ function AdvancedFilterGridInner({
 
   // Build filter option lists from available products
   const options = useMemo(() => {
-    const series = new Set<string>();
-    const sub = new Set<string>();
-    const useCase = new Set<string>();
-    const material = new Set<string>();
+    const series = new Map<string, string>();
+    const sub = new Map<string, string>();
+    const useCase = new Map<string, string>();
+    const material = new Map<string, string>();
     const priceRange = new Set<string>();
     let headrestCount = 0;
     let heightAdjustableCount = 0;
@@ -469,10 +473,23 @@ function AdvancedFilterGridInner({
     let maxEcoScore = Number.NEGATIVE_INFINITY;
 
     allProducts.forEach((p) => {
-      if (p.seriesName?.trim()) series.add(p.seriesName.trim());
-      if (p.metadata?.subcategory) sub.add(p.metadata.subcategory);
-      p.metadata?.useCase?.forEach((u) => useCase.add(u));
-      p.metadata?.material?.forEach((m) => material.add(m));
+      const seriesName = p.seriesName?.trim();
+      if (seriesName) {
+        const key = normalizeOptionValue(seriesName);
+        if (key && !series.has(key)) series.set(key, seriesName);
+      }
+      if (p.metadata?.subcategory) {
+        const key = normalizeOptionValue(p.metadata.subcategory);
+        if (key && !sub.has(key)) sub.set(key, p.metadata.subcategory.trim());
+      }
+      p.metadata?.useCase?.forEach((u) => {
+        const key = normalizeOptionValue(u);
+        if (key && !useCase.has(key)) useCase.set(key, u.trim());
+      });
+      p.metadata?.material?.forEach((m) => {
+        const key = normalizeOptionValue(m);
+        if (key && !material.has(key)) material.set(key, m.trim());
+      });
       if (p.metadata?.priceRange) priceRange.add(p.metadata.priceRange);
       if (p.metadata?.hasHeadrest) headrestCount++;
       if (p.metadata?.isHeightAdjustable) heightAdjustableCount++;
@@ -485,10 +502,10 @@ function AdvancedFilterGridInner({
     const total = allProducts.length;
 
     return {
-      series: [...series].sort(),
-      subcategory: [...sub].sort(),
-      useCase: [...useCase].sort(),
-      material: [...material].sort(),
+      series: [...series.values()].sort(),
+      subcategory: [...sub.values()].sort(),
+      useCase: [...useCase.values()].sort(),
+      material: [...material.values()].sort(),
       priceRange: PRICE_RANGES.filter((range) => priceRange.has(range)),
       featureAvailability: {
         hasHeadrest: headrestCount > 0 && headrestCount < total,
@@ -556,7 +573,11 @@ function AdvancedFilterGridInner({
 
     // Series
     if (filters.series !== "all" && options.series.length > 1) {
-      list = list.filter((p) => p.seriesName === filters.series);
+      list = list.filter(
+        (p) =>
+          normalizeOptionValue(p.seriesName) ===
+          normalizeOptionValue(filters.series),
+      );
     }
 
     // Fuzzy search via fuse.js
@@ -571,14 +592,22 @@ function AdvancedFilterGridInner({
       list = list.filter(
         (p) =>
           p.metadata?.subcategory &&
-          filters.subcategory.includes(p.metadata.subcategory),
+          filters.subcategory.some(
+            (value) =>
+              normalizeOptionValue(value) ===
+              normalizeOptionValue(p.metadata?.subcategory),
+          ),
       );
     }
 
     // Use case
     if (filters.useCase.length && options.useCase.length > 1) {
       list = list.filter((p) =>
-        p.metadata?.useCase?.some((u) => filters.useCase.includes(u)),
+        p.metadata?.useCase?.some((u) =>
+          filters.useCase.some(
+            (value) => normalizeOptionValue(value) === normalizeOptionValue(u),
+          ),
+        ),
       );
     }
 
@@ -594,7 +623,11 @@ function AdvancedFilterGridInner({
     // Material
     if (filters.material.length && options.material.length > 1) {
       list = list.filter((p) =>
-        p.metadata?.material?.some((m) => filters.material.includes(m)),
+        p.metadata?.material?.some((m) =>
+          filters.material.some(
+            (value) => normalizeOptionValue(value) === normalizeOptionValue(m),
+          ),
+        ),
       );
     }
 
@@ -635,7 +668,7 @@ function AdvancedFilterGridInner({
     }
 
     return list;
-  }, [allProducts, filters, aiRankedIds, options]);
+  }, [allProducts, filters, aiRankedIds, options, fuse]);
 
   // Update URL on filter change
   const updateFilters = useCallback(

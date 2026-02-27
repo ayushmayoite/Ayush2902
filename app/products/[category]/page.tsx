@@ -35,18 +35,6 @@ export async function generateMetadata({
   };
 }
 
-// Hardcoded hero images per category — never rely on product images for hero
-const CATEGORY_HEROES: Record<string, string> = {
-  "oando-workstations": "/images/products/imported/cabin/image-1.webp",
-  "oando-tables": "/images/products/imported/meeting-table/image-33.webp",
-  "oando-storage": "/images/products/imported/storage/image-14.webp",
-  chairs: "/images/hero/chairs.webp",
-  "other-seating": "/images/hero/other-seating.webp",
-  "oando-soft-seating": "/images/products/imported/cocoon/image-1.webp",
-  "oando-educational": "/images/products/imported/adam/image-1.webp",
-  "oando-collaborative": "/images/products/imported/pod/image-2.webp",
-};
-
 export async function generateStaticParams() {
   const { data, error } = await supabase.from("categories").select("id");
   if (error || !data) {
@@ -119,9 +107,13 @@ export default async function CategoryPage({
         }
       : category;
 
+  const firstProductWithImage = normalizedCategory.series
+    .flatMap((series) => series.products)
+    .find((product) => product.images?.[0] || product.flagshipImage);
   const heroImage =
-    CATEGORY_HEROES[categoryId] ||
-    "/images/products/imported/cabin/image-1.webp";
+    firstProductWithImage?.images?.[0] ||
+    firstProductWithImage?.flagshipImage ||
+    "/images/hero/hero-1.webp";
 
   return (
     <main className="flex min-h-screen flex-col items-center bg-white">
@@ -138,3 +130,4 @@ export default async function CategoryPage({
     </main>
   );
 }
+

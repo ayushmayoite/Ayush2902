@@ -11,7 +11,7 @@ export default function DownloadsPage() {
                 title="Service & Info."
                 subtitle="All information about our products, brochures, pCon data and certificates."
                 showButton={false}
-                backgroundImage="https://images.unsplash.com/photo-1497215842964-2229243e8a01?auto=format&fit=crop&q=80&w=2000"
+                backgroundImage="/images/hero/hero-3.webp"
             />
             <section className="container px-6 2xl:px-0 py-24">
                 <div className="max-w-4xl space-y-8 mb-20">
