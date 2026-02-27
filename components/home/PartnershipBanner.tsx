@@ -9,7 +9,7 @@ export function PartnershipBanner() {
           {/* Partner Logo Side */}
           <div className="shrink-0">
             <div className="flex items-center gap-1">
-              <span className="text-6xl font-black text-[#E31A22] tracking-tighter italic">
+              <span className="text-6xl font-black text-primary tracking-tighter italic">
                 oando
               </span>
             </div>

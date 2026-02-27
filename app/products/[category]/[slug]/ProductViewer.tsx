@@ -124,7 +124,7 @@ export function ProductViewer({
 
       <div className="flex flex-col lg:flex-row min-h-[calc(100vh-112px)]">
         {/* ── LEFT: IMAGE GALLERY ── */}
-        <div className="w-full lg:w-[58%] xl:w-[62%] flex flex-col pt-0 lg:pt-8 bg-[#f5f5f5]">
+        <div className="w-full lg:w-[58%] xl:w-[62%] flex flex-col pt-0 lg:pt-8 bg-neutral-100">
           <div className="flex-1 w-full max-w-[800px] mx-auto p-4 lg:p-8">
             <ProductGallery
               images={uniqueImages}

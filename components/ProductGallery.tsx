@@ -52,7 +52,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
             key={idx}
             onClick={() => setSelectedIndex(idx)}
             className={clsx(
-              "shrink-0 w-16 h-16 md:w-20 md:h-20 bg-[#f5f5f5] rounded-sm overflow-hidden border-2 transition-all relative outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2",
+              "shrink-0 w-16 h-16 md:w-20 md:h-20 bg-neutral-100 rounded-sm overflow-hidden border-2 transition-all relative outline-none focus-visible:ring-2 focus-visible:ring-neutral-900 focus-visible:ring-offset-2",
               safeIndex === idx
                 ? "border-neutral-900 opacity-100"
                 : "border-transparent opacity-60 hover:opacity-100 hover:border-neutral-300",
@@ -72,7 +72,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
       </div>
 
       {/* Main image */}
-      <div className="order-1 md:order-2 relative bg-[#f5f5f5] w-full min-h-[50vw] md:min-h-[500px] lg:min-h-0 flex-1 flex items-center justify-center p-4">
+      <div className="order-1 md:order-2 relative bg-neutral-100 w-full min-h-[50vw] md:min-h-[500px] lg:min-h-0 flex-1 flex items-center justify-center p-4">
         <Image
           src={currentImage}
           alt={productName}
