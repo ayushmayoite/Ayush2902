@@ -16,15 +16,14 @@ interface MenuItem {
 
 const discoverMenuCards = [
   {
-    title: "Seating",
-    description:
-      "Ergonomic office chairs and task seating for every workspace.",
+    title: "Chairs",
+    description: "Ergonomic office chairs and task chairs for every workspace.",
     image: "/images/products/imported/fluid/image-1.webp",
-    href: "/products/oando-seating",
+    href: "/products/oando-chairs",
   },
   {
-    title: "Workstations",
-    description: "Modular workstation solutions for modern offices.",
+    title: "Desks & Workstations",
+    description: "Desking systems and modular workstation solutions.",
     image: "/images/products/imported/cabin/image-1.webp",
     href: "/products/oando-workstations",
   },
@@ -55,7 +54,13 @@ export function Header() {
         if (!Array.isArray(cats)) return;
         setDiscoverMenuItems(
           cats
-            .map((c) => ({ label: c.name, href: `/products/${c.id}` }))
+            .map((c) => ({
+              label: c.id === "oando-seating" ? "Chairs" : c.name,
+              href:
+                c.id === "oando-seating"
+                  ? "/products/oando-chairs"
+                  : `/products/${c.id}`,
+            }))
             .concat([{ label: "All Products", href: "/products" }]),
         );
       })

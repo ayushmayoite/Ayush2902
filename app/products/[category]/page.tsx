@@ -19,8 +19,13 @@ export async function generateMetadata({
   const catalog = await getCatalog();
   const category = catalog.find((c: CompatCategory) => c.id === categoryId);
   if (!category) return {};
-  const title = `${category.name} | One and Only Furniture`;
-  const description = `${category.description} Browse our full range of ${category.name.toLowerCase()} in Patna, Bihar.`;
+  const displayName = categoryId === "oando-seating" ? "Chairs" : category.name;
+  const displayDescription =
+    categoryId === "oando-seating"
+      ? "Professional furniture systems for chairs"
+      : category.description;
+  const title = `${displayName} | One and Only Furniture`;
+  const description = `${displayDescription} Browse our full range of ${displayName.toLowerCase()} in Patna, Bihar.`;
   const url = `${BASE_URL}/products/${categoryId}`;
   return {
     title,
@@ -105,6 +110,14 @@ export default async function CategoryPage({
   if (!category) {
     notFound();
   }
+  const normalizedCategory: CompatCategory =
+    categoryId === "oando-seating"
+      ? {
+          ...category,
+          name: "Chairs",
+          description: "Professional furniture systems for chairs",
+        }
+      : category;
 
   const heroImage =
     CATEGORY_HEROES[categoryId] ||
@@ -114,13 +127,13 @@ export default async function CategoryPage({
     <main className="flex min-h-screen flex-col items-center bg-white">
       <Hero
         variant="small"
-        title={category.name}
-        subtitle={category.description}
+        title={normalizedCategory.name}
+        subtitle={normalizedCategory.description}
         showButton={false}
         backgroundImage={heroImage}
       />
       <Suspense fallback={<GridSkeleton />}>
-        <FilterGrid category={category} categoryId={categoryId} />
+        <FilterGrid category={normalizedCategory} categoryId={categoryId} />
       </Suspense>
     </main>
   );

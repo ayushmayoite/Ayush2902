@@ -208,15 +208,17 @@ function CheckList({
 
 const PRICE_RANGES = ["budget", "mid", "premium", "luxury"];
 function PriceButtons({
+  options,
   selected,
   onToggle,
 }: {
+  options: string[];
   selected: string[];
   onToggle: (v: string) => void;
 }) {
   return (
     <div className="flex flex-wrap gap-2">
-      {PRICE_RANGES.map((p) => (
+      {options.map((p) => (
         <button
           key={p}
           onClick={() => onToggle(p)}
@@ -454,20 +456,52 @@ function AdvancedFilterGridInner({
 
   // Build filter option lists from available products
   const options = useMemo(() => {
+    const series = new Set<string>();
     const sub = new Set<string>();
     const useCase = new Set<string>();
     const material = new Set<string>();
+    const priceRange = new Set<string>();
+    let headrestCount = 0;
+    let heightAdjustableCount = 0;
+    let bifmaCount = 0;
+    let stackableCount = 0;
+    let minEcoScore = Number.POSITIVE_INFINITY;
+    let maxEcoScore = Number.NEGATIVE_INFINITY;
 
     allProducts.forEach((p) => {
+      if (p.seriesName?.trim()) series.add(p.seriesName.trim());
       if (p.metadata?.subcategory) sub.add(p.metadata.subcategory);
       p.metadata?.useCase?.forEach((u) => useCase.add(u));
       p.metadata?.material?.forEach((m) => material.add(m));
+      if (p.metadata?.priceRange) priceRange.add(p.metadata.priceRange);
+      if (p.metadata?.hasHeadrest) headrestCount++;
+      if (p.metadata?.isHeightAdjustable) heightAdjustableCount++;
+      if (p.metadata?.bifmaCertified) bifmaCount++;
+      if (p.metadata?.isStackable) stackableCount++;
+      const score = p.metadata?.sustainabilityScore ?? 0;
+      minEcoScore = Math.min(minEcoScore, score);
+      maxEcoScore = Math.max(maxEcoScore, score);
     });
+    const total = allProducts.length;
 
     return {
+      series: [...series].sort(),
       subcategory: [...sub].sort(),
       useCase: [...useCase].sort(),
       material: [...material].sort(),
+      priceRange: PRICE_RANGES.filter((range) => priceRange.has(range)),
+      featureAvailability: {
+        hasHeadrest: headrestCount > 0 && headrestCount < total,
+        isHeightAdjustable:
+          heightAdjustableCount > 0 && heightAdjustableCount < total,
+        bifmaCertified: bifmaCount > 0 && bifmaCount < total,
+        isStackable: stackableCount > 0 && stackableCount < total,
+      },
+      hasSustainability:
+        total > 1 &&
+        Number.isFinite(minEcoScore) &&
+        Number.isFinite(maxEcoScore) &&
+        maxEcoScore > minEcoScore,
     };
   }, [allProducts]);
 
@@ -521,8 +555,8 @@ function AdvancedFilterGridInner({
     let list = [...allProducts];
 
     // Series
-    if (filters.series !== "all") {
-      list = list.filter((p) => p.seriesId === filters.series);
+    if (filters.series !== "all" && options.series.length > 1) {
+      list = list.filter((p) => p.seriesName === filters.series);
     }
 
     // Fuzzy search via fuse.js
@@ -533,7 +567,7 @@ function AdvancedFilterGridInner({
     }
 
     // Subcategory
-    if (filters.subcategory.length) {
+    if (filters.subcategory.length && options.subcategory.length > 1) {
       list = list.filter(
         (p) =>
           p.metadata?.subcategory &&
@@ -542,14 +576,14 @@ function AdvancedFilterGridInner({
     }
 
     // Use case
-    if (filters.useCase.length) {
+    if (filters.useCase.length && options.useCase.length > 1) {
       list = list.filter((p) =>
         p.metadata?.useCase?.some((u) => filters.useCase.includes(u)),
       );
     }
 
     // Price range
-    if (filters.priceRange.length) {
+    if (filters.priceRange.length && options.priceRange.length > 1) {
       list = list.filter(
         (p) =>
           p.metadata?.priceRange &&
@@ -558,28 +592,31 @@ function AdvancedFilterGridInner({
     }
 
     // Material
-    if (filters.material.length) {
+    if (filters.material.length && options.material.length > 1) {
       list = list.filter((p) =>
         p.metadata?.material?.some((m) => filters.material.includes(m)),
       );
     }
 
     // Feature toggles
-    if (filters.hasHeadrest) {
+    if (filters.hasHeadrest && options.featureAvailability.hasHeadrest) {
       list = list.filter((p) => p.metadata?.hasHeadrest);
     }
-    if (filters.isHeightAdjustable) {
+    if (
+      filters.isHeightAdjustable &&
+      options.featureAvailability.isHeightAdjustable
+    ) {
       list = list.filter((p) => p.metadata?.isHeightAdjustable);
     }
-    if (filters.bifmaCertified) {
+    if (filters.bifmaCertified && options.featureAvailability.bifmaCertified) {
       list = list.filter((p) => p.metadata?.bifmaCertified);
     }
-    if (filters.isStackable) {
+    if (filters.isStackable && options.featureAvailability.isStackable) {
       list = list.filter((p) => p.metadata?.isStackable);
     }
 
     // Eco Score
-    if (filters.minEcoScore > 0) {
+    if (filters.minEcoScore > 0 && options.hasSustainability) {
       list = list.filter(
         (p) => (p.metadata?.sustainabilityScore || 0) >= filters.minEcoScore,
       );
@@ -598,7 +635,7 @@ function AdvancedFilterGridInner({
     }
 
     return list;
-  }, [allProducts, filters, aiRankedIds]);
+  }, [allProducts, filters, aiRankedIds, options]);
 
   // Update URL on filter change
   const updateFilters = useCallback(
@@ -680,42 +717,44 @@ function AdvancedFilterGridInner({
       </div>
 
       {/* Series */}
-      <AccordionSection
-        title="Series"
-        count={filters.series !== "all" ? 1 : 0}
-        defaultOpen
-      >
-        <div className="space-y-1.5">
-          <button
-            onClick={() => updateFilters({ series: "all" })}
-            className={clsx(
-              "w-full text-left text-sm py-1.5 px-2 rounded-sm transition-colors",
-              filters.series === "all"
-                ? "bg-neutral-900 text-white font-semibold"
-                : "text-neutral-600 hover:bg-neutral-50",
-            )}
-          >
-            All Series
-          </button>
-          {category.series.map((s) => (
+      {options.series.length > 1 && (
+        <AccordionSection
+          title="Series"
+          count={filters.series !== "all" ? 1 : 0}
+          defaultOpen
+        >
+          <div className="space-y-1.5">
             <button
-              key={s.id}
-              onClick={() => updateFilters({ series: s.id })}
+              onClick={() => updateFilters({ series: "all" })}
               className={clsx(
                 "w-full text-left text-sm py-1.5 px-2 rounded-sm transition-colors",
-                filters.series === s.id
+                filters.series === "all"
                   ? "bg-neutral-900 text-white font-semibold"
                   : "text-neutral-600 hover:bg-neutral-50",
               )}
             >
-              {s.name}
+              All Series
             </button>
-          ))}
-        </div>
-      </AccordionSection>
+            {options.series.map((seriesName) => (
+              <button
+                key={seriesName}
+                onClick={() => updateFilters({ series: seriesName })}
+                className={clsx(
+                  "w-full text-left text-sm py-1.5 px-2 rounded-sm transition-colors",
+                  filters.series === seriesName
+                    ? "bg-neutral-900 text-white font-semibold"
+                    : "text-neutral-600 hover:bg-neutral-50",
+                )}
+              >
+                {seriesName}
+              </button>
+            ))}
+          </div>
+        </AccordionSection>
+      )}
 
       {/* Subcategory */}
-      {options.subcategory.length > 0 && (
+      {options.subcategory.length > 1 && (
         <AccordionSection
           title="Type"
           count={filters.subcategory.length}
@@ -730,7 +769,7 @@ function AdvancedFilterGridInner({
       )}
 
       {/* Use Case */}
-      {options.useCase.length > 0 && (
+      {options.useCase.length > 1 && (
         <AccordionSection
           title="Use Case"
           count={filters.useCase.length}
@@ -745,19 +784,22 @@ function AdvancedFilterGridInner({
       )}
 
       {/* Price Range */}
-      <AccordionSection
-        title="Price Range"
-        count={filters.priceRange.length}
-        defaultOpen={filters.priceRange.length > 0}
-      >
-        <PriceButtons
-          selected={filters.priceRange}
-          onToggle={(v) => toggleArray("priceRange", v)}
-        />
-      </AccordionSection>
+      {options.priceRange.length > 1 && (
+        <AccordionSection
+          title="Price Range"
+          count={filters.priceRange.length}
+          defaultOpen={filters.priceRange.length > 0}
+        >
+          <PriceButtons
+            options={options.priceRange}
+            selected={filters.priceRange}
+            onToggle={(v) => toggleArray("priceRange", v)}
+          />
+        </AccordionSection>
+      )}
 
       {/* Material */}
-      {options.material.length > 0 && (
+      {options.material.length > 1 && (
         <AccordionSection
           title="Material"
           count={filters.material.length}
@@ -772,65 +814,80 @@ function AdvancedFilterGridInner({
       )}
 
       {/* Feature Toggles */}
-      <AccordionSection
-        title="Features"
-        count={
-          (filters.hasHeadrest ? 1 : 0) +
-          (filters.isHeightAdjustable ? 1 : 0) +
-          (filters.bifmaCertified ? 1 : 0) +
-          (filters.isStackable ? 1 : 0)
-        }
-      >
-        <div className="space-y-1">
-          <Toggle
-            label="With Headrest"
-            checked={filters.hasHeadrest}
-            onChange={(v) => updateFilters({ hasHeadrest: v })}
-          />
-          <Toggle
-            label="Height Adjustable"
-            checked={filters.isHeightAdjustable}
-            onChange={(v) => updateFilters({ isHeightAdjustable: v })}
-          />
-          <Toggle
-            label="BIFMA Certified"
-            checked={filters.bifmaCertified}
-            onChange={(v) => updateFilters({ bifmaCertified: v })}
-          />
-          <Toggle
-            label="Stackable"
-            checked={filters.isStackable}
-            onChange={(v) => updateFilters({ isStackable: v })}
-          />
-        </div>
-      </AccordionSection>
+      {(options.featureAvailability.hasHeadrest ||
+        options.featureAvailability.isHeightAdjustable ||
+        options.featureAvailability.bifmaCertified ||
+        options.featureAvailability.isStackable) && (
+        <AccordionSection
+          title="Features"
+          count={
+            (filters.hasHeadrest ? 1 : 0) +
+            (filters.isHeightAdjustable ? 1 : 0) +
+            (filters.bifmaCertified ? 1 : 0) +
+            (filters.isStackable ? 1 : 0)
+          }
+        >
+          <div className="space-y-1">
+            {options.featureAvailability.hasHeadrest && (
+              <Toggle
+                label="With Headrest"
+                checked={filters.hasHeadrest}
+                onChange={(v) => updateFilters({ hasHeadrest: v })}
+              />
+            )}
+            {options.featureAvailability.isHeightAdjustable && (
+              <Toggle
+                label="Height Adjustable"
+                checked={filters.isHeightAdjustable}
+                onChange={(v) => updateFilters({ isHeightAdjustable: v })}
+              />
+            )}
+            {options.featureAvailability.bifmaCertified && (
+              <Toggle
+                label="BIFMA Certified"
+                checked={filters.bifmaCertified}
+                onChange={(v) => updateFilters({ bifmaCertified: v })}
+              />
+            )}
+            {options.featureAvailability.isStackable && (
+              <Toggle
+                label="Stackable"
+                checked={filters.isStackable}
+                onChange={(v) => updateFilters({ isStackable: v })}
+              />
+            )}
+          </div>
+        </AccordionSection>
+      )}
 
       {/* Eco Score Slider */}
-      <AccordionSection
-        title="Sustainability"
-        count={filters.minEcoScore > 0 ? 1 : 0}
-      >
-        <div className="space-y-3 pt-1">
-          <label
-            htmlFor="eco-score-range"
-            className="text-sm text-neutral-600 block"
-          >
-            Min Eco-Score: {filters.minEcoScore}
-          </label>
-          <input
-            id="eco-score-range"
-            type="range"
-            min="0"
-            max="10"
-            step="1"
-            value={filters.minEcoScore}
-            onChange={(e) =>
-              updateFilters({ minEcoScore: parseInt(e.target.value, 10) })
-            }
-            className="w-full accent-neutral-900"
-          />
-        </div>
-      </AccordionSection>
+      {options.hasSustainability && (
+        <AccordionSection
+          title="Sustainability"
+          count={filters.minEcoScore > 0 ? 1 : 0}
+        >
+          <div className="space-y-3 pt-1">
+            <label
+              htmlFor="eco-score-range"
+              className="text-sm text-neutral-600 block"
+            >
+              Min Eco-Score: {filters.minEcoScore}
+            </label>
+            <input
+              id="eco-score-range"
+              type="range"
+              min="0"
+              max="10"
+              step="1"
+              value={filters.minEcoScore}
+              onChange={(e) =>
+                updateFilters({ minEcoScore: parseInt(e.target.value, 10) })
+              }
+              className="w-full accent-neutral-900"
+            />
+          </div>
+        </AccordionSection>
+      )}
     </div>
   );
 

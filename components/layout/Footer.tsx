@@ -9,7 +9,7 @@ const NAV = [
     heading: "Products",
     links: [
       { href: "/products", label: "All Products" },
-      { href: "/products/oando-seating", label: "Seating" },
+      { href: "/products/oando-chairs", label: "Chairs" },
       { href: "/products/oando-workstations", label: "Workstations" },
       { href: "/products/oando-tables", label: "Tables" },
       { href: "/products/oando-storage", label: "Storage" },

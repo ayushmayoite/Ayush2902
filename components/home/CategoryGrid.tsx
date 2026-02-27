@@ -39,6 +39,12 @@ export async function CategoryGrid() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-100">
           {oandoCatalog.map((category) => {
             const allProducts = category.series.flatMap((s) => s.products);
+            const categoryName =
+              category.id === "oando-seating" ? "Chairs" : category.name;
+            const categoryHref =
+              category.id === "oando-seating"
+                ? "/products/oando-chairs"
+                : `/products/${category.id}`;
             const flagshipImage =
               CATEGORY_THUMBNAILS[category.id] ||
               allProducts[0]?.flagshipImage ||
@@ -47,12 +53,12 @@ export async function CategoryGrid() {
             return (
               <Link
                 key={category.id}
-                href={`/products/${category.id}`}
+                href={categoryHref}
                 className="group relative bg-white block overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
                 {/* Uniform square image */}
                 <div className="relative aspect-square overflow-hidden bg-neutral-50">
-                  <CategoryImage src={flagshipImage} alt={category.name} />
+                  <CategoryImage src={flagshipImage} alt={categoryName} />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/8 transition-colors duration-500" />
                 </div>
 
@@ -60,7 +66,7 @@ export async function CategoryGrid() {
                 <div className="px-5 py-5 border-t border-neutral-100 flex items-center justify-between gap-4">
                   <div>
                     <h3 className="text-body font-medium text-neutral-900 group-hover:text-primary transition-colors duration-200">
-                      {category.name}
+                      {categoryName}
                     </h3>
                     <p className="text-label text-neutral-400 mt-0.5">
                       {allProducts.length} products

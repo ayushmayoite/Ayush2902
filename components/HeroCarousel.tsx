@@ -23,7 +23,7 @@ const slides = [
     src: "https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?q=80&w=2670&auto=format&fit=crop",
     headline: "Inspire Every\nConversation",
     sub: "Conference and meeting solutions that command attention.",
-    cta: { label: "Explore Seating", href: "/products/oando-seating" },
+    cta: { label: "Explore Chairs", href: "/products/oando-chairs" },
   },
   {
     src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2670&auto=format&fit=crop",

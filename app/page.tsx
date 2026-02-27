@@ -35,7 +35,7 @@ export default async function Home() {
           title="Space for collaboration."
           description="The office is the central home base for personal exchanges and meetings with colleagues. With our modular furniture systems, versatile communication spaces can be created to foster innovation."
           buttonText="Explore Workspace Solutions"
-          buttonLink="/products/oando-seating"
+          buttonLink="/products/oando-chairs"
           posterSrc="/images/afc/oando-workstations--deskpro/image-1.webp"
           lightMode={true}
         />

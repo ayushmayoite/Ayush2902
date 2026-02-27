@@ -27,7 +27,7 @@ const MAIN_LINKS = [
 
 const PRODUCT_CATEGORIES = [
   { label: "Workstations", href: "/products/oando-workstations" },
-  { label: "Seating", href: "/products/oando-seating" },
+  { label: "Chairs", href: "/products/oando-chairs" },
   { label: "Tables", href: "/products/oando-tables" },
   { label: "Storage", href: "/products/oando-storage" },
   { label: "Soft Seating", href: "/products/oando-soft-seating" },
