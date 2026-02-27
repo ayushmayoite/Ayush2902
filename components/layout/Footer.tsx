@@ -31,7 +31,7 @@ const NAV = [
 
 export function Footer() {
   return (
-    <footer className="w-full bg-neutral-900 text-neutral-400 font-sans">
+    <footer className="footer w-full bg-neutral-900 text-neutral-400 font-sans">
       {/* Main grid */}
       <div className="container px-6 2xl:px-0 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">

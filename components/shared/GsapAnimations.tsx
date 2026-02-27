@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-// Register the plugin
+// Register plugins once
 if (typeof window !== "undefined") {
-  gsap.registerPlugin(useGSAP);
+  gsap.registerPlugin(useGSAP, ScrollTrigger);
 }
 
 export function GsapAnimations() {
@@ -21,10 +22,8 @@ export function GsapAnimations() {
     // Reset loaded state on route change
     setImagesLoaded(false);
 
-    // Initial pre-hide to prevent FOUC / flash before images load
-    gsap.set(".hero-section, .product-card, .our-work, .footer", {
-      opacity: 0,
-    });
+    // Pre-hide to prevent FOUC before images load
+    gsap.set(".hero-section, .section, .footer", { opacity: 0 });
 
     const checkImages = () => {
       const images = Array.from(document.images);
@@ -49,7 +48,6 @@ export function GsapAnimations() {
         };
 
         incomplete.forEach((img) => {
-          // If it load fails, we don't want to hang forever
           img.addEventListener("load", onLoad, { once: true });
           img.addEventListener("error", onLoad, { once: true });
           listenerCleanup.push(() => {
@@ -60,7 +58,7 @@ export function GsapAnimations() {
       }
     };
 
-    // Small delay to ensure the DOM for this route is fully parsed into document.images
+    // Small delay to ensure DOM for this route is fully parsed into document.images
     const timer = setTimeout(checkImages, 50);
     return () => {
       isActive = false;
@@ -72,41 +70,58 @@ export function GsapAnimations() {
   useGSAP(() => {
     if (!imagesLoaded) return;
 
-    // Use fromTo because we set opacity: 0 initially to prevent flash
     const ctx = gsap.context(() => {
-      // Keep duration/stagger identical to user request
+      // Hero — above-fold fade in on load (no scroll trigger needed)
       gsap.fromTo(
         ".hero-section",
         { opacity: 0, y: -30 },
-        { opacity: 1, y: 0, duration: 0.6, clearProps: "all" },
+        { opacity: 1, y: 0, duration: 0.6, force3D: true, clearProps: "all" },
       );
 
-      gsap.fromTo(
-        ".product-card",
-        { opacity: 0, y: 50 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.1, clearProps: "all" },
-      );
+      // Sections — scroll-triggered slide up reveals
+      // gsap.from('.section', {opacity: 0, y: 50, duration: 0.5, stagger: 0.2})
+      gsap.utils.toArray<HTMLElement>(".section").forEach((el) => {
+        gsap.fromTo(
+          el,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.5,
+            ease: "power2.out",
+            force3D: true,
+            clearProps: "all",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 88%",
+              toggleActions: "play none none none",
+            },
+          },
+        );
+      });
 
-      gsap.fromTo(
-        ".our-work",
-        { opacity: 0, scale: 0.95 },
-        {
-          opacity: 1,
-          scale: 1,
-          duration: 0.4,
-          stagger: 0.3,
-          clearProps: "all",
-        },
-      );
-
+      // Footer — scroll-triggered fade in
       gsap.fromTo(
         ".footer",
         { opacity: 0 },
-        { opacity: 1, duration: 0.3, clearProps: "all" },
+        {
+          opacity: 1,
+          duration: 0.3,
+          force3D: true,
+          clearProps: "all",
+          scrollTrigger: {
+            trigger: ".footer",
+            start: "top 95%",
+            toggleActions: "play none none none",
+          },
+        },
       );
     });
 
-    return () => ctx.revert();
+    return () => {
+      ctx.revert();
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
   }, [imagesLoaded, pathname]);
 
   return null;

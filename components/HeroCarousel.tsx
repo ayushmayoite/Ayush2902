@@ -51,7 +51,7 @@ export function HeroCarousel() {
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
 
   return (
-    <div className="relative w-full h-dvh min-h-[560px] overflow-hidden">
+    <div className="hero-section relative w-full h-dvh min-h-[560px] overflow-hidden">
       {/* Carousel viewport */}
       <div ref={emblaRef} className="overflow-hidden h-full">
         <div className="flex h-full">
