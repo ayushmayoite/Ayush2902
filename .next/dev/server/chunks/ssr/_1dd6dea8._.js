@@ -318,6 +318,7 @@ __turbopack_context__.s([
     ()=>FilterGrid
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/ssr/react-jsx-dev-runtime.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$fuse$2e$js$2f$dist$2f$fuse$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/fuse.js/dist/fuse.mjs [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$image$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/image.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
@@ -337,6 +338,15 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist
 ;
 ;
 ;
+;
+const CATEGORY_EXCLUSION_KEYWORDS = {
+    "oando-workstations": [
+        "chair",
+        "seating",
+        "sofa",
+        "table"
+    ]
+};
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 function buildUrl(pathname, filters) {
     const params = new URLSearchParams();
@@ -385,6 +395,23 @@ function countActive(f) {
     if (f.minEcoScore > 0) n++;
     return n;
 }
+function containsKeywordToken(value, keyword) {
+    const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`, "i");
+    return re.test(value.toLowerCase());
+}
+function shouldExcludeByCategory(categoryId, product) {
+    const blocked = CATEGORY_EXCLUSION_KEYWORDS[categoryId] || [];
+    if (blocked.length === 0) return false;
+    const haystack = [
+        product.name || "",
+        product.slug || "",
+        product.description || "",
+        product.metadata?.subcategory || "",
+        product.metadata?.category || ""
+    ].join(" ");
+    return blocked.some((kw)=>containsKeywordToken(haystack, kw));
+}
 // ─── Accordion Section ───────────────────────────────────────────────────────
 function AccordionSection({ title, count, children, defaultOpen = false }) {
     const [open, setOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(defaultOpen);
@@ -405,32 +432,32 @@ function AccordionSection({ title, count, children, defaultOpen = false }) {
                                 children: count
                             }, void 0, false, {
                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                lineNumber: 122,
+                                lineNumber: 155,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 119,
+                        lineNumber: 152,
                         columnNumber: 9
                     }, this),
                     open ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$up$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronUp$3e$__["ChevronUp"], {
                         className: "w-3.5 h-3.5 text-neutral-400"
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 128,
+                        lineNumber: 161,
                         columnNumber: 11
                     }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$chevron$2d$down$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__ChevronDown$3e$__["ChevronDown"], {
                         className: "w-3.5 h-3.5 text-neutral-400"
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 130,
+                        lineNumber: 163,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 114,
+                lineNumber: 147,
                 columnNumber: 7
             }, this),
             open && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -438,13 +465,13 @@ function AccordionSection({ title, count, children, defaultOpen = false }) {
                 children: children
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 133,
+                lineNumber: 166,
                 columnNumber: 16
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-        lineNumber: 113,
+        lineNumber: 146,
         columnNumber: 5
     }, this);
 }
@@ -455,7 +482,7 @@ function CheckList({ options, selected, onToggle }) {
         children: "No options available"
     }, void 0, false, {
         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-        lineNumber: 151,
+        lineNumber: 184,
         columnNumber: 7
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -471,7 +498,7 @@ function CheckList({ options, selected, onToggle }) {
                             className: "w-3.5 h-3.5 accent-neutral-900"
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 158,
+                            lineNumber: 191,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -479,23 +506,23 @@ function CheckList({ options, selected, onToggle }) {
                             children: opt
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 164,
+                            lineNumber: 197,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 157,
+                    lineNumber: 190,
                     columnNumber: 11
                 }, this)
             }, opt, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 156,
+                lineNumber: 189,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-        lineNumber: 154,
+        lineNumber: 187,
         columnNumber: 5
     }, this);
 }
@@ -515,12 +542,12 @@ function PriceButtons({ selected, onToggle }) {
                 children: p
             }, p, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 187,
+                lineNumber: 220,
                 columnNumber: 9
             }, this))
     }, void 0, false, {
         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-        lineNumber: 185,
+        lineNumber: 218,
         columnNumber: 5
     }, this);
 }
@@ -534,7 +561,7 @@ function Toggle({ label, checked, onChange }) {
                 children: label
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 217,
+                lineNumber: 250,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -546,18 +573,18 @@ function Toggle({ label, checked, onChange }) {
                     className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"])("absolute w-3.5 h-3.5 bg-white rounded-full shadow transition-all", checked ? "left-[18px]" : "left-[3px]")
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 227,
+                    lineNumber: 260,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 218,
+                lineNumber: 251,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-        lineNumber: 216,
+        lineNumber: 249,
         columnNumber: 5
     }, this);
 }
@@ -568,7 +595,7 @@ function ProductCard({ product, categoryId }) {
     const displayName = product.name;
     const ecoScore = product.metadata?.sustainabilityScore || 0;
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
-        href: `/products/${categoryId}/${product.id}`,
+        href: `/products/${categoryId}/${product.slug || product.id}`,
         className: "group block bg-white border border-neutral-100 hover:border-neutral-300 transition-all duration-200 hover:shadow-sm",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -583,7 +610,7 @@ function ProductCard({ product, categoryId }) {
                         onError: ()=>setImgSrc("/images/fallback/category.webp")
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 265,
+                        lineNumber: 298,
                         columnNumber: 9
                     }, this),
                     product.metadata?.bifmaCertified && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -591,7 +618,7 @@ function ProductCard({ product, categoryId }) {
                         children: "BIFMA"
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 274,
+                        lineNumber: 307,
                         columnNumber: 11
                     }, this),
                     product.metadata?.priceRange && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -599,7 +626,7 @@ function ProductCard({ product, categoryId }) {
                         children: product.metadata.priceRange
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 279,
+                        lineNumber: 312,
                         columnNumber: 11
                     }, this),
                     ecoScore > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -611,13 +638,13 @@ function ProductCard({ product, categoryId }) {
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 284,
+                        lineNumber: 317,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 264,
+                lineNumber: 297,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -628,7 +655,7 @@ function ProductCard({ product, categoryId }) {
                         children: product.seriesName
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 298,
+                        lineNumber: 331,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -636,7 +663,7 @@ function ProductCard({ product, categoryId }) {
                         children: displayName
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 301,
+                        lineNumber: 334,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -644,7 +671,7 @@ function ProductCard({ product, categoryId }) {
                         children: product.description
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 304,
+                        lineNumber: 337,
                         columnNumber: 9
                     }, this),
                     product.metadata?.useCase && product.metadata.useCase.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -654,24 +681,24 @@ function ProductCard({ product, categoryId }) {
                                 children: uc
                             }, uc, false, {
                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                lineNumber: 310,
+                                lineNumber: 343,
                                 columnNumber: 15
                             }, this))
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 308,
+                        lineNumber: 341,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 297,
+                lineNumber: 330,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-        lineNumber: 259,
+        lineNumber: 292,
         columnNumber: 5
     }, this);
 }
@@ -731,7 +758,7 @@ function ActiveChips({ filters, onRemove, onClearAll, total }) {
                 children: "Active:"
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 369,
+                lineNumber: 402,
                 columnNumber: 7
             }, this),
             chips.map((chip)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -743,20 +770,20 @@ function ActiveChips({ filters, onRemove, onClearAll, total }) {
                             children: chip.label
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 378,
+                            lineNumber: 411,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$x$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__X$3e$__["X"], {
                             className: "w-3 h-3"
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 379,
+                            lineNumber: 412,
                             columnNumber: 11
                         }, this)
                     ]
                 }, `${chip.key}-${chip.value ?? ""}`, true, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 373,
+                    lineNumber: 406,
                     columnNumber: 9
                 }, this)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -765,13 +792,13 @@ function ActiveChips({ filters, onRemove, onClearAll, total }) {
                 children: "Clear all"
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 382,
+                lineNumber: 415,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-        lineNumber: 368,
+        lineNumber: 401,
         columnNumber: 5
     }, this);
 }
@@ -781,6 +808,8 @@ function AdvancedFilterGridInner({ category, categoryId }) {
     const pathname = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["usePathname"])();
     const searchParams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSearchParams"])();
     const [drawerOpen, setDrawerOpen] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [aiRankedIds, setAiRankedIds] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(null);
+    const [aiLoading, setAiLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     // Parse filters from URL
     const filters = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>parseFilters(searchParams), [
         searchParams
@@ -790,8 +819,9 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                     ...p,
                     seriesId: s.id,
                     seriesName: s.name
-                }))), [
-        category
+                }))).filter((p)=>!shouldExcludeByCategory(categoryId, p)), [
+        category,
+        categoryId
     ]);
     // Build filter option lists from available products
     const options = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
@@ -817,6 +847,58 @@ function AdvancedFilterGridInner({ category, categoryId }) {
     }, [
         allProducts
     ]);
+    // Fetch AI ranking when an AI sort mode is selected
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        const AI_MODES = [
+            "ai-sustainability",
+            "ai-price",
+            "ai-material",
+            "ai-ergonomic"
+        ];
+        if (!AI_MODES.includes(filters.sort)) {
+            setAiRankedIds(null);
+            return;
+        }
+        const rankBy = filters.sort.replace("ai-", "");
+        setAiLoading(true);
+        fetch("/api/filter", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                products: allProducts.map((p)=>({
+                        id: p.id,
+                        name: p.name,
+                        description: p.description,
+                        sustainabilityScore: p.metadata?.sustainabilityScore,
+                        priceRange: p.metadata?.priceRange,
+                        material: p.metadata?.material,
+                        bifmaCertified: p.metadata?.bifmaCertified,
+                        isHeightAdjustable: p.metadata?.isHeightAdjustable,
+                        hasHeadrest: p.metadata?.hasHeadrest
+                    })),
+                category: categoryId,
+                rankBy
+            })
+        }).then((r)=>r.json()).then((data)=>setAiRankedIds(data.rankedIds ?? null)).catch(()=>setAiRankedIds(null)).finally(()=>setAiLoading(false));
+    }, [
+        filters.sort,
+        allProducts,
+        categoryId
+    ]);
+    // Fuse.js instance for fuzzy product search
+    const fuse = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>new __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$fuse$2e$js$2f$dist$2f$fuse$2e$mjs__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"](allProducts, {
+            keys: [
+                "name",
+                "description",
+                "seriesName"
+            ],
+            threshold: 0.35,
+            includeScore: true
+        }), [
+        allProducts
+    ]);
     // Apply filters
     const filteredProducts = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useMemo"])(()=>{
         let list = [
@@ -826,10 +908,11 @@ function AdvancedFilterGridInner({ category, categoryId }) {
         if (filters.series !== "all") {
             list = list.filter((p)=>p.seriesId === filters.series);
         }
-        // Search
+        // Fuzzy search via fuse.js
         if (filters.query.trim()) {
-            const q = filters.query.trim().toLowerCase();
-            list = list.filter((p)=>p.name.toLowerCase().includes(q) || p.description.toLowerCase().includes(q));
+            const results = fuse.search(filters.query.trim());
+            const matchIds = new Set(results.map((r)=>r.item.id));
+            list = list.filter((p)=>matchIds.has(p.id));
         }
         // Subcategory
         if (filters.subcategory.length) {
@@ -865,11 +948,20 @@ function AdvancedFilterGridInner({ category, categoryId }) {
             list = list.filter((p)=>(p.metadata?.sustainabilityScore || 0) >= filters.minEcoScore);
         }
         // Sort
-        list.sort((a, b)=>filters.sort === "za" ? b.name.localeCompare(a.name) : a.name.localeCompare(b.name));
+        if (aiRankedIds && filters.sort.startsWith("ai-")) {
+            const rankMap = new Map(aiRankedIds.map((id, i)=>[
+                    id,
+                    i
+                ]));
+            list.sort((a, b)=>(rankMap.get(a.id) ?? 999) - (rankMap.get(b.id) ?? 999));
+        } else {
+            list.sort((a, b)=>filters.sort === "za" ? b.name.localeCompare(a.name) : a.name.localeCompare(b.name));
+        }
         return list;
     }, [
         allProducts,
-        filters
+        filters,
+        aiRankedIds
     ]);
     // Update URL on filter change
     const updateFilters = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useCallback"])((next)=>{
@@ -944,7 +1036,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                 className: "w-3.5 h-3.5"
                             }, void 0, false, {
                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                lineNumber: 580,
+                                lineNumber: 664,
                                 columnNumber: 11
                             }, this),
                             "Filters",
@@ -953,13 +1045,13 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                 children: activeCount
                             }, void 0, false, {
                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                lineNumber: 583,
+                                lineNumber: 667,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 579,
+                        lineNumber: 663,
                         columnNumber: 9
                     }, this),
                     activeCount > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -968,13 +1060,13 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                         children: "Clear all"
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 589,
+                        lineNumber: 673,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 578,
+                lineNumber: 662,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AccordionSection, {
@@ -992,7 +1084,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                             children: "All Series"
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 605,
+                            lineNumber: 689,
                             columnNumber: 11
                         }, this),
                         category.series.map((s)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1003,18 +1095,18 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                 children: s.name
                             }, s.id, false, {
                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                lineNumber: 617,
+                                lineNumber: 701,
                                 columnNumber: 13
                             }, this))
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 604,
+                    lineNumber: 688,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 599,
+                lineNumber: 683,
                 columnNumber: 7
             }, this),
             options.subcategory.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AccordionSection, {
@@ -1027,12 +1119,12 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                     onToggle: (v)=>toggleArray("subcategory", v)
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 640,
+                    lineNumber: 724,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 635,
+                lineNumber: 719,
                 columnNumber: 9
             }, this),
             options.useCase.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AccordionSection, {
@@ -1045,12 +1137,12 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                     onToggle: (v)=>toggleArray("useCase", v)
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 655,
+                    lineNumber: 739,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 650,
+                lineNumber: 734,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AccordionSection, {
@@ -1062,12 +1154,12 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                     onToggle: (v)=>toggleArray("priceRange", v)
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 669,
+                    lineNumber: 753,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 664,
+                lineNumber: 748,
                 columnNumber: 7
             }, this),
             options.material.length > 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AccordionSection, {
@@ -1080,12 +1172,12 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                     onToggle: (v)=>toggleArray("material", v)
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 682,
+                    lineNumber: 766,
                     columnNumber: 11
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 677,
+                lineNumber: 761,
                 columnNumber: 9
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AccordionSection, {
@@ -1102,7 +1194,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                 })
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 701,
+                            lineNumber: 785,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Toggle, {
@@ -1113,7 +1205,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                 })
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 706,
+                            lineNumber: 790,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Toggle, {
@@ -1124,7 +1216,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                 })
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 711,
+                            lineNumber: 795,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Toggle, {
@@ -1135,18 +1227,18 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                 })
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 716,
+                            lineNumber: 800,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 700,
+                    lineNumber: 784,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 691,
+                lineNumber: 775,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AccordionSection, {
@@ -1164,7 +1256,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 730,
+                            lineNumber: 814,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1180,24 +1272,24 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                             className: "w-full accent-neutral-900"
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 736,
+                            lineNumber: 820,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 729,
+                    lineNumber: 813,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 725,
+                lineNumber: 809,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-        lineNumber: 576,
+        lineNumber: 660,
         columnNumber: 5
     }, this);
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
@@ -1221,7 +1313,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                            lineNumber: 768,
+                                            lineNumber: 852,
                                             columnNumber: 15
                                         }, this),
                                         "Filters",
@@ -1230,13 +1322,13 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                             children: activeCount
                                         }, void 0, false, {
                                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                            lineNumber: 771,
+                                            lineNumber: 855,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                    lineNumber: 763,
+                                    lineNumber: 847,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1246,7 +1338,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                             className: "absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400"
                                         }, void 0, false, {
                                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                            lineNumber: 779,
+                                            lineNumber: 863,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -1260,7 +1352,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                                 })
                                         }, void 0, false, {
                                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                            lineNumber: 780,
+                                            lineNumber: 864,
                                             columnNumber: 15
                                         }, this),
                                         filters.query && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1273,18 +1365,18 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                                 className: "w-3.5 h-3.5 text-neutral-400 hover:text-neutral-800"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                                lineNumber: 794,
+                                                lineNumber: 878,
                                                 columnNumber: 19
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                            lineNumber: 789,
+                                            lineNumber: 873,
                                             columnNumber: 17
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                    lineNumber: 778,
+                                    lineNumber: 862,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1302,8 +1394,16 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                            lineNumber: 801,
+                                            lineNumber: 885,
                                             columnNumber: 15
+                                        }, this),
+                                        aiLoading && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "text-[10px] font-bold uppercase tracking-widest text-neutral-400 animate-pulse",
+                                            children: "AI ranking…"
+                                        }, void 0, false, {
+                                            fileName: "[project]/app/products/[category]/FilterGrid.tsx",
+                                            lineNumber: 893,
+                                            columnNumber: 17
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
                                             "aria-label": "Sort products",
@@ -1318,7 +1418,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                                     children: "Name A–Z"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                                    lineNumber: 816,
+                                                    lineNumber: 905,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1326,7 +1426,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                                     children: "Name Z–A"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                                    lineNumber: 817,
+                                                    lineNumber: 906,
                                                     columnNumber: 17
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -1334,25 +1434,66 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                                     children: "Newest"
                                                 }, void 0, false, {
                                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                                    lineNumber: 818,
+                                                    lineNumber: 907,
+                                                    columnNumber: 17
+                                                }, this),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("optgroup", {
+                                                    label: "AI Sort",
+                                                    children: [
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                            value: "ai-sustainability",
+                                                            children: "AI: Sustainability"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/products/[category]/FilterGrid.tsx",
+                                                            lineNumber: 909,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                            value: "ai-price",
+                                                            children: "AI: Price Low–High"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/products/[category]/FilterGrid.tsx",
+                                                            lineNumber: 910,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                            value: "ai-material",
+                                                            children: "AI: Recycled Material"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/products/[category]/FilterGrid.tsx",
+                                                            lineNumber: 911,
+                                                            columnNumber: 19
+                                                        }, this),
+                                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
+                                                            value: "ai-ergonomic",
+                                                            children: "AI: Ergonomic"
+                                                        }, void 0, false, {
+                                                            fileName: "[project]/app/products/[category]/FilterGrid.tsx",
+                                                            lineNumber: 912,
+                                                            columnNumber: 19
+                                                        }, this)
+                                                    ]
+                                                }, void 0, true, {
+                                                    fileName: "[project]/app/products/[category]/FilterGrid.tsx",
+                                                    lineNumber: 908,
                                                     columnNumber: 17
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                            lineNumber: 808,
+                                            lineNumber: 897,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                    lineNumber: 800,
+                                    lineNumber: 884,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 761,
+                            lineNumber: 845,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(ActiveChips, {
@@ -1362,18 +1503,18 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                             total: activeCount
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 824,
+                            lineNumber: 919,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                    lineNumber: 760,
+                    lineNumber: 844,
                     columnNumber: 9
                 }, this)
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 759,
+                lineNumber: 843,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1384,7 +1525,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                         children: SidebarContent
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 836,
+                        lineNumber: 931,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1398,12 +1539,12 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                         className: "w-5 h-5 text-neutral-400"
                                     }, void 0, false, {
                                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                        lineNumber: 845,
+                                        lineNumber: 940,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                    lineNumber: 844,
+                                    lineNumber: 939,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1411,7 +1552,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                     children: "No products found"
                                 }, void 0, false, {
                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                    lineNumber: 847,
+                                    lineNumber: 942,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -1419,7 +1560,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                     children: "Try adjusting your filters or search query"
                                 }, void 0, false, {
                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                    lineNumber: 850,
+                                    lineNumber: 945,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1428,13 +1569,13 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                     children: "Clear all filters"
                                 }, void 0, false, {
                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                    lineNumber: 853,
+                                    lineNumber: 948,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 843,
+                            lineNumber: 938,
                             columnNumber: 13
                         }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                             className: "grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4",
@@ -1445,28 +1586,28 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                         categoryId: categoryId
                                     }, void 0, false, {
                                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                        lineNumber: 867,
+                                        lineNumber: 962,
                                         columnNumber: 19
                                     }, this)
                                 }, product.id, false, {
                                     fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                    lineNumber: 863,
+                                    lineNumber: 958,
                                     columnNumber: 17
                                 }, this))
                         }, void 0, false, {
                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                            lineNumber: 861,
+                            lineNumber: 956,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 841,
+                        lineNumber: 936,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                lineNumber: 834,
+                lineNumber: 929,
                 columnNumber: 7
             }, this),
             drawerOpen && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -1477,7 +1618,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                         "aria-hidden": "true"
                     }, void 0, false, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 879,
+                        lineNumber: 974,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1496,7 +1637,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                                lineNumber: 893,
+                                                lineNumber: 988,
                                                 columnNumber: 17
                                             }, this),
                                             "Filters",
@@ -1505,13 +1646,13 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                                 children: activeCount
                                             }, void 0, false, {
                                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                                lineNumber: 896,
+                                                lineNumber: 991,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                        lineNumber: 892,
+                                        lineNumber: 987,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1521,18 +1662,18 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                             className: "w-5 h-5 text-neutral-500 hover:text-neutral-900"
                                         }, void 0, false, {
                                             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                            lineNumber: 905,
+                                            lineNumber: 1000,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                        lineNumber: 901,
+                                        lineNumber: 996,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                lineNumber: 891,
+                                lineNumber: 986,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1540,7 +1681,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                 children: SidebarContent
                             }, void 0, false, {
                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                lineNumber: 908,
+                                lineNumber: 1003,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1555,7 +1696,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                         children: "Clear all"
                                     }, void 0, false, {
                                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                        lineNumber: 911,
+                                        lineNumber: 1006,
                                         columnNumber: 17
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1568,19 +1709,19 @@ function AdvancedFilterGridInner({ category, categoryId }) {
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                        lineNumber: 921,
+                                        lineNumber: 1016,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                                lineNumber: 909,
+                                lineNumber: 1004,
                                 columnNumber: 13
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-                        lineNumber: 885,
+                        lineNumber: 980,
                         columnNumber: 11
                     }, this)
                 ]
@@ -1588,7 +1729,7 @@ function AdvancedFilterGridInner({ category, categoryId }) {
         ]
     }, void 0, true, {
         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-        lineNumber: 754,
+        lineNumber: 838,
         columnNumber: 5
     }, this);
 }
@@ -1599,7 +1740,7 @@ function FilterGrid({ category, categoryId }) {
             children: "Loading products…"
         }, void 0, false, {
             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-            lineNumber: 947,
+            lineNumber: 1042,
             columnNumber: 9
         }, void 0),
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(AdvancedFilterGridInner, {
@@ -1607,12 +1748,12 @@ function FilterGrid({ category, categoryId }) {
             categoryId: categoryId
         }, void 0, false, {
             fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-            lineNumber: 952,
+            lineNumber: 1047,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/products/[category]/FilterGrid.tsx",
-        lineNumber: 945,
+        lineNumber: 1040,
         columnNumber: 5
     }, this);
 }

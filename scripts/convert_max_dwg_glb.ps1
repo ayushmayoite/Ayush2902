@@ -1,6 +1,7 @@
 param(
   [Parameter(Mandatory = $true)]
-  [string]$Input,
+  [Alias("Input")]
+  [string]$InputPath,
 
   [string]$OutDir = ".\converted",
 
@@ -44,9 +45,9 @@ function Invoke-MaxExport {
 
   $msPath = [System.IO.Path]::GetTempFileName().Replace(".tmp", ".ms")
   $msContent = @"
-local inFile = @"$MaxFile"
-local outDwg = @"$OutDwg"
-local outFbx = @"$OutFbx"
+inFile = @"$MaxFile"
+outDwg = @"$OutDwg"
+outFbx = @"$OutFbx"
 
 try (
   loadMaxFile inFile quiet:true useFileUnits:true
@@ -62,7 +63,7 @@ quitMAX #noPrompt
 
   try {
     Write-Host "Running 3ds Max export (.max -> .dwg + .fbx)..."
-    & $MaxBatchExe "-mxsString=fileIn @`"$msPath`""
+    & $MaxBatchExe $msPath
     if (-not (Test-Path -LiteralPath $OutFbx) -and -not (Test-Path -LiteralPath $OutDwg)) {
       throw "3ds Max did not export output files. Check exporter plug-ins and logs."
     }
@@ -141,10 +142,15 @@ function Invoke-CompressGlb {
   }
 }
 
-$inputAbs = Resolve-AbsolutePath -Path $Input
+$inputAbs = Resolve-AbsolutePath -Path $InputPath
 $ext = [System.IO.Path]::GetExtension($inputAbs).ToLowerInvariant()
 $base = [System.IO.Path]::GetFileNameWithoutExtension($inputAbs)
-$outAbs = [System.IO.Path]::GetFullPath((Join-Path (Get-Location) $OutDir))
+$outAbs = if ([System.IO.Path]::IsPathRooted($OutDir)) {
+  [System.IO.Path]::GetFullPath($OutDir)
+}
+else {
+  [System.IO.Path]::GetFullPath((Join-Path (Get-Location).Path $OutDir))
+}
 $converterScript = Join-Path (Split-Path -Parent $PSCommandPath) "blender_to_glb.py"
 
 if (-not (Test-Path -LiteralPath $outAbs)) {

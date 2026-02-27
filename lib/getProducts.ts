@@ -75,6 +75,8 @@ export interface CompatProduct {
     variants: ProductVariant[];
     detailedInfo: ProductDetailedInfo;
     metadata: ProductMetadata;
+    "3d_model"?: string;
+    threeDModelUrl?: string;
     technicalDrawings?: string[];
     documents?: string[];
     images?: string[];
@@ -109,6 +111,8 @@ function toCompatProduct(p: Product): CompatProduct {
             ...(p.metadata ?? {}),
             sustainabilityScore: p.specs?.sustainability_score ?? 5, // fallback if missing
         },
+        "3d_model": p["3d_model"],
+        threeDModelUrl: p["3d_model"],
         images: p.images ?? [],
     };
 }

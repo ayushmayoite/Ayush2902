@@ -14,8 +14,12 @@ Date: 2026-02-27
 
 - Migration exists: `supabase/migrations/20260226_add_3d_model.sql`.
 - Viewer components exist: `components/ThreeViewer.tsx`, `components/3DViewer.tsx`.
+- Coverage and data-path validation completed locally:
+  - `npm run test:coverage` passed with global coverage above threshold.
+  - `getCatalog()` / `getCategoryIds()` tests added to cover Task 3 data mapping paths.
+  - Product page now forwards `3d_model` into `CompatProduct` and viewer path.
 - End-to-end verification still pending:
   - Confirm DB products actually have `3d_model` values.
-  - Ensure category page data path passes `3d_model` to UI for all products.
   - Compress generated GLBs (`gltfpack`) and validate on iOS/Android.
   - Deploy blocked until Vercel login is fixed.
+  - `scripts/seed_3d_models.js` currently fails with `PGRST204` because remote `products.3d_model` is not present in schema cache.

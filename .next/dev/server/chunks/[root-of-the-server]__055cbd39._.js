@@ -74,6 +74,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
 /** Map a Supabase row to the shape the old catalog.ts used */ function toCompatProduct(p) {
     return {
         id: p.id,
+        slug: p.slug,
         name: p.name,
         description: p.description || "",
         flagshipImage: p.flagship_image || "",
@@ -89,6 +90,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
             ...p.metadata ?? {},
             sustainabilityScore: p.specs?.sustainability_score ?? 5
         },
+        "3d_model": p["3d_model"],
+        threeDModelUrl: p["3d_model"],
         images: p.images ?? []
     };
 }

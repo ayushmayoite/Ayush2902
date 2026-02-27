@@ -97,11 +97,14 @@ async function ProductContent({
 
   const compatProduct: CompatProduct = {
     id: p.id,
+    slug: p.slug,
     name: p.name,
     description: p.description || "",
     flagshipImage: p.flagship_image || "",
     sceneImages: [],
     images: p.images || [],
+    "3d_model": p["3d_model"],
+    threeDModelUrl: p["3d_model"],
     variants: [],
     detailedInfo: {
       overview: "",

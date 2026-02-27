@@ -3,15 +3,16 @@
  * Unit tests for lib/getProducts.ts helper functions.
  * Supabase is mocked so these run without a real DB connection.
  */
-import { getProducts, getProductsByCategory, getProductBySlug } from '../lib/getProducts';
+import { getProducts, getProductsByCategory, getProductBySlug, getCatalog, getCategoryIds } from '../lib/getProducts';
 
 // ── Mock Supabase ──────────────────────────────────────────────────────────────
 const mockSelect = jest.fn();
 const mockOrder = jest.fn();
 const mockEq = jest.fn();
 const mockSingle = jest.fn();
+const mockFrom = jest.fn();
 
-const chainMock = {
+const chainMock: any = {
     select: mockSelect,
     order: mockOrder,
     eq: mockEq,
@@ -25,7 +26,7 @@ mockEq.mockReturnValue(chainMock);
 
 jest.mock('../lib/db', () => ({
     supabase: {
-        from: jest.fn(() => chainMock),
+        from: (...args: unknown[]) => mockFrom(...args),
     },
 }));
 
@@ -65,9 +66,12 @@ const MOCK_PRODUCTS = [
 describe('getProducts()', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        mockFrom.mockImplementation(() => chainMock);
         mockSelect.mockReturnValue(chainMock);
         mockOrder.mockReturnValue(chainMock);
         mockEq.mockReturnValue(chainMock);
+        chainMock.data = undefined;
+        chainMock.error = undefined;
     });
 
     test('returns mapped products on success', async () => {
@@ -107,9 +111,12 @@ describe('getProducts()', () => {
 describe('getProductsByCategory()', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        mockFrom.mockImplementation(() => chainMock);
         mockSelect.mockReturnValue(chainMock);
         mockEq.mockReturnValue(chainMock);
         mockOrder.mockReturnValue(chainMock);
+        chainMock.data = undefined;
+        chainMock.error = undefined;
     });
 
     test('filters products by category_id', async () => {
@@ -141,9 +148,12 @@ describe('getProductsByCategory()', () => {
 describe('getProductBySlug()', () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        mockFrom.mockImplementation(() => chainMock);
         mockSelect.mockReturnValue(chainMock);
         mockEq.mockReturnValue(chainMock);
         mockSingle.mockReturnValue(chainMock);
+        chainMock.data = undefined;
+        chainMock.error = undefined;
     });
 
     test('returns product data when slug matches', async () => {
@@ -161,5 +171,112 @@ describe('getProductBySlug()', () => {
 
         const product = await getProductBySlug('non-existent-slug');
         expect(product).toBeNull();
+    });
+});
+
+describe('getCatalog()', () => {
+    const CATEGORIES = [
+        { id: 'oando-seating', name: 'Seating' },
+        { id: 'oando-storage', name: 'Storage' },
+    ];
+
+    beforeEach(() => {
+        jest.clearAllMocks();
+        mockSelect.mockReturnValue(chainMock);
+        mockEq.mockReturnValue(chainMock);
+        mockOrder.mockReturnValue(chainMock);
+        mockFrom.mockImplementation((table: string) => {
+            if (table === 'categories') {
+                return chainMock;
+            }
+            return chainMock;
+        });
+        chainMock.data = undefined;
+        chainMock.error = undefined;
+    });
+
+    test('groups products by category and series in compat shape', async () => {
+        const productsForCatalog = [
+            {
+                ...MOCK_PRODUCTS[0],
+                series_id: '',
+                series_name: '',
+                description: '',
+                flagship_image: '',
+                metadata: { source: 'seed' },
+                specs: { dimensions: '', materials: [], features: [] },
+                images: null,
+                '3d_model': '/models/seating/task.glb',
+            },
+            {
+                ...MOCK_PRODUCTS[1],
+                category_id: 'unknown-category',
+            },
+        ];
+
+        chainMock.data = CATEGORIES;
+        chainMock.error = null;
+        mockOrder.mockResolvedValueOnce({ data: productsForCatalog, error: null });
+
+        const catalog = await getCatalog();
+
+        expect(catalog).toHaveLength(1);
+        expect(catalog[0].id).toBe('oando-seating');
+        expect(catalog[0].series).toHaveLength(1);
+        expect(catalog[0].series[0].id).toBe('oando-seating-series');
+        expect(catalog[0].series[0].name).toBe('Series');
+        expect(catalog[0].series[0].products[0].images).toEqual([]);
+        expect(catalog[0].series[0].products[0].metadata.sustainabilityScore).toBe(5);
+        expect(catalog[0].series[0].products[0]['3d_model']).toBe('/models/seating/task.glb');
+    });
+
+    test('returns empty array when categories query fails', async () => {
+        chainMock.data = null;
+        chainMock.error = { message: 'Categories failed' };
+        mockOrder.mockResolvedValueOnce({ data: MOCK_PRODUCTS, error: null });
+
+        const catalog = await getCatalog();
+        expect(catalog).toEqual([]);
+    });
+
+    test('returns empty array when products query fails', async () => {
+        chainMock.data = CATEGORIES;
+        chainMock.error = null;
+        mockOrder.mockResolvedValueOnce({ data: null, error: { message: 'Products failed' } });
+
+        const catalog = await getCatalog();
+        expect(catalog).toEqual([]);
+    });
+});
+
+describe('getCategoryIds()', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        mockFrom.mockImplementation(() => chainMock);
+        mockSelect.mockReturnValue(chainMock);
+        mockOrder.mockReturnValue(chainMock);
+        chainMock.data = undefined;
+        chainMock.error = undefined;
+    });
+
+    test('returns unique category ids from product rows', async () => {
+        mockOrder.mockResolvedValueOnce({
+            data: [
+                { category: 'oando-seating' },
+                { category: 'oando-seating' },
+                { category: 'oando-storage' },
+            ],
+            error: null,
+        });
+
+        const ids = await getCategoryIds();
+        expect(ids).toEqual(['oando-seating', 'oando-storage']);
+    });
+
+    test('returns empty array on query error', async () => {
+        mockOrder.mockResolvedValueOnce({ data: null, error: { message: 'No access' } });
+
+        const ids = await getCategoryIds();
+        expect(ids).toEqual([]);
     });
 });

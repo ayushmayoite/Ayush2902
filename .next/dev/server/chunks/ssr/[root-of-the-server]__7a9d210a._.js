@@ -50,6 +50,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
 /** Map a Supabase row to the shape the old catalog.ts used */ function toCompatProduct(p) {
     return {
         id: p.id,
+        slug: p.slug,
         name: p.name,
         description: p.description || "",
         flagshipImage: p.flagship_image || "",
@@ -65,6 +66,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
             ...p.metadata ?? {},
             sustainabilityScore: p.specs?.sustainability_score ?? 5
         },
+        "3d_model": p["3d_model"],
+        threeDModelUrl: p["3d_model"],
         images: p.images ?? []
     };
 }
@@ -277,7 +280,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 ;
 ;
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.oando.co.in";
 async function generateMetadata({ params }) {
     const { category: categoryId } = await params;
     const catalog = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$getProducts$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCatalog"])();
@@ -312,13 +315,13 @@ const CATEGORY_HEROES = {
     "oando-collaborative": "/images/products/imported/pod/image-2.webp"
 };
 async function generateStaticParams() {
-    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("categories").select("name");
+    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("categories").select("id");
     if (error || !data) {
         console.error("Error fetching categories for static params:", error);
         return [];
     }
     return data.map((c)=>({
-            category: c.name
+            category: c.id
         }));
 }
 // Loading skeleton for the grid while Supabase data resolves

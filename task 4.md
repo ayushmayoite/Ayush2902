@@ -1,6 +1,6 @@
 task 4
 
-creoss verify all images with afcindiain, each product should have 7 photos with good views of the products
+creoss verify all images with afcindia.in, each product should have 7 photos with good views of the products
 detailed specification to be added to eacch prduct
 ensure product and images are correctly matched
 category is currently wrong. reorganise

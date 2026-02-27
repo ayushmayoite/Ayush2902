@@ -1,5 +1,7 @@
 var R=require("../../chunks/ssr/[turbopack]_runtime.js")("server/app/products/page.js")
-R.c("server/chunks/ssr/node_modules_d85d3276._.js")
+R.c("server/chunks/ssr/node_modules_next_02c228e6._.js")
+R.c("server/chunks/ssr/node_modules_@supabase_auth-js_dist_module_ca04f287._.js")
+R.c("server/chunks/ssr/node_modules_f8bc7bb2._.js")
 R.c("server/chunks/ssr/[root-of-the-server]__b3349849._.js")
 R.c("server/chunks/ssr/node_modules_e2d1c5df._.js")
 R.c("server/chunks/ssr/[externals]__e8a2741f._.js")

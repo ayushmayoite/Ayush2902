@@ -1,11 +1,36 @@
 "use client";
 
+import { useState } from "react";
 import { useRecommendations } from "@/hooks/useRecommendations";
 import Link from "next/link";
 import { Loader2 } from "lucide-react";
 
 export function Recommendations() {
-  const { data, isLoading, error } = useRecommendations();
+  const [enabled, setEnabled] = useState(false);
+  const { data, isLoading, error } = useRecommendations(enabled);
+
+  if (!enabled) {
+    return (
+      <section className="py-20 bg-neutral-50 border-y border-neutral-100">
+        <div className="container-wide px-6 2xl:px-0">
+          <div className="max-w-xl">
+            <h2 className="text-3xl font-light text-neutral-900 tracking-tight mb-4">
+              Recommended for You
+            </h2>
+            <p className="text-sm text-neutral-500 leading-relaxed font-light mb-6">
+              Get curated product suggestions based on your browsing behavior.
+            </p>
+            <button
+              onClick={() => setEnabled(true)}
+              className="inline-flex items-center border border-neutral-900 text-neutral-900 px-5 py-3 text-xs font-semibold tracking-widest uppercase hover:bg-neutral-900 hover:text-white transition-colors"
+            >
+              Load Recommendations
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   if (isLoading) {
     return (

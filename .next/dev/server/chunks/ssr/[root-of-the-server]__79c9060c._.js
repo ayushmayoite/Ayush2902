@@ -73,7 +73,9 @@ __turbopack_context__.s([
     "default",
     ()=>ProductPage,
     "generateMetadata",
-    ()=>generateMetadata
+    ()=>generateMetadata,
+    "generateStaticParams",
+    ()=>generateStaticParams
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/db.ts [app-rsc] (ecmascript)");
@@ -86,14 +88,26 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 ;
 ;
 ;
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.oando.co.in";
+async function generateStaticParams() {
+    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("slug, category_id");
+    if (error || !data) {
+        console.error("Error fetching products for static params:", error);
+        return [];
+    }
+    return data.map((p)=>({
+            category: p.category_id,
+            slug: p.slug
+        }));
+}
 async function generateMetadata({ params }) {
     const { category: categoryId, slug } = await params;
     const { data: product } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").eq("slug", slug).single();
     if (!product) return {};
     const title = `${product.name} | One and Only Furniture`;
     const description = product.description || `${product.name} — premium office furniture from One and Only Furniture.`;
-    const image = product.flagship_image || "/images/products/imported/fluid/image-1.webp";
+    const images = Array.isArray(product.images) ? product.images : [];
+    const image = (images.length > 0 ? images[0] : null) || product.flagship_image || "/images/fallback/category.webp";
     const url = `${BASE_URL}/products/${categoryId}/${slug}`;
     return {
         title,
@@ -135,32 +149,32 @@ function ProductLoadingSkeleton() {
                     className: "h-96 bg-neutral-100 rounded"
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/[slug]/page.tsx",
-                    lineNumber: 57,
+                    lineNumber: 71,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "h-8 bg-neutral-100 rounded w-1/3"
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/[slug]/page.tsx",
-                    lineNumber: 58,
+                    lineNumber: 72,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "h-4 bg-neutral-100 rounded w-2/3"
                 }, void 0, false, {
                     fileName: "[project]/app/products/[category]/[slug]/page.tsx",
-                    lineNumber: 59,
+                    lineNumber: 73,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/app/products/[category]/[slug]/page.tsx",
-            lineNumber: 56,
+            lineNumber: 70,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/products/[category]/[slug]/page.tsx",
-        lineNumber: 55,
+        lineNumber: 69,
         columnNumber: 5
     }, this);
 }
@@ -172,13 +186,16 @@ async function ProductContent({ categoryId, slug }) {
     const p = rawProduct;
     const compatProduct = {
         id: p.id,
+        slug: p.slug,
         name: p.name,
-        description: p.description,
-        flagshipImage: p.flagship_image,
-        sceneImages: p.scene_images || [],
+        description: p.description || "",
+        flagshipImage: p.flagship_image || "",
+        sceneImages: [],
         images: p.images || [],
-        variants: p.variants || [],
-        detailedInfo: p.detailed_info || {
+        "3d_model": p["3d_model"],
+        threeDModelUrl: p["3d_model"],
+        variants: [],
+        detailedInfo: {
             overview: "",
             features: [],
             dimensions: "",
@@ -191,8 +208,10 @@ async function ProductContent({ categoryId, slug }) {
         "@context": "https://schema.org",
         "@type": "Product",
         name: p.name,
-        description: p.description,
-        image: p.flagship_image,
+        description: rawProduct.alt_text || rawProduct?.metadata?.ai_alt_text || p.description,
+        image: p.images || [
+            p.flagship_image
+        ],
         url,
         brand: {
             "@type": "Brand",
@@ -207,7 +226,7 @@ async function ProductContent({ categoryId, slug }) {
                 name: "One and Only Furniture"
             }
         },
-        category: p.category_id || p.category
+        category: p.category_id
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Fragment"], {
         children: [
@@ -218,7 +237,7 @@ async function ProductContent({ categoryId, slug }) {
                 }
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/[slug]/page.tsx",
-                lineNumber: 121,
+                lineNumber: 141,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$app$2f$products$2f5b$category$5d2f5b$slug$5d2f$ProductViewer$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ProductViewer"], {
@@ -228,7 +247,7 @@ async function ProductContent({ categoryId, slug }) {
                 categoryId: p.category_id || categoryId
             }, void 0, false, {
                 fileName: "[project]/app/products/[category]/[slug]/page.tsx",
-                lineNumber: 125,
+                lineNumber: 145,
                 columnNumber: 7
             }, this)
         ]
@@ -239,7 +258,7 @@ async function ProductPage({ params }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Suspense"], {
         fallback: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductLoadingSkeleton, {}, void 0, false, {
             fileName: "[project]/app/products/[category]/[slug]/page.tsx",
-            lineNumber: 143,
+            lineNumber: 163,
             columnNumber: 25
         }, void 0),
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(ProductContent, {
@@ -247,12 +266,12 @@ async function ProductPage({ params }) {
             slug: slug
         }, void 0, false, {
             fileName: "[project]/app/products/[category]/[slug]/page.tsx",
-            lineNumber: 144,
+            lineNumber: 164,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/app/products/[category]/[slug]/page.tsx",
-        lineNumber: 143,
+        lineNumber: 163,
         columnNumber: 5
     }, this);
 }

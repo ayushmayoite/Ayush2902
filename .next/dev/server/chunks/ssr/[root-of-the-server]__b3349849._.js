@@ -46,12 +46,13 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
 /** Map a Supabase row to the shape the old catalog.ts used */ function toCompatProduct(p) {
     return {
         id: p.id,
+        slug: p.slug,
         name: p.name,
-        description: p.description,
-        flagshipImage: p.flagship_image,
-        sceneImages: p.scene_images ?? [],
-        variants: p.variants ?? [],
-        detailedInfo: p.detailed_info ?? {
+        description: p.description || "",
+        flagshipImage: p.flagship_image || "",
+        sceneImages: [],
+        variants: [],
+        detailedInfo: {
             overview: "",
             features: [],
             dimensions: "",
@@ -61,6 +62,8 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$
             ...p.metadata ?? {},
             sustainabilityScore: p.specs?.sustainability_score ?? 5
         },
+        "3d_model": p["3d_model"],
+        threeDModelUrl: p["3d_model"],
         images: p.images ?? []
     };
 }
@@ -72,17 +75,25 @@ async function getProducts() {
         console.error("[getProducts] Supabase error:", error.message);
         return [];
     }
-    return data ?? [];
+    return (data ?? []).map((p)=>({
+            ...p,
+            images: p.images ?? [],
+            category_id: p.category_id
+        }));
 }
 async function getProductsByCategory(categoryId) {
-    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").eq("category", categoryId).order("name", {
+    const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*, categories(name)").eq("category_id", categoryId).order("name", {
         ascending: true
     });
     if (error) {
         console.error("[getProductsByCategory] Supabase error:", error.message);
         return [];
     }
-    return data ?? [];
+    return (data ?? []).map((p)=>({
+            ...p,
+            images: p.images ?? [],
+            category_id: p.category_id
+        }));
 }
 async function getProductBySlug(slug) {
     const { data, error } = await __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").eq("slug", slug).single();
@@ -96,7 +107,7 @@ async function getCatalog() {
     // Fetch categories and products in parallel
     const [catRes, prodRes] = await Promise.all([
         __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("categories").select("*"),
-        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*").order("name", {
+        __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$db$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["supabase"].from("products").select("*, categories(name)").order("name", {
             ascending: true
         })
     ]);
@@ -119,7 +130,7 @@ async function getCatalog() {
         });
     }
     for (const p of products){
-        const catId = p.category_id || p.category;
+        const catId = p.category_id;
         if (!catMap.has(catId)) {
             continue;
         }
@@ -206,19 +217,26 @@ __turbopack_context__.n(__TURBOPACK__imported__module__$5b$project$5d2f$componen
 
 __turbopack_context__.s([
     "CategoryGrid",
-    ()=>CategoryGrid,
-    "dynamic",
-    ()=>dynamic
+    ()=>CategoryGrid
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$react$2d$server$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/dist/client/app-dir/link.react-server.js [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$getProducts$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/lib/getProducts.ts [app-rsc] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$components$2f$home$2f$CategoryImage$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/components/home/CategoryImage.tsx [app-rsc] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/cache.js [app-rsc] (ecmascript)");
 ;
 ;
 ;
 ;
-const dynamic = "force-dynamic";
+;
+const getCachedCatalog = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$cache$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["unstable_cache"])(async ()=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$getProducts$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCatalog"])(), [
+    "home-category-grid"
+], {
+    revalidate: 3600,
+    tags: [
+        "catalog"
+    ]
+});
 const CATEGORY_THUMBNAILS = {
     "oando-workstations": "/images/products/imported/cabin/image-1.webp",
     "oando-tables": "/images/products/imported/meeting-table/image-33.webp",
@@ -228,7 +246,7 @@ const CATEGORY_THUMBNAILS = {
     "oando-educational": "/images/products/imported/accent/image-1.webp"
 };
 async function CategoryGrid() {
-    const oandoCatalog = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$getProducts$2e$ts__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["getCatalog"])();
+    const oandoCatalog = await getCachedCatalog();
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("section", {
         className: "w-full bg-white py-20 md:py-28",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -242,7 +260,7 @@ async function CategoryGrid() {
                             children: "Product Range"
                         }, void 0, false, {
                             fileName: "[project]/components/home/CategoryGrid.tsx",
-                            lineNumber: 24,
+                            lineNumber: 29,
                             columnNumber: 11
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
@@ -250,13 +268,13 @@ async function CategoryGrid() {
                             children: "Explore Solutions"
                         }, void 0, false, {
                             fileName: "[project]/components/home/CategoryGrid.tsx",
-                            lineNumber: 27,
+                            lineNumber: 32,
                             columnNumber: 11
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/home/CategoryGrid.tsx",
-                    lineNumber: 23,
+                    lineNumber: 28,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -276,20 +294,20 @@ async function CategoryGrid() {
                                             alt: category.name
                                         }, void 0, false, {
                                             fileName: "[project]/components/home/CategoryGrid.tsx",
-                                            lineNumber: 49,
+                                            lineNumber: 54,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                             className: "absolute inset-0 bg-black/0 group-hover:bg-black/8 transition-colors duration-500"
                                         }, void 0, false, {
                                             fileName: "[project]/components/home/CategoryGrid.tsx",
-                                            lineNumber: 50,
+                                            lineNumber: 55,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/home/CategoryGrid.tsx",
-                                    lineNumber: 48,
+                                    lineNumber: 53,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -302,7 +320,7 @@ async function CategoryGrid() {
                                                     children: category.name
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/home/CategoryGrid.tsx",
-                                                    lineNumber: 56,
+                                                    lineNumber: 61,
                                                     columnNumber: 21
                                                 }, this),
                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -313,13 +331,13 @@ async function CategoryGrid() {
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/home/CategoryGrid.tsx",
-                                                    lineNumber: 59,
+                                                    lineNumber: 64,
                                                     columnNumber: 21
                                                 }, this)
                                             ]
                                         }, void 0, true, {
                                             fileName: "[project]/components/home/CategoryGrid.tsx",
-                                            lineNumber: 55,
+                                            lineNumber: 60,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("svg", {
@@ -335,41 +353,41 @@ async function CategoryGrid() {
                                                 d: "M9 5l7 7-7 7"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/home/CategoryGrid.tsx",
-                                                lineNumber: 70,
+                                                lineNumber: 75,
                                                 columnNumber: 21
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/home/CategoryGrid.tsx",
-                                            lineNumber: 63,
+                                            lineNumber: 68,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/home/CategoryGrid.tsx",
-                                    lineNumber: 54,
+                                    lineNumber: 59,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, category.id, true, {
                             fileName: "[project]/components/home/CategoryGrid.tsx",
-                            lineNumber: 42,
+                            lineNumber: 47,
                             columnNumber: 15
                         }, this);
                     })
                 }, void 0, false, {
                     fileName: "[project]/components/home/CategoryGrid.tsx",
-                    lineNumber: 33,
+                    lineNumber: 38,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/home/CategoryGrid.tsx",
-            lineNumber: 21,
+            lineNumber: 26,
             columnNumber: 7
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/home/CategoryGrid.tsx",
-        lineNumber: 20,
+        lineNumber: 25,
         columnNumber: 5
     }, this);
 }

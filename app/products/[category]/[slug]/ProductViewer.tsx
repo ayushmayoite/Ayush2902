@@ -52,9 +52,10 @@ export function ProductViewer({
 
   const modelPath =
     selectedVariant?.threeDModelUrl ||
-    (product as any)["3d_model"] ||
-    (product as any).threeDModelUrl;
-  const is3DSupported = Boolean(modelPath);
+    product["3d_model"] ||
+    product.threeDModelUrl ||
+    "";
+  const is3DSupported = modelPath.length > 0;
 
   const allImages = [
     ...(product.images || []),

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:ayushmayoite.wixsite.com)",
+      "Bash(git add app/page.tsx components/HeroCarousel.tsx components/layout/Footer.tsx components/shared/GsapAnimations.tsx)",
+      "Bash(git commit:*)",
+      "Bash(git add app/layout.tsx app/page.tsx components/home/CategoryGrid.tsx components/home/OurWork.tsx)",
+      "Bash(vercel --prod)"
+    ]
+  }
+}

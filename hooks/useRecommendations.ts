@@ -11,7 +11,7 @@ const getOrCreateUserId = () => {
     return userId;
 };
 
-export function useRecommendations() {
+export function useRecommendations(enabled = true) {
     return useQuery({
         queryKey: ['recommendations'],
         queryFn: async () => {
@@ -27,6 +27,7 @@ export function useRecommendations() {
             if (!res.ok) throw new Error('Failed to fetch recommendations');
             return res.json();
         },
+        enabled,
         staleTime: 1000 * 60 * 60, // 1 hour
     });
 }

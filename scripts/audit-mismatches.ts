@@ -66,6 +66,15 @@ type AuditRow = {
   fixedImage: string;
 };
 
+type AuditReport = {
+  generatedAt: string;
+  scannedProducts: number;
+  mismatchCount: number;
+  fixedProductCount: number;
+  columns: Array<keyof AuditRow>;
+  rows: AuditRow[];
+};
+
 function containsKeywordToken(pathValue: string, keyword: string): boolean {
   const lower = pathValue.toLowerCase();
   const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -147,8 +156,24 @@ async function main() {
     }
   }
 
+  const report: AuditReport = {
+    generatedAt: new Date().toISOString(),
+    scannedProducts: products.length,
+    mismatchCount: auditRows.length,
+    fixedProductCount: fixedProducts.length,
+    columns: [
+      "productId",
+      "productName",
+      "category",
+      "slug",
+      "mismatchedImage",
+      "fixedImage",
+    ],
+    rows: auditRows,
+  };
+
   const outPath = resolve(process.cwd(), "scripts", "audit-results.json");
-  fs.writeFileSync(outPath, JSON.stringify(auditRows, null, 2), "utf8");
+  fs.writeFileSync(outPath, JSON.stringify(report, null, 2), "utf8");
 
   console.log(`Scanned: ${products.length} products`);
   console.log(`Mismatches: ${auditRows.length}`);

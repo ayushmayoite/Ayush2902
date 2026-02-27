@@ -490,15 +490,22 @@ const SUGGESTIONS = [
 function SearchOverlay({ isOpen, onClose }) {
     _s();
     const inputRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const focusTimeoutRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     const [query, setQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     // Focus input when opened
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "SearchOverlay.useEffect": ()=>{
+            if (focusTimeoutRef.current) clearTimeout(focusTimeoutRef.current);
             if (isOpen) {
-                setTimeout({
+                focusTimeoutRef.current = setTimeout({
                     "SearchOverlay.useEffect": ()=>inputRef.current?.focus()
                 }["SearchOverlay.useEffect"], 100);
             }
+            return ({
+                "SearchOverlay.useEffect": ()=>{
+                    if (focusTimeoutRef.current) clearTimeout(focusTimeoutRef.current);
+                }
+            })["SearchOverlay.useEffect"];
         }
     }["SearchOverlay.useEffect"], [
         isOpen
@@ -524,12 +531,12 @@ function SearchOverlay({ isOpen, onClose }) {
                         className: "w-8 h-8 text-neutral-400 hover:text-neutral-900"
                     }, void 0, false, {
                         fileName: "[project]/components/layout/SearchOverlay.tsx",
-                        lineNumber: 46,
+                        lineNumber: 51,
                         columnNumber: 13
                     }, this)
                 }, void 0, false, {
                     fileName: "[project]/components/layout/SearchOverlay.tsx",
-                    lineNumber: 41,
+                    lineNumber: 46,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -544,20 +551,20 @@ function SearchOverlay({ isOpen, onClose }) {
                             className: "w-full text-4xl md:text-5xl font-light text-neutral-900 placeholder:text-neutral-300 bg-transparent border-b-2 border-neutral-200 focus:border-primary outline-none py-4 pr-12 transition-colors"
                         }, void 0, false, {
                             fileName: "[project]/components/layout/SearchOverlay.tsx",
-                            lineNumber: 51,
+                            lineNumber: 56,
                             columnNumber: 13
                         }, this),
                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
                             className: "absolute right-0 top-1/2 -translate-y-1/2 w-8 h-8 text-neutral-400"
                         }, void 0, false, {
                             fileName: "[project]/components/layout/SearchOverlay.tsx",
-                            lineNumber: 59,
+                            lineNumber: 64,
                             columnNumber: 13
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/layout/SearchOverlay.tsx",
-                    lineNumber: 50,
+                    lineNumber: 55,
                     columnNumber: 11
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -570,7 +577,7 @@ function SearchOverlay({ isOpen, onClose }) {
                                     children: "Popular Searches"
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/SearchOverlay.tsx",
-                                    lineNumber: 65,
+                                    lineNumber: 70,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("ul", {
@@ -583,30 +590,30 @@ function SearchOverlay({ isOpen, onClose }) {
                                                         className: "w-4 h-4 opacity-0 -ml-6 group-hover:opacity-100 group-hover:ml-0 transition-all duration-300"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/layout/SearchOverlay.tsx",
-                                                        lineNumber: 72,
+                                                        lineNumber: 77,
                                                         columnNumber: 23
                                                     }, this),
                                                     item
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/layout/SearchOverlay.tsx",
-                                                lineNumber: 71,
+                                                lineNumber: 76,
                                                 columnNumber: 21
                                             }, this)
                                         }, item, false, {
                                             fileName: "[project]/components/layout/SearchOverlay.tsx",
-                                            lineNumber: 70,
+                                            lineNumber: 75,
                                             columnNumber: 19
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/SearchOverlay.tsx",
-                                    lineNumber: 68,
+                                    lineNumber: 73,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/layout/SearchOverlay.tsx",
-                            lineNumber: 64,
+                            lineNumber: 69,
                             columnNumber: 13
                         }, this),
                         query && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -616,7 +623,7 @@ function SearchOverlay({ isOpen, onClose }) {
                                     children: "Results"
                                 }, void 0, false, {
                                     fileName: "[project]/components/layout/SearchOverlay.tsx",
-                                    lineNumber: 81,
+                                    lineNumber: 86,
                                     columnNumber: 17
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -627,7 +634,7 @@ function SearchOverlay({ isOpen, onClose }) {
                                         '"...',
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("br", {}, void 0, false, {
                                             fileName: "[project]/components/layout/SearchOverlay.tsx",
-                                            lineNumber: 86,
+                                            lineNumber: 91,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -635,40 +642,40 @@ function SearchOverlay({ isOpen, onClose }) {
                                             children: "(This is a simulated search interface)"
                                         }, void 0, false, {
                                             fileName: "[project]/components/layout/SearchOverlay.tsx",
-                                            lineNumber: 87,
+                                            lineNumber: 92,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/layout/SearchOverlay.tsx",
-                                    lineNumber: 84,
+                                    lineNumber: 89,
                                     columnNumber: 17
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/components/layout/SearchOverlay.tsx",
-                            lineNumber: 80,
+                            lineNumber: 85,
                             columnNumber: 15
                         }, this)
                     ]
                 }, void 0, true, {
                     fileName: "[project]/components/layout/SearchOverlay.tsx",
-                    lineNumber: 63,
+                    lineNumber: 68,
                     columnNumber: 11
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/components/layout/SearchOverlay.tsx",
-            lineNumber: 34,
+            lineNumber: 39,
             columnNumber: 9
         }, this)
     }, void 0, false, {
         fileName: "[project]/components/layout/SearchOverlay.tsx",
-        lineNumber: 32,
+        lineNumber: 37,
         columnNumber: 5
     }, this);
 }
-_s(SearchOverlay, "YfAzgbggdhXi+bWu5D0yDo1X3gw=");
+_s(SearchOverlay, "7e3WMpkwiGEvUy/2EmL4I2wHjCE=");
 _c = SearchOverlay;
 var _c;
 __turbopack_context__.k.register(_c, "SearchOverlay");
@@ -1108,6 +1115,7 @@ function Header() {
                                         className: "flex items-center shrink-0",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                             href: "/",
+                                            prefetch: false,
                                             className: "flex items-center py-2",
                                             "aria-label": "One and Only Home",
                                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$Logo$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["OneAndOnlyLogo"], {
@@ -1115,7 +1123,7 @@ function Header() {
                                                 variant: isScrolled ? "orange" : "orange"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/layout/Header.tsx",
-                                                lineNumber: 150,
+                                                lineNumber: 151,
                                                 columnNumber: 17
                                             }, this)
                                         }, void 0, false, {
@@ -1161,39 +1169,40 @@ function Header() {
                                                             className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])("ml-1.5 w-4 h-4 transition-transform opacity-40", activeMenu === item.label && "rotate-180")
                                                         }, void 0, false, {
                                                             fileName: "[project]/components/layout/Header.tsx",
-                                                            lineNumber: 185,
+                                                            lineNumber: 186,
                                                             columnNumber: 23
                                                         }, this)
                                                     ]
                                                 }, void 0, true, {
                                                     fileName: "[project]/components/layout/Header.tsx",
-                                                    lineNumber: 174,
+                                                    lineNumber: 175,
                                                     columnNumber: 19
                                                 }, this)
                                             }, item.label, false, {
                                                 fileName: "[project]/components/layout/Header.tsx",
-                                                lineNumber: 165,
+                                                lineNumber: 166,
                                                 columnNumber: 17
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/Header.tsx",
-                                        lineNumber: 158,
+                                        lineNumber: 159,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                         className: "hidden lg:flex items-center gap-6",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
                                             href: "/contact",
+                                            prefetch: false,
                                             className: (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$clsx$2f$dist$2f$clsx$2e$mjs__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"])("text-xs font-semibold tracking-widest uppercase px-5 py-2.5 border transition-colors duration-200", "border-neutral-900 text-neutral-900 hover:bg-neutral-900 hover:text-white"),
                                             children: "Request Quote"
                                         }, void 0, false, {
                                             fileName: "[project]/components/layout/Header.tsx",
-                                            lineNumber: 199,
+                                            lineNumber: 200,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/Header.tsx",
-                                        lineNumber: 198,
+                                        lineNumber: 199,
                                         columnNumber: 13
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -1204,12 +1213,12 @@ function Header() {
                                             className: "w-5 h-5"
                                         }, void 0, false, {
                                             fileName: "[project]/components/layout/Header.tsx",
-                                            lineNumber: 218,
+                                            lineNumber: 220,
                                             columnNumber: 15
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/layout/Header.tsx",
-                                        lineNumber: 210,
+                                        lineNumber: 212,
                                         columnNumber: 13
                                     }, this)
                                 ]
@@ -1231,7 +1240,7 @@ function Header() {
                         cards: discoverMenuCards
                     }, void 0, false, {
                         fileName: "[project]/components/layout/Header.tsx",
-                        lineNumber: 224,
+                        lineNumber: 226,
                         columnNumber: 9
                     }, this)
                 ]
@@ -1245,7 +1254,7 @@ function Header() {
                 onClose: ()=>setIsMenuOpen(false)
             }, void 0, false, {
                 fileName: "[project]/components/layout/Header.tsx",
-                lineNumber: 233,
+                lineNumber: 235,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$layout$2f$SearchOverlay$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["SearchOverlay"], {
@@ -1253,7 +1262,7 @@ function Header() {
                 onClose: ()=>setIsSearchOpen(false)
             }, void 0, false, {
                 fileName: "[project]/components/layout/Header.tsx",
-                lineNumber: 234,
+                lineNumber: 236,
                 columnNumber: 7
             }, this)
         ]
@@ -2101,12 +2110,21 @@ function AIAdvisor() {
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [result, setResult] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const inputRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
+    const focusTimeoutRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
     // Focus input when opened
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "AIAdvisor.useEffect": ()=>{
-            if (open) setTimeout({
-                "AIAdvisor.useEffect": ()=>inputRef.current?.focus()
-            }["AIAdvisor.useEffect"], 100);
+            if (focusTimeoutRef.current) clearTimeout(focusTimeoutRef.current);
+            if (open) {
+                focusTimeoutRef.current = setTimeout({
+                    "AIAdvisor.useEffect": ()=>inputRef.current?.focus()
+                }["AIAdvisor.useEffect"], 100);
+            }
+            return ({
+                "AIAdvisor.useEffect": ()=>{
+                    if (focusTimeoutRef.current) clearTimeout(focusTimeoutRef.current);
+                }
+            })["AIAdvisor.useEffect"];
         }
     }["AIAdvisor.useEffect"], [
         open
@@ -2163,7 +2181,7 @@ function AIAdvisor() {
                 position: "bottom-right"
             }, void 0, false, {
                 fileName: "[project]/components/ai/Advisor.tsx",
-                lineNumber: 93,
+                lineNumber: 100,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2176,7 +2194,7 @@ function AIAdvisor() {
                         className: "w-4 h-4 text-primary group-hover:text-white transition-colors"
                     }, void 0, false, {
                         fileName: "[project]/components/ai/Advisor.tsx",
-                        lineNumber: 106,
+                        lineNumber: 113,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2184,13 +2202,13 @@ function AIAdvisor() {
                         children: "AI Advisor"
                     }, void 0, false, {
                         fileName: "[project]/components/ai/Advisor.tsx",
-                        lineNumber: 107,
+                        lineNumber: 114,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/ai/Advisor.tsx",
-                lineNumber: 96,
+                lineNumber: 103,
                 columnNumber: 7
             }, this),
             open && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2204,7 +2222,7 @@ function AIAdvisor() {
                         onClick: ()=>setOpen(false)
                     }, void 0, false, {
                         fileName: "[project]/components/ai/Advisor.tsx",
-                        lineNumber: 119,
+                        lineNumber: 126,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2222,12 +2240,12 @@ function AIAdvisor() {
                                                     className: "w-5 h-5 text-white"
                                                 }, void 0, false, {
                                                     fileName: "[project]/components/ai/Advisor.tsx",
-                                                    lineNumber: 130,
+                                                    lineNumber: 137,
                                                     columnNumber: 19
                                                 }, this)
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 129,
+                                                lineNumber: 136,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2237,7 +2255,7 @@ function AIAdvisor() {
                                                         children: "AI Workspace Consultant"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                                        lineNumber: 133,
+                                                        lineNumber: 140,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2245,19 +2263,19 @@ function AIAdvisor() {
                                                         children: "Powered by One & Only × GPT-4o"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                                        lineNumber: 136,
+                                                        lineNumber: 143,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 132,
+                                                lineNumber: 139,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                        lineNumber: 128,
+                                        lineNumber: 135,
                                         columnNumber: 15
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2268,18 +2286,18 @@ function AIAdvisor() {
                                             className: "w-4 h-4"
                                         }, void 0, false, {
                                             fileName: "[project]/components/ai/Advisor.tsx",
-                                            lineNumber: 146,
+                                            lineNumber: 153,
                                             columnNumber: 17
                                         }, this)
                                     }, void 0, false, {
                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                        lineNumber: 141,
+                                        lineNumber: 148,
                                         columnNumber: 15
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                lineNumber: 127,
+                                lineNumber: 134,
                                 columnNumber: 13
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2292,7 +2310,7 @@ function AIAdvisor() {
                                                 children: "Describe your workspace project — team size, industry, location, and budget — and I'll engineer a curated system recommendation from our live catalog."
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 154,
+                                                lineNumber: 161,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2303,7 +2321,7 @@ function AIAdvisor() {
                                                         children: "Try a sample"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                                        lineNumber: 161,
+                                                        lineNumber: 168,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2314,18 +2332,18 @@ function AIAdvisor() {
                                                                 children: q
                                                             }, q, false, {
                                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                                lineNumber: 166,
+                                                                lineNumber: 173,
                                                                 columnNumber: 25
                                                             }, this))
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                                        lineNumber: 164,
+                                                        lineNumber: 171,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 160,
+                                                lineNumber: 167,
                                                 columnNumber: 19
                                             }, this)
                                         ]
@@ -2337,7 +2355,7 @@ function AIAdvisor() {
                                                 className: "w-8 h-8 animate-spin text-primary"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 181,
+                                                lineNumber: 188,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2345,13 +2363,13 @@ function AIAdvisor() {
                                                 children: "Analysing catalog and engineering your recommendations…"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 182,
+                                                lineNumber: 189,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                        lineNumber: 180,
+                                        lineNumber: 187,
                                         columnNumber: 17
                                     }, this),
                                     result && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2365,7 +2383,7 @@ function AIAdvisor() {
                                                         children: "Consultant Summary"
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                                        lineNumber: 192,
+                                                        lineNumber: 199,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2373,7 +2391,7 @@ function AIAdvisor() {
                                                         children: result.summary
                                                     }, void 0, false, {
                                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                                        lineNumber: 195,
+                                                        lineNumber: 202,
                                                         columnNumber: 21
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2384,7 +2402,7 @@ function AIAdvisor() {
                                                                 children: "Estimated project total:"
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                                lineNumber: 199,
+                                                                lineNumber: 206,
                                                                 columnNumber: 23
                                                             }, this),
                                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2392,19 +2410,19 @@ function AIAdvisor() {
                                                                 children: result.totalBudget
                                                             }, void 0, false, {
                                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                                lineNumber: 202,
+                                                                lineNumber: 209,
                                                                 columnNumber: 23
                                                             }, this)
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                                        lineNumber: 198,
+                                                        lineNumber: 205,
                                                         columnNumber: 21
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 191,
+                                                lineNumber: 198,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2419,7 +2437,7 @@ function AIAdvisor() {
                                                         ]
                                                     }, void 0, true, {
                                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                                        lineNumber: 210,
+                                                        lineNumber: 217,
                                                         columnNumber: 21
                                                     }, this),
                                                     result.recommendations?.map((rec, i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2433,7 +2451,7 @@ function AIAdvisor() {
                                                                             children: rec.productName
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/ai/Advisor.tsx",
-                                                                            lineNumber: 220,
+                                                                            lineNumber: 227,
                                                                             columnNumber: 27
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -2444,18 +2462,18 @@ function AIAdvisor() {
                                                                                 className: "w-3.5 h-3.5"
                                                                             }, void 0, false, {
                                                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                                                lineNumber: 228,
+                                                                                lineNumber: 235,
                                                                                 columnNumber: 29
                                                                             }, this)
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/ai/Advisor.tsx",
-                                                                            lineNumber: 223,
+                                                                            lineNumber: 230,
                                                                             columnNumber: 27
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/components/ai/Advisor.tsx",
-                                                                    lineNumber: 219,
+                                                                    lineNumber: 226,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -2463,7 +2481,7 @@ function AIAdvisor() {
                                                                     children: rec.why
                                                                 }, void 0, false, {
                                                                     fileName: "[project]/components/ai/Advisor.tsx",
-                                                                    lineNumber: 231,
+                                                                    lineNumber: 238,
                                                                     columnNumber: 25
                                                                 }, this),
                                                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2474,7 +2492,7 @@ function AIAdvisor() {
                                                                             children: rec.category?.replace("oando-", "").replace(/-/g, " ")
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/ai/Advisor.tsx",
-                                                                            lineNumber: 235,
+                                                                            lineNumber: 242,
                                                                             columnNumber: 27
                                                                         }, this),
                                                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -2482,25 +2500,25 @@ function AIAdvisor() {
                                                                             children: rec.budgetEstimate
                                                                         }, void 0, false, {
                                                                             fileName: "[project]/components/ai/Advisor.tsx",
-                                                                            lineNumber: 240,
+                                                                            lineNumber: 247,
                                                                             columnNumber: 27
                                                                         }, this)
                                                                     ]
                                                                 }, void 0, true, {
                                                                     fileName: "[project]/components/ai/Advisor.tsx",
-                                                                    lineNumber: 234,
+                                                                    lineNumber: 241,
                                                                     columnNumber: 25
                                                                 }, this)
                                                             ]
                                                         }, i, true, {
                                                             fileName: "[project]/components/ai/Advisor.tsx",
-                                                            lineNumber: 215,
+                                                            lineNumber: 222,
                                                             columnNumber: 23
                                                         }, this))
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 209,
+                                                lineNumber: 216,
                                                 columnNumber: 19
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2512,19 +2530,19 @@ function AIAdvisor() {
                                                 children: "Start a new query"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 248,
+                                                lineNumber: 255,
                                                 columnNumber: 19
                                             }, this)
                                         ]
                                     }, void 0, true, {
                                         fileName: "[project]/components/ai/Advisor.tsx",
-                                        lineNumber: 189,
+                                        lineNumber: 196,
                                         columnNumber: 17
                                     }, this)
                                 ]
                             }, void 0, true, {
                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                lineNumber: 151,
+                                lineNumber: 158,
                                 columnNumber: 13
                             }, this),
                             !result && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -2550,7 +2568,7 @@ function AIAdvisor() {
                                             disabled: loading
                                         }, void 0, false, {
                                             fileName: "[project]/components/ai/Advisor.tsx",
-                                            lineNumber: 268,
+                                            lineNumber: 275,
                                             columnNumber: 19
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2563,47 +2581,47 @@ function AIAdvisor() {
                                                 className: "w-4 h-4 animate-spin"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 292,
+                                                lineNumber: 299,
                                                 columnNumber: 23
                                             }, this) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$send$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$export__default__as__Send$3e$__["Send"], {
                                                 className: "w-4 h-4"
                                             }, void 0, false, {
                                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                                lineNumber: 294,
+                                                lineNumber: 301,
                                                 columnNumber: 23
                                             }, this)
                                         }, void 0, false, {
                                             fileName: "[project]/components/ai/Advisor.tsx",
-                                            lineNumber: 284,
+                                            lineNumber: 291,
                                             columnNumber: 19
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/components/ai/Advisor.tsx",
-                                    lineNumber: 267,
+                                    lineNumber: 274,
                                     columnNumber: 17
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/components/ai/Advisor.tsx",
-                                lineNumber: 263,
+                                lineNumber: 270,
                                 columnNumber: 15
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/components/ai/Advisor.tsx",
-                        lineNumber: 125,
+                        lineNumber: 132,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/components/ai/Advisor.tsx",
-                lineNumber: 112,
+                lineNumber: 119,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true);
 }
-_s(AIAdvisor, "27mvqTQb/T3/cc3gItjYYZYdXuc=");
+_s(AIAdvisor, "hpu6fpCk8xwy5HfDxUX0Vzhml5I=");
 _c = AIAdvisor;
 var _c;
 __turbopack_context__.k.register(_c, "AIAdvisor");

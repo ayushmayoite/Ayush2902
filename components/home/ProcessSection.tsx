@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const steps = [
   {
@@ -41,9 +42,12 @@ export function ProcessSection() {
             <p className="text-neutral-500 text-lg mb-8">
               We&apos;ve refined our workflow to ensure your office transformation is smooth, on-time, and within budget.
             </p>
-            <button className="bg-neutral-900 text-white px-8 py-3 rounded-full font-medium hover:bg-neutral-800 transition-colors">
+            <Link
+              href="/contact"
+              className="inline-flex bg-neutral-900 text-white px-8 py-3 rounded-full font-medium hover:bg-neutral-800 transition-colors"
+            >
               Start Your Project
-            </button>
+            </Link>
           </div>
 
           {/* Scrolling Right Steps */}
