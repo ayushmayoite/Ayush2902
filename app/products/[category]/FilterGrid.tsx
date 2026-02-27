@@ -16,7 +16,7 @@ import {
   ChevronUp,
   Filter,
 } from "lucide-react";
-import { useState, useMemo, useCallback, useEffect, Suspense } from "react";
+import { useState, useMemo, useCallback, Suspense } from "react";
 import clsx from "clsx";
 
 // ─── Types ──────────────────────────────────────────────────────────────────
@@ -26,14 +26,7 @@ interface FlatProduct extends Product {
   seriesName: string;
 }
 
-type SortOption =
-  | "az"
-  | "za"
-  | "newest"
-  | "ai-sustainability"
-  | "ai-price"
-  | "ai-material"
-  | "ai-ergonomic";
+type SortOption = "az" | "za";
 
 interface ActiveFilters {
   series: string;
@@ -75,11 +68,15 @@ function buildUrl(pathname: string, filters: ActiveFilters): string {
   return qs ? `${pathname}?${qs}` : pathname;
 }
 
+function parseSortOption(value: string | null): SortOption {
+  return value === "za" ? "za" : "az";
+}
+
 function parseFilters(sp: URLSearchParams): ActiveFilters {
   return {
     series: sp.get("series") ?? "all",
     query: sp.get("q") ?? "",
-    sort: (sp.get("sort") as SortOption) ?? "az",
+    sort: parseSortOption(sp.get("sort")),
     subcategory: sp.getAll("sub"),
     useCase: sp.getAll("use"),
     priceRange: sp.getAll("price"),
@@ -441,8 +438,6 @@ function AdvancedFilterGridInner({
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [aiRankedIds, setAiRankedIds] = useState<string[] | null>(null);
-  const [aiLoading, setAiLoading] = useState(false);
 
   // Parse filters from URL
   const filters = useMemo(() => parseFilters(searchParams), [searchParams]);
@@ -521,40 +516,6 @@ function AdvancedFilterGridInner({
         maxEcoScore > minEcoScore,
     };
   }, [allProducts]);
-
-  // Fetch AI ranking when an AI sort mode is selected
-  useEffect(() => {
-    const AI_MODES = ["ai-sustainability", "ai-price", "ai-material", "ai-ergonomic"];
-    if (!AI_MODES.includes(filters.sort)) {
-      setAiRankedIds(null);
-      return;
-    }
-    const rankBy = filters.sort.replace("ai-", "");
-    setAiLoading(true);
-    fetch("/api/filter", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        products: allProducts.map((p) => ({
-          id: p.id,
-          name: p.name,
-          description: p.description,
-          sustainabilityScore: p.metadata?.sustainabilityScore,
-          priceRange: p.metadata?.priceRange,
-          material: p.metadata?.material,
-          bifmaCertified: p.metadata?.bifmaCertified,
-          isHeightAdjustable: p.metadata?.isHeightAdjustable,
-          hasHeadrest: p.metadata?.hasHeadrest,
-        })),
-        category: categoryId,
-        rankBy,
-      }),
-    })
-      .then((r) => r.json())
-      .then((data) => setAiRankedIds(data.rankedIds ?? null))
-      .catch(() => setAiRankedIds(null))
-      .finally(() => setAiLoading(false));
-  }, [filters.sort, allProducts, categoryId]);
 
   // Fuse.js instance for fuzzy product search
   const fuse = useMemo(
@@ -656,19 +617,14 @@ function AdvancedFilterGridInner({
     }
 
     // Sort
-    if (aiRankedIds && filters.sort.startsWith("ai-")) {
-      const rankMap = new Map(aiRankedIds.map((id, i) => [id, i]));
-      list.sort((a, b) => (rankMap.get(a.id) ?? 999) - (rankMap.get(b.id) ?? 999));
-    } else {
-      list.sort((a, b) =>
-        filters.sort === "za"
-          ? b.name.localeCompare(a.name)
-          : a.name.localeCompare(b.name),
-      );
-    }
+    list.sort((a, b) =>
+      filters.sort === "za"
+        ? b.name.localeCompare(a.name)
+        : a.name.localeCompare(b.name),
+    );
 
     return list;
-  }, [allProducts, filters, aiRankedIds, options, fuse]);
+  }, [allProducts, filters, options, fuse]);
 
   // Update URL on filter change
   const updateFilters = useCallback(
@@ -979,11 +935,6 @@ function AdvancedFilterGridInner({
               >
                 {filteredProducts.length} / {allProducts.length} products
               </span>
-              {aiLoading && (
-                <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400 animate-pulse">
-                  AI ranking…
-                </span>
-              )}
               <select
                 aria-label="Sort products"
                 className="h-10 px-3 bg-white border border-neutral-200 rounded-sm text-sm text-neutral-700 focus:outline-none focus:border-neutral-800"
@@ -994,13 +945,6 @@ function AdvancedFilterGridInner({
               >
                 <option value="az">Name A–Z</option>
                 <option value="za">Name Z–A</option>
-                <option value="newest">Newest</option>
-                <optgroup label="AI Sort">
-                  <option value="ai-sustainability">AI: Sustainability</option>
-                  <option value="ai-price">AI: Price Low–High</option>
-                  <option value="ai-material">AI: Recycled Material</option>
-                  <option value="ai-ergonomic">AI: Ergonomic</option>
-                </optgroup>
               </select>
             </div>
           </div>
