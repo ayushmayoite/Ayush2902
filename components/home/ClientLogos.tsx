@@ -63,7 +63,7 @@ export function ClientLogos() {
               </p>
               <Link
                 href={pillar.href}
-                className="inline-flex items-center gap-1.5 text-[16px] text-[#D30000] font-medium hover:underline"
+                className="inline-flex items-center gap-1.5 text-[16px] text-primary font-medium hover:underline"
               >
                 {pillar.linkText}
                 <ArrowRight className="w-4 h-4" />

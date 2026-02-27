@@ -291,7 +291,7 @@ function ProductCard({
   return (
     <Link
       href={`/products/${categoryId}/${product.slug || product.id}`}
-      className="group block bg-white border border-neutral-100 hover:border-neutral-300 transition-all duration-200 hover:shadow-sm"
+      className="group block bg-white border border-neutral-100 hover:border-neutral-300 hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
     >
       {/* Image */}
       <div className="relative w-full aspect-square bg-stone-50 rounded-md overflow-hidden">
@@ -836,7 +836,7 @@ function AdvancedFilterGridInner({
 
   return (
     <section
-      className="w-full bg-[#f8f9fa]"
+      className="w-full bg-neutral-50"
       aria-label={`${category.name} product catalog`}
     >
       {/* ── Top Toolbar ── */}
@@ -978,7 +978,7 @@ function AdvancedFilterGridInner({
           />
           {/* Panel */}
           <div
-            className="fixed inset-y-0 left-0 w-80 max-w-full bg-[#f8f9fa] z-50 overflow-y-auto lg:hidden shadow-2xl"
+            className="fixed inset-y-0 left-0 w-80 max-w-full bg-neutral-50 z-50 overflow-y-auto lg:hidden shadow-2xl"
             role="dialog"
             aria-modal="true"
             aria-label="Filter products"

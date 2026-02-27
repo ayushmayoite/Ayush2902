@@ -78,7 +78,7 @@ export function Recommendations() {
                 <Link
                   key={idx}
                   href={productHref}
-                  className="group flex flex-col bg-white p-6 border border-neutral-200 hover:border-neutral-900 transition-colors h-full"
+                  className="group flex flex-col bg-white p-6 border border-neutral-200 hover:border-neutral-900 hover:shadow-lg hover:-translate-y-1 transition-all duration-300 h-full"
                 >
                   <div className="mb-4">
                     <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-400">

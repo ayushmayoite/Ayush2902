@@ -42,7 +42,7 @@ export function PartnerSection() {
             href="/"
             target="_blank"
             rel="noopener noreferrer"
-            className="group inline-flex items-center gap-2 text-base text-[#BF0D17] font-medium hover:text-[#9A0A12] transition-colors"
+            className="group inline-flex items-center gap-2 text-base text-primary font-medium hover:text-primary-hover transition-colors"
           >
             Read about our partnership
             <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />

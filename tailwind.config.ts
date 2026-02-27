@@ -26,12 +26,7 @@ const config: Config = {
       },
     },
     extend: {
-      // Brand colours
-      colors: {
-        primary: '#D30000',       // OandO red
-        navy: { 900: '#0A1121' },
-        brass: { 500: '#D4AF37' },
-      },
+      // All brand colours defined in globals.css @theme
       keyframes: {
         marquee: {
           '0%': { transform: 'translateX(0%)' },

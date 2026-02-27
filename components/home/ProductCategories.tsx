@@ -87,7 +87,7 @@ export function ProductCategories() {
               </div>
 
               {/* Hover: red accent line at top */}
-              <div className="absolute top-0 left-0 right-0 h-0.5 bg-[#BF0D17] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
+              <div className="absolute top-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left" />
             </Link>
           ))}
         </div>
@@ -96,7 +96,7 @@ export function ProductCategories() {
         <div className="mt-10 flex justify-start">
           <Link
             href="/products"
-            className="inline-flex items-center gap-2 text-base font-medium text-neutral-900 border border-neutral-300 px-7 py-3 rounded-none hover:border-[#BF0D17] hover:text-[#BF0D17] transition-colors"
+            className="inline-flex items-center gap-2 text-base font-medium text-neutral-900 border border-neutral-300 px-7 py-3 rounded-none hover:border-primary hover:text-primary transition-colors"
           >
             Show all products
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">

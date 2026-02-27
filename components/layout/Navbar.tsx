@@ -137,8 +137,8 @@ export function Navbar() {
                   className={cn(
                     "flex items-center gap-1 text-[22px] font-medium tracking-wide transition-colors duration-200 py-2",
                     activeMegaMenu === key
-                      ? "text-[#D30000]"
-                      : "text-neutral-900 hover:text-[#D30000]",
+                      ? "text-primary"
+                      : "text-neutral-900 hover:text-primary",
                   )}
                 >
                   {section.title}
@@ -146,7 +146,7 @@ export function Navbar() {
                     className={cn(
                       "w-3 h-3 transition-transform duration-300 mt-1",
                       activeMegaMenu === key
-                        ? "rotate-180 text-[#D30000]"
+                        ? "rotate-180 text-primary"
                         : "text-neutral-400",
                     )}
                   />
@@ -174,7 +174,7 @@ export function Navbar() {
                             <li key={item.label}>
                               <Link
                                 href={item.href}
-                                className="block text-[18px] text-neutral-600 hover:text-[#D30000] transition-colors duration-200"
+                                className="block text-[18px] text-neutral-600 hover:text-primary transition-colors duration-200"
                               >
                                 {item.label}
                               </Link>
@@ -190,21 +190,21 @@ export function Navbar() {
 
             <Link
               href="/gallery"
-              className="text-[22px] font-medium tracking-wide text-neutral-900 hover:text-[#D30000] transition-colors duration-200"
+              className="text-[22px] font-medium tracking-wide text-neutral-900 hover:text-primary transition-colors duration-200"
             >
               Projects
             </Link>
 
             <Link
               href="/about"
-              className="text-[22px] font-medium tracking-wide text-neutral-900 hover:text-[#D30000] transition-colors duration-200"
+              className="text-[22px] font-medium tracking-wide text-neutral-900 hover:text-primary transition-colors duration-200"
             >
               About
             </Link>
 
             <Link
               href="/contact"
-              className="text-[22px] font-medium tracking-wide text-neutral-900 hover:text-[#D30000] transition-colors duration-200"
+              className="text-[22px] font-medium tracking-wide text-neutral-900 hover:text-primary transition-colors duration-200"
             >
               Contact
             </Link>
@@ -222,7 +222,7 @@ export function Navbar() {
             <div className="hidden md:flex items-center gap-4 pl-6 border-l border-neutral-200">
               <Link
                 href="/contact"
-                className="group flex items-center gap-2 bg-[#D30000] text-white text-[16px] font-medium px-6 py-3 rounded-none hover:bg-[#9A0A12] transition-colors duration-200"
+                className="group flex items-center gap-2 bg-primary text-white text-[16px] font-medium px-6 py-3 rounded-none hover:bg-primary-hover transition-colors duration-200"
               >
                 <span>Request Quote</span>
                 <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -289,21 +289,21 @@ export function Navbar() {
             <div className="pt-8 space-y-4 border-t border-neutral-100">
               <Link
                 href="/projects"
-                className="block text-3xl font-light text-neutral-900 hover:text-[#BF0D17] transition-colors"
+                className="block text-3xl font-light text-neutral-900 hover:text-primary transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Projects
               </Link>
               <Link
                 href="/about"
-                className="block text-3xl font-light text-neutral-900 hover:text-[#BF0D17] transition-colors"
+                className="block text-3xl font-light text-neutral-900 hover:text-primary transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 About
               </Link>
               <Link
                 href="/contact"
-                className="block text-3xl font-light text-neutral-900 hover:text-[#BF0D17] transition-colors"
+                className="block text-3xl font-light text-neutral-900 hover:text-primary transition-colors"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 Contact

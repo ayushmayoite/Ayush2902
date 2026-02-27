@@ -1,6 +1,6 @@
 export default function Loading() {
   return (
-    <div className="w-full bg-[#f8f9fa] min-h-screen">
+    <div className="w-full bg-neutral-50 min-h-screen">
       {/* Hero skeleton */}
       <div className="w-full h-[50vh] min-h-[400px] bg-neutral-200 animate-pulse" />
       {/* Toolbar skeleton */}
