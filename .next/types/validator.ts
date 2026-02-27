@@ -173,6 +173,42 @@ type RouteHandlerConfig<Route extends AppRouteHandlerRoutes = AppRouteHandlerRou
   type __Unused = __Check
 }
 
+// Validate ../../app/products/oando-chairs/[slug]/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/products/oando-chairs/[slug]">> = Specific
+  const handler = {} as typeof import("../../app/products/oando-chairs/[slug]/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/products/oando-chairs/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/products/oando-chairs">> = Specific
+  const handler = {} as typeof import("../../app/products/oando-chairs/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/products/oando-other-seating/[slug]/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/products/oando-other-seating/[slug]">> = Specific
+  const handler = {} as typeof import("../../app/products/oando-other-seating/[slug]/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
+// Validate ../../app/products/oando-other-seating/page.tsx
+{
+  type __IsExpected<Specific extends AppPageConfig<"/products/oando-other-seating">> = Specific
+  const handler = {} as typeof import("../../app/products/oando-other-seating/page.js")
+  type __Check = __IsExpected<typeof handler>
+  // @ts-ignore
+  type __Unused = __Check
+}
+
 // Validate ../../app/products/page.tsx
 {
   type __IsExpected<Specific extends AppPageConfig<"/products">> = Specific

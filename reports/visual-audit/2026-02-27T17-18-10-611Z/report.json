@@ -1,0 +1,573 @@
+[
+  {
+    "viewport": "desktop",
+    "route": "/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 5591,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/about/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/about/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 2554,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 400 ()",
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/contact/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/contact/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 709,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/products/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 3956,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/projects/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/projects/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 2104,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/service/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/service/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 902,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/sustainability/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/sustainability/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 2840,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/showrooms/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/showrooms/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 1002,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/gallery/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/gallery/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 1463,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/catalog/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/catalog/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 1050,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/configurator/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/workstations/configurator/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 1082,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/downloads/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/downloads/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 1445,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 ()"
+    ],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/career/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/career/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 2014,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/news/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/news/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 909,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/tracking/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/tracking/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 743,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/social/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/social/",
+    "title": "Social | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 1000,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 ()",
+      "Failed to load resource: the server responded with a status of 404 ()",
+      "Failed to load resource: the server responded with a status of 404 ()"
+    ],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/products/oando-chairs/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-seating/",
+    "title": "Chairs | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 7618,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/products/oando-other-seating/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-seating/",
+    "title": "Chairs | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 7618,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/products/oando-seating/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-seating/",
+    "title": "Chairs | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 7618,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/products/oando-workstations/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-workstations/",
+    "title": "Workstations | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 2354,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/products/oando-tables/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-tables/",
+    "title": "Tables | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 4641,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/products/oando-storage/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-storage/",
+    "title": "Storage | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 2243,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/products/oando-soft-seating/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-soft-seating/",
+    "title": "Soft Seating | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 8631,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/products/oando-collaborative/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-collaborative/",
+    "title": "Collaborative | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 1104,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "desktop",
+    "route": "/products/oando-educational/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-educational/",
+    "title": "Educational | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 2847,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 5525,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/about/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/about/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 2482,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 400 ()",
+      "Failed to load resource: the server responded with a status of 400 ()"
+    ],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/contact/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/contact/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 637,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/products/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 3883,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/projects/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/projects/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 2031,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/service/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/service/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 830,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/sustainability/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/sustainability/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 2768,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/showrooms/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/showrooms/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 930,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/gallery/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/gallery/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 1391,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/catalog/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/catalog/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 978,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/configurator/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/workstations/configurator/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 1017,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/downloads/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/downloads/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 1373,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 ()"
+    ],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/career/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/career/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 1942,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/news/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/news/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 837,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/tracking/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/tracking/",
+    "title": "One and Only Furniture | Premium Office Solutions — Patna, Bihar",
+    "hasHidden404": false,
+    "bodyTextLen": 670,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/social/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/social/",
+    "title": "Social | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 935,
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 404 ()",
+      "Failed to load resource: the server responded with a status of 404 ()"
+    ],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/products/oando-chairs/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-seating/",
+    "title": "Chairs | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 7439,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/products/oando-other-seating/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-seating/",
+    "title": "Chairs | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 7439,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/products/oando-seating/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-seating/",
+    "title": "Chairs | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 7439,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/products/oando-workstations/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-workstations/",
+    "title": "Workstations | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 2247,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/products/oando-tables/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-tables/",
+    "title": "Tables | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 4488,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/products/oando-storage/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-storage/",
+    "title": "Storage | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 2147,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/products/oando-soft-seating/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-soft-seating/",
+    "title": "Soft Seating | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 8459,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/products/oando-collaborative/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-collaborative/",
+    "title": "Collaborative | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 1032,
+    "consoleErrors": [],
+    "ok": true
+  },
+  {
+    "viewport": "mobile",
+    "route": "/products/oando-educational/",
+    "status": 200,
+    "finalUrl": "https://antigravity26022026.vercel.app/products/oando-educational/",
+    "title": "Educational | One and Only Furniture | One and Only Furniture",
+    "hasHidden404": false,
+    "bodyTextLen": 2751,
+    "consoleErrors": [],
+    "ok": true
+  }
+]
