@@ -93,7 +93,11 @@ async function ProductContent({
     notFound();
   }
 
-  const p = rawProduct as Product;
+  const p = rawProduct as Product & {
+    alt_text?: string;
+    metadata?: (Product["metadata"] & { ai_alt_text?: string }) | null;
+  };
+  const aiOverview = p.alt_text || p.metadata?.ai_alt_text || p.description || "";
 
   const compatProduct: CompatProduct = {
     id: p.id,
@@ -107,10 +111,13 @@ async function ProductContent({
     threeDModelUrl: p["3d_model"],
     variants: [],
     detailedInfo: {
-      overview: "",
-      features: [],
-      dimensions: "",
-      materials: [],
+      overview: aiOverview,
+      features:
+        p.specs?.features?.filter(Boolean) ||
+        p.features?.filter(Boolean) ||
+        [],
+      dimensions: p.specs?.dimensions || "",
+      materials: p.specs?.materials?.filter(Boolean) || [],
     },
     metadata: p.metadata || {},
   };
@@ -120,10 +127,7 @@ async function ProductContent({
     "@context": "https://schema.org",
     "@type": "Product",
     name: p.name,
-    description:
-      (rawProduct as any).alt_text ||
-      (rawProduct as any)?.metadata?.ai_alt_text ||
-      p.description,
+    description: aiOverview,
     image: p.images || [p.flagship_image],
     url,
     brand: { "@type": "Brand", name: "One and Only Furniture" },

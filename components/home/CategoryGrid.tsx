@@ -16,11 +16,11 @@ export async function CategoryGrid() {
     <section className="w-full bg-white py-20 md:py-28">
       <div className="container px-6 2xl:px-0">
         {/* Section header */}
-        <div className="mb-12 md:mb-16 max-w-xl">
-          <p className="text-label-xs text-neutral-400 uppercase tracking-[0.25em] mb-3">
+        <div className="mb-12 md:mb-16 max-w-2xl">
+          <p className="text-[11px] font-semibold text-neutral-500 uppercase tracking-[0.22em] mb-3">
             Product Range
           </p>
-          <h2 className="text-3xl md:text-4xl text-neutral-900">
+          <h2 className="font-serif text-4xl md:text-5xl text-neutral-900 leading-[1] tracking-tight">
             Explore Solutions
           </h2>
         </div>
@@ -50,7 +50,7 @@ export async function CategoryGrid() {
                 className="group relative bg-white block overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
                 {/* Uniform square image */}
-                <div className="relative aspect-square overflow-hidden bg-neutral-50">
+                <div className="relative aspect-square overflow-hidden bg-neutral-100">
                   <CategoryImage src={flagshipImage} alt={categoryName} />
                   <div className="absolute inset-0 bg-black/0 group-hover:bg-black/8 transition-colors duration-500" />
                 </div>
@@ -58,10 +58,10 @@ export async function CategoryGrid() {
                 {/* Card text */}
                 <div className="px-5 py-5 border-t border-neutral-100 flex items-center justify-between gap-4">
                   <div>
-                    <h3 className="text-body font-medium text-neutral-900 group-hover:text-primary transition-colors duration-200">
+                    <h3 className="font-serif text-2xl md:text-3xl leading-[0.95] text-neutral-900 group-hover:text-primary transition-colors duration-200">
                       {categoryName}
                     </h3>
-                    <p className="text-label text-neutral-400 mt-0.5">
+                    <p className="text-sm text-neutral-600 mt-1">
                       {allProducts.length} products
                     </p>
                   </div>

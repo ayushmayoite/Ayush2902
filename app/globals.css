@@ -133,13 +133,13 @@
     @apply inline-flex items-center justify-center gap-3 px-8 py-4 transition-all duration-200 border border-neutral-300 text-neutral-900 hover:border-neutral-900 hover:shadow-sm active:scale-[0.98];
   }
   .typ-h1 {
-    @apply text-[40px] md:text-[56px] lg:text-[64px] leading-[1.05] font-light tracking-tight;
+    @apply font-serif text-[44px] md:text-[60px] lg:text-[72px] leading-[1.02] font-medium tracking-tight;
   }
   .typ-h2 {
-    @apply text-[32px] md:text-[40px] lg:text-[48px] leading-tight font-light tracking-tight;
+    @apply font-serif text-[36px] md:text-[46px] lg:text-[56px] leading-[1.02] font-medium tracking-tight;
   }
   .typ-h3 {
-    @apply text-[24px] md:text-[28px] lg:text-[32px] leading-tight font-light;
+    @apply font-serif text-[28px] md:text-[34px] lg:text-[40px] leading-[1.02] font-medium;
   }
   .typ-eyebrow {
     @apply text-[10px] uppercase tracking-[0.3em] font-bold text-neutral-400;

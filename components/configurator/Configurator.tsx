@@ -217,7 +217,7 @@ export function Configurator() {
         </motion.div>
 
         {/* Dimensions Label Overlay */}
-        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-neutral-500 text-xs font-mono tracking-widest bg-white/90 px-4 py-2 backdrop-blur-sm border border-neutral-200">
+        <div className="absolute bottom-6 left-1/2 -translate-x-1/2 text-neutral-500 text-xs font-sans tracking-widest bg-white/90 px-4 py-2 backdrop-blur-sm border border-neutral-200">
           W: {size.widthCm} | D: {size.depthCm}
         </div>
       </div>

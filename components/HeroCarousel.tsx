@@ -8,25 +8,25 @@ import { ArrowRight, Pause, Play } from "lucide-react";
 
 const slides = [
   {
-    src: "/images/hero/dmrc-hero.webp",
+    src: "/images/hero/hero-1.webp",
     headline: "Spaces That\nWork Harder",
     sub: "Trusted by Titan, TVS, Usha & DMRC across 20 locations.",
     cta: { label: "Explore Products", href: "/products" },
   },
   {
-    src: "/images/hero/titan-hero.webp",
+    src: "/images/hero/hero-2.webp",
     headline: "Where Work\nBecomes Culture",
     sub: "15 years of engineering premium corporate environments.",
     cta: { label: "View Projects", href: "/projects" },
   },
   {
-    src: "/images/hero/usha-hero.webp",
+    src: "/images/hero/hero-3.webp",
     headline: "Inspire Every\nConversation",
     sub: "Conference and meeting solutions that command attention.",
     cta: { label: "Explore Chairs", href: "/products/oando-chairs" },
   },
   {
-    src: "/images/hero/franklin-hero.webp",
+    src: "/images/hero/hero-4.webp",
     headline: "Built for\nFocused Work",
     sub: "Modular workstations for heads-down, high-performance teams.",
     cta: { label: "See Workstations", href: "/products/oando-workstations" },

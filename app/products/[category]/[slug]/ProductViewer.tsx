@@ -90,10 +90,49 @@ export function ProductViewer({
 
   const [is3DMode, setIs3DMode] = useState(false);
 
+  const overview = product.detailedInfo?.overview || product.description;
+  const dimensions =
+    product.detailedInfo?.dimensions || "Dimensions available on request";
+  const materials =
+    product.detailedInfo?.materials?.filter(Boolean) ||
+    product.metadata?.material ||
+    [];
   const features =
     product.detailedInfo?.features?.filter(
       (f: string) => f && f !== "MANUFACTURING" && f !== "Sustainability",
     ) || [];
+  const useCases = product.metadata?.useCase || [];
+  const warrantyYears = product.metadata?.warrantyYears;
+  const warrantyText = warrantyYears
+    ? `${warrantyYears}-Year Warranty`
+    : "Warranty on request";
+  const certificationText = product.metadata?.bifmaCertified
+    ? "BIFMA Certified"
+    : "Certification on request";
+  const sustainabilityText =
+    typeof product.metadata?.sustainabilityScore === "number"
+      ? `Eco Score ${product.metadata.sustainabilityScore}/10`
+      : "Sustainability details on request";
+  const specRows = [
+    { label: "Dimensions", value: dimensions },
+    {
+      label: "Materials",
+      value:
+        materials.length > 0
+          ? materials.slice(0, 3).join(", ")
+          : "Material options available",
+    },
+    { label: "Warranty", value: warrantyText },
+    { label: "Certification", value: certificationText },
+    {
+      label: "Use Case",
+      value:
+        useCases.length > 0
+          ? useCases.slice(0, 3).join(", ")
+          : "Corporate and institutional",
+    },
+    { label: "Sustainability", value: sustainabilityText },
+  ];
 
   const seriesShort = seriesName.replace(/ Series$/i, "");
 
@@ -193,8 +232,23 @@ export function ProductViewer({
                 {cleanName(product.name)}
               </h1>
               <p className="text-[14px] text-neutral-500 leading-relaxed font-light mb-6">
-                {product.detailedInfo?.overview || product.description}
+                {overview}
               </p>
+              <div className="flex flex-wrap gap-2 mb-6">
+                <span className="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] bg-neutral-100 text-neutral-700">
+                  {warrantyText}
+                </span>
+                {product.metadata?.bifmaCertified && (
+                  <span className="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] bg-neutral-900 text-white">
+                    BIFMA
+                  </span>
+                )}
+                {typeof product.metadata?.sustainabilityScore === "number" && (
+                  <span className="px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] bg-green-50 text-green-700 border border-green-200">
+                    Eco {product.metadata.sustainabilityScore}/10
+                  </span>
+                )}
+              </div>
 
               <div className="flex gap-4 items-center mb-6">
                 <button
@@ -321,7 +375,7 @@ export function ProductViewer({
               <div className="flex flex-col gap-2">
                 <ShieldCheck className="w-5 h-5 text-neutral-400" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-900">
-                  5-Year Warranty
+                  {warrantyText}
                 </span>
                 <p className="text-[10px] text-neutral-500 leading-relaxed font-light">
                   Guaranteed durability and performance.
@@ -339,7 +393,7 @@ export function ProductViewer({
               <div className="flex flex-col gap-2">
                 <ThumbsUp className="w-5 h-5 text-neutral-400" />
                 <span className="text-[10px] font-bold uppercase tracking-widest text-neutral-900">
-                  Ergonomic
+                  {certificationText}
                 </span>
                 <p className="text-[10px] text-neutral-500 leading-relaxed font-light">
                   Certified for extended use.
@@ -347,22 +401,39 @@ export function ProductViewer({
               </div>
             </div>
 
-            {/* Specs */}
-            <div className="space-y-6 pt-7 border-t border-neutral-100 text-[13px]">
+                        {/* Specifications */}
+            <div className="pt-7 border-t border-neutral-100">
+              <h2 className="text-xl font-semibold text-neutral-900 mb-4">
+                Specifications
+              </h2>
+              <div className="rounded-lg border border-neutral-200 overflow-hidden mb-7">
+                {specRows.map((row) => (
+                  <div
+                    key={row.label}
+                    className="grid grid-cols-[120px_1fr] gap-3 px-4 py-3 border-b border-neutral-100 last:border-b-0"
+                  >
+                    <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-neutral-500">
+                      {row.label}
+                    </span>
+                    <span className="text-sm text-neutral-700 leading-relaxed">
+                      {row.value}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
               {features.length > 0 && (
                 <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-400 mb-3">
-                    Features
+                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500 mb-3">
+                    Key Features
                   </p>
                   <ul className="space-y-2">
                     {features.slice(0, 8).map((f: string, i: number) => (
                       <li
                         key={i}
-                        className="flex items-start gap-3 text-neutral-600 font-light leading-relaxed"
+                        className="flex items-start gap-3 text-sm text-neutral-700 leading-relaxed"
                       >
-                        <span className="text-neutral-300 mt-0.5 shrink-0">
-                          —
-                        </span>
+                        <span className="text-neutral-400 mt-0.5 shrink-0">-</span>
                         <span>{f}</span>
                       </li>
                     ))}
@@ -370,40 +441,23 @@ export function ProductViewer({
                 </div>
               )}
 
-              {product.detailedInfo?.dimensions && (
-                <div>
-                  <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-400 mb-3">
-                    Dimensions
-                  </p>
-                  <p className="text-neutral-600 font-light">
-                    {product.detailedInfo.dimensions}
-                  </p>
+              {materials.length > 0 && (
+                <div className="pt-7 border-t border-neutral-100 mt-7">
+                  <h3 className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-500 mb-3">
+                    Material Options
+                  </h3>
+                  <div className="flex flex-wrap gap-2">
+                    {materials.map((material) => (
+                      <span
+                        key={material}
+                        className="px-2.5 py-1 text-xs text-neutral-700 border border-neutral-200 bg-neutral-50"
+                      >
+                        {material}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               )}
-
-              {product.detailedInfo?.materials &&
-                product.detailedInfo.materials.length > 0 && (
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-neutral-400 mb-3">
-                      Materials
-                    </p>
-                    <ul className="space-y-1.5">
-                      {product.detailedInfo.materials.map(
-                        (m: string, i: number) => (
-                          <li
-                            key={i}
-                            className="flex items-start gap-3 text-neutral-600 font-light"
-                          >
-                            <span className="text-neutral-300 mt-0.5 shrink-0">
-                              —
-                            </span>
-                            <span>{m}</span>
-                          </li>
-                        ),
-                      )}
-                    </ul>
-                  </div>
-                )}
             </div>
           </div>
         </div>
@@ -421,3 +475,4 @@ export function ProductViewer({
     </main>
   );
 }
+

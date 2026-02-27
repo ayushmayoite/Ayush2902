@@ -1,8 +1,9 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, type ReactNode } from "react";
 import { Play } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 
 import { Fancybox } from "@fancyapps/ui";
 import "@fancyapps/ui/dist/fancybox/fancybox.css";
@@ -10,7 +11,7 @@ import "@fancyapps/ui/dist/fancybox/fancybox.css";
 interface VideoSectionProps {
   videoSrc?: string;
   posterSrc?: string;
-  title: string;
+  title: ReactNode;
   description: string;
   lightMode?: boolean; // If true, use dark text on light background, else white text on dark/video
   buttonText?: string;
@@ -46,7 +47,7 @@ export function VideoSection({
   return (
     <section
       ref={containerRef}
-      className={`relative w-full py-24 md:py-32 overflow-hidden ${lightMode ? "bg-neutral-100" : "bg-neutral-900"}`}
+      className={`relative w-full py-16 md:py-20 overflow-hidden ${lightMode ? "bg-neutral-100" : "bg-neutral-900"}`}
     >
       {/* Background Video or Image */}
       <div className="absolute inset-0 z-0">
@@ -77,6 +78,15 @@ export function VideoSection({
               </div>
             </a>
           </>
+        ) : posterSrc ? (
+          <Image
+            src={posterSrc}
+            alt="Workspace collaboration"
+            fill
+            priority={false}
+            sizes="100vw"
+            className="w-full h-full object-cover"
+          />
         ) : (
           /* Fallback generic background if no video is provided yet */
           <div
@@ -85,19 +95,19 @@ export function VideoSection({
         )}
         {/* Overlay Gradient */}
         <div
-          className={`absolute inset-0 ${lightMode ? "bg-white/80" : "bg-black/40"}`}
+          className={`absolute inset-0 ${lightMode ? "bg-white/45" : "bg-black/40"}`}
         />
       </div>
 
-      <div className="container relative z-10 px-6 2xl:px-0 h-full flex flex-col justify-center pointer-events-none">
-        <div className="max-w-2xl space-y-6 pointer-events-auto">
+      <div className="container relative z-10 px-6 2xl:px-0 h-full flex flex-col justify-center pt-10 md:pt-6 pointer-events-none">
+        <div className="max-w-4xl space-y-6 pointer-events-auto">
           <h2
-            className={`text-[44px] md:text-[56px] lg:text-[72px] font-light leading-[1.05] tracking-tight ${lightMode ? "text-neutral-900" : "text-white"}`}
+            className={`font-serif text-[36px] md:text-[48px] lg:text-[58px] font-medium leading-[1.08] tracking-tight text-balance ${lightMode ? "text-neutral-900" : "text-white"}`}
           >
             {title}
           </h2>
           <p
-            className={`text-[17px] font-light leading-relaxed max-w-xl ${lightMode ? "text-neutral-500" : "text-neutral-300"}`}
+            className={`text-[18px] font-light leading-relaxed max-w-2xl ${lightMode ? "text-neutral-700" : "text-neutral-200"}`}
           >
             {description}
           </p>

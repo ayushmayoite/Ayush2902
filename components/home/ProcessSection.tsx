@@ -28,23 +28,23 @@ const steps = [
 
 export function ProcessSection() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-20 md:py-24 bg-white">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex flex-col lg:flex-row gap-16 items-start">
           {/* Sticky Left Content */}
           <div className="lg:w-1/3 lg:sticky lg:top-32">
-            <span className="text-amber-600 font-medium tracking-wider uppercase text-sm mb-4 block">
+            <span className="text-[11px] font-semibold tracking-[0.22em] uppercase text-amber-700 mb-4 block">
               Our Process
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold mb-6 text-neutral-900 leading-tight">
+            <h2 className="font-serif text-5xl md:text-6xl font-medium mb-6 text-neutral-900 leading-[0.96] tracking-tight">
               Seamless from Start to Finish
             </h2>
-            <p className="text-neutral-500 text-lg mb-8">
+            <p className="text-neutral-700 text-lg leading-relaxed mb-8">
               We&apos;ve refined our workflow to ensure your office transformation is smooth, on-time, and within budget.
             </p>
             <Link
               href="/contact"
-              className="inline-flex bg-neutral-900 text-white px-8 py-3 rounded-full font-medium hover:bg-neutral-800 transition-colors"
+              className="inline-flex bg-neutral-900 text-white px-8 py-3 rounded-full text-sm font-semibold tracking-[0.08em] hover:bg-neutral-800 transition-colors"
             >
               Start Your Project
             </Link>
@@ -61,14 +61,14 @@ export function ProcessSection() {
                 transition={{ delay: index * 0.1, duration: 0.5 }}
                 className="flex gap-8 group"
               >
-                <span className="text-5xl md:text-6xl font-light text-neutral-200 group-hover:text-amber-600 transition-colors duration-300">
+                <span className="text-5xl md:text-6xl font-light text-neutral-300 group-hover:text-amber-600 transition-colors duration-300">
                   {step.id}
                 </span>
                 <div className="pt-2">
-                  <h3 className="text-2xl font-bold mb-4 text-neutral-900">
+                  <h3 className="font-serif text-4xl md:text-5xl leading-[0.95] font-medium mb-3 text-neutral-900">
                     {step.title}
                   </h3>
-                  <p className="text-neutral-500 text-lg leading-relaxed max-w-md">
+                  <p className="text-neutral-600 text-[22px] leading-relaxed max-w-lg font-light">
                     {step.description}
                   </p>
                 </div>

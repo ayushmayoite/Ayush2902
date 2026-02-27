@@ -469,7 +469,7 @@ export function AdvancedBot() {
                     <p className="font-medium mb-1">
                       Preview of what we receive:
                     </p>
-                    <pre className="whitespace-pre-wrap font-mono text-[10px] text-neutral-700">
+                    <pre className="whitespace-pre-wrap font-sans text-[10px] text-neutral-700">
                       {summary}
                     </pre>
                   </div>

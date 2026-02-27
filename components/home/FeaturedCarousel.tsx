@@ -51,11 +51,11 @@ export function FeaturedCarousel() {
   }, [isInView, controls]);
 
   return (
-    <section className="w-full bg-neutral-50 py-24 md:py-40">
+    <section className="w-full bg-neutral-50 py-16 md:py-20">
       <div className="container px-6 2xl:px-0">
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 md:mb-24 gap-8">
           <div className="max-w-2xl space-y-4">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-neutral-500">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600">
               Featured Systems
             </p>
             <motion.h2
@@ -64,7 +64,7 @@ export function FeaturedCarousel() {
               variants={{
                 visible: { opacity: 1, y: 0, transition: { duration: 0.8 } },
               }}
-              className="text-3xl md:text-5xl text-neutral-900 tracking-tight leading-[1.08]"
+              className="typ-h2 text-neutral-900"
             >
               Signature workspace pieces chosen for form, comfort, and daily
               performance.
@@ -83,7 +83,7 @@ export function FeaturedCarousel() {
           >
             <Link
               href="/products"
-              className="group inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-neutral-900 border-b border-neutral-900 pb-1 hover:text-primary hover:border-primary-hover transition-colors"
+              className="group inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.16em] text-neutral-900 border-b border-neutral-900 pb-1 hover:text-primary hover:border-primary-hover transition-colors"
             >
               Explore All Collections{" "}
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -124,13 +124,13 @@ export function FeaturedCarousel() {
             <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-stone-200/50 to-transparent pointer-events-none" />
 
             <div className="absolute bottom-0 left-0 p-8 md:p-12 w-full max-w-2xl z-10 text-neutral-900">
-              <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.22em] text-neutral-600 mb-3">
+              <p className="text-[11px] md:text-xs font-semibold uppercase tracking-[0.18em] text-neutral-600 mb-3">
                 {FEATURED_PRODUCTS[0].category}
               </p>
-              <h3 className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-[0.95] mb-4">
+              <h3 className="font-serif text-5xl md:text-6xl font-medium tracking-tight leading-[0.97] mb-4 text-neutral-950">
                 {FEATURED_PRODUCTS[0].name}
               </h3>
-              <p className="text-base md:text-2xl font-light text-neutral-700 leading-snug line-clamp-2 md:line-clamp-none">
+              <p className="text-lg md:text-2xl font-light text-neutral-700 leading-snug line-clamp-2 md:line-clamp-none">
                 {FEATURED_PRODUCTS[0].description}
               </p>
             </div>
@@ -165,10 +165,10 @@ export function FeaturedCarousel() {
                 <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-stone-200/50 to-transparent pointer-events-none" />
 
                 <div className="absolute bottom-0 left-0 p-8 z-10 text-neutral-900">
-                  <p className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.2em] text-neutral-600 mb-2">
+                  <p className="text-[10px] md:text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-600 mb-2">
                     {product.category}
                   </p>
-                  <h3 className="font-serif text-4xl md:text-5xl leading-[0.95] font-medium tracking-tight mb-2">
+                  <h3 className="font-serif text-4xl md:text-[52px] leading-[0.97] font-medium tracking-tight mb-2 text-neutral-950">
                     {product.name}
                   </h3>
                 </div>
