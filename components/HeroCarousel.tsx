@@ -8,31 +8,31 @@ import { ArrowRight, Pause, Play } from "lucide-react";
 
 const slides = [
   {
-    src: "https://images.unsplash.com/photo-1572044162444-ad60f128bdea?q=80&w=2670&auto=format&fit=crop",
+    src: "/images/hero/dmrc-hero.webp",
     headline: "Spaces That\nWork Harder",
     sub: "Trusted by Titan, TVS, Usha & DMRC across 20 locations.",
     cta: { label: "Explore Products", href: "/products" },
   },
   {
-    src: "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2670&auto=format&fit=crop",
+    src: "/images/hero/titan-hero.webp",
     headline: "Where Work\nBecomes Culture",
     sub: "15 years of engineering premium corporate environments.",
     cta: { label: "View Projects", href: "/projects" },
   },
   {
-    src: "https://images.unsplash.com/photo-1620916297397-a4a5402a3c6c?q=80&w=2670&auto=format&fit=crop",
+    src: "/images/hero/usha-hero.webp",
     headline: "Inspire Every\nConversation",
     sub: "Conference and meeting solutions that command attention.",
     cta: { label: "Explore Chairs", href: "/products/oando-chairs" },
   },
   {
-    src: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?q=80&w=2670&auto=format&fit=crop",
+    src: "/images/hero/franklin-hero.webp",
     headline: "Built for\nFocused Work",
     sub: "Modular workstations for heads-down, high-performance teams.",
     cta: { label: "See Workstations", href: "/products/oando-workstations" },
   },
   {
-    src: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2670&auto=format&fit=crop",
+    src: "/images/hero/hero-5.webp",
     headline: "Comfort Meets\nDesign",
     sub: "Soft seating collections that redefine collaborative spaces.",
     cta: {

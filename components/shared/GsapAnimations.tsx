@@ -14,38 +14,52 @@ export function GsapAnimations() {
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
-      gsap.from(".hero-section", {
-        opacity: 0,
+      const heroTimeline = gsap.timeline({ defaults: { overwrite: "auto" } });
+      heroTimeline.from(".hero-section", {
+        autoAlpha: 0,
         y: -24,
-        duration: 0.5,
+        duration: 0.55,
         ease: "power2.out",
-        overwrite: "auto",
       });
+      heroTimeline.from(
+        ".hero-section h1, .hero-section h2, .hero-section p, .hero-section a",
+        {
+          autoAlpha: 0,
+          y: 20,
+          duration: 0.45,
+          ease: "power2.out",
+          stagger: 0.06,
+        },
+        "-=0.32",
+      );
 
       gsap.utils.toArray<HTMLElement>(".section").forEach((el) => {
         gsap.from(el, {
-          opacity: 0,
-          y: 36,
-          duration: 0.45,
-          ease: "power2.out",
+          autoAlpha: 0,
+          y: 42,
+          duration: 0.52,
+          ease: "power3.out",
           overwrite: "auto",
           scrollTrigger: {
             trigger: el,
-            start: "top 88%",
+            start: "top 90%",
             toggleActions: "play none none none",
+            once: true,
           },
         });
       });
 
       gsap.from(".footer", {
-        opacity: 0,
-        duration: 0.3,
-        ease: "power1.out",
+        autoAlpha: 0,
+        y: 24,
+        duration: 0.35,
+        ease: "power2.out",
         overwrite: "auto",
         scrollTrigger: {
           trigger: ".footer",
           start: "top 95%",
           toggleActions: "play none none none",
+          once: true,
         },
       });
     });
