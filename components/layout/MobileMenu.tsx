@@ -3,7 +3,7 @@
 import { X, ChevronRight, Globe, Search } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 type MobileMenuProps = {
   isOpen: boolean;
@@ -42,6 +42,23 @@ const SECONDARY_LINKS = [
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const [searchQuery, setSearchQuery] = useState("");
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleEsc = (event: KeyboardEvent) => {
+      if (event.key === "Escape") onClose();
+    };
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleEsc);
+
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleEsc);
+    };
+  }, [isOpen, onClose]);
+
   return (
     <AnimatePresence>
       {isOpen && (
@@ -64,7 +81,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
             </div>
             <button
               onClick={onClose}
-              className="w-10 h-10 flex items-center justify-center bg-white hover:bg-neutral-100 rounded-xl transition-colors shadow-sm"
+              className="w-11 h-11 flex items-center justify-center bg-white hover:bg-neutral-100 rounded-xl transition-colors shadow-sm"
               aria-label="Close mobile menu"
               title="Close"
             >
@@ -105,7 +122,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                           href={link.href}
                           prefetch={false}
                           onClick={onClose}
-                          className="block group py-3"
+                          className="block group min-h-11 py-2"
                         >
                           <div className="flex items-center justify-between">
                             <span className="text-2xl font-light text-neutral-900 group-hover:text-primary transition-colors">
@@ -128,14 +145,14 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               {/* Product Categories Filter */}
               <div className="px-6 pb-6">
                 <h3 className="typ-eyebrow mb-3">Categories</h3>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {PRODUCT_CATEGORIES.map((category) => (
                     <Link
                       key={category.href}
                       href={category.href}
                       prefetch={false}
                       onClick={onClose}
-                      className="text-sm text-neutral-700 hover:text-primary transition-colors py-2"
+                      className="text-sm text-neutral-700 hover:text-primary transition-colors min-h-11 py-2 flex items-center"
                     >
                       {category.label}
                     </Link>
@@ -160,7 +177,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
                           href={link.href}
                           prefetch={false}
                           onClick={onClose}
-                          className="text-base text-neutral-600 hover:text-neutral-900 transition-colors"
+                          className="text-base text-neutral-600 hover:text-neutral-900 transition-colors min-h-11 flex items-center"
                         >
                           {link.label}
                         </Link>

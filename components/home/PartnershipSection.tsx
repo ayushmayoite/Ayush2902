@@ -17,6 +17,7 @@ export function PartnershipSection() {
                 alt="AFC Furniture Solutions"
                 width={480}
                 height={160}
+                sizes="(max-width: 768px) 320px, 480px"
                 className="h-20 w-auto opacity-80 hover:opacity-100 transition-all"
               />
             </div>

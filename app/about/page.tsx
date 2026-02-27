@@ -34,6 +34,7 @@ function FounderCard({ name, bio, image }: Founder) {
           alt={name}
           width={192}
           height={192}
+          sizes="(max-width: 768px) 128px, 192px"
           className="w-full h-full object-cover"
         />
       </div>
@@ -93,6 +94,7 @@ export default async function CompanyPage() {
               src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&q=80&w=1000"
               alt="OandO Production"
               fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
           </div>

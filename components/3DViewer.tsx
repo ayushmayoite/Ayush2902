@@ -40,6 +40,7 @@ export function ThreeDViewer({ src, fallbackImage }: ThreeDViewerProps) {
             src={fallbackImage}
             alt="Fallback"
             fill
+            sizes="100vw"
             className="object-cover opacity-50"
           />
           <Loader2 className="w-8 h-8 text-neutral-300 animate-spin z-10" />

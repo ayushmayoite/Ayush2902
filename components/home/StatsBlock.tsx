@@ -49,7 +49,7 @@ export function StatsBlock() {
   return (
     <section className="w-full bg-neutral-50 border-y border-neutral-100 py-20 md:py-28">
       <div className="container px-6 2xl:px-0">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-12 md:gap-8">
           {STATS.map((stat, i) => (
             <StatItem
               key={stat.label}

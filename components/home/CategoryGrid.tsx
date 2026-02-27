@@ -10,12 +10,13 @@ const getCachedCatalog = unstable_cache(
 );
 
 const CATEGORY_THUMBNAILS: Record<string, string> = {
-  "oando-workstations": "/images/products/imported/cabin/image-1.webp",
-  "oando-tables": "/images/products/imported/meeting-table/image-33.webp",
-  "oando-storage": "/images/products/imported/storage/image-14.webp",
-  "oando-soft-seating": "/images/products/imported/cocoon/image-1.webp",
-  "oando-seating": "/images/products/imported/fluid/image-1.webp",
-  "oando-educational": "/images/products/imported/accent/image-1.webp",
+  "oando-workstations": "/images/afc/oando-workstations--deskpro/image-1.webp",
+  "oando-tables": "/images/afc/oando-tables--convene/image-1.webp",
+  "oando-storage": "/images/afc/oando-storage--metal-locker/image-1.webp",
+  "oando-soft-seating": "/images/afc/oando-soft-seating--cocoon/image-1.webp",
+  "oando-seating": "/images/afc/oando-seating--fluid-x/image-1.webp",
+  "oando-educational": "/images/afc/oando-educational--academia/image-1.webp",
+  "oando-collaborative": "/images/products/imported/cocoon/image-1.webp",
 };
 
 export async function CategoryGrid() {

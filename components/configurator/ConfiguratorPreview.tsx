@@ -30,6 +30,7 @@ export function ConfiguratorPreview() {
           src={previewImage}
           alt="Workstation Preview"
           fill
+          sizes="100vw"
           className="object-contain p-4"
           priority
         />

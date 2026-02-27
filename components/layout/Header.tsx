@@ -212,7 +212,7 @@ export function Header() {
             <button
               onClick={() => setIsMenuOpen(true)}
               className={clsx(
-                "flex lg:hidden items-center justify-center w-10 h-10 border transition-colors",
+                "flex lg:hidden items-center justify-center w-11 h-11 border transition-colors",
                 "border-neutral-200 text-neutral-700 hover:bg-neutral-50",
               )}
               aria-label="Open menu"

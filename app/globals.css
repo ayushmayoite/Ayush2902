@@ -65,12 +65,14 @@
   html {
     scroll-behavior: smooth;
     -webkit-tap-highlight-color: transparent;
+    overflow-x: hidden;
   }
 
   body {
     @apply antialiased bg-white text-neutral-900 font-light leading-relaxed;
     font-family: var(--font-sans);
     text-rendering: optimizeLegibility;
+    overflow-x: hidden;
   }
 
   :focus-visible {

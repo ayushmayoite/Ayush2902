@@ -57,7 +57,7 @@ export function ProductCategories() {
         </div>
 
         {/* OandO-style grid: full-image cards with hover overlay text */}
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-neutral-200">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-px bg-neutral-200">
           {categories.map((category) => (
             <Link
               key={category.name}

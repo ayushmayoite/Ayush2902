@@ -29,6 +29,7 @@ export function HotspotImage({ src, alt, hotspots }: HotspotImageProps) {
         src={src}
         alt={alt}
         fill
+        sizes="100vw"
         className="object-cover transition-transform duration-700 group-hover:scale-105"
       />
 

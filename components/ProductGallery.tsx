@@ -63,6 +63,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
               src={img}
               alt={`${productName} thumbnail ${idx + 1}`}
               fill
+              sizes="(max-width: 768px) 18vw, 80px"
               style={{ objectFit: "contain" }}
               className="p-1"
             />
@@ -76,6 +77,7 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
           src={currentImage}
           alt={productName}
           fill
+          sizes="(max-width: 768px) 100vw, 70vw"
           style={{ objectFit: "contain" }}
           className="p-8 lg:p-16 transition-opacity duration-500"
           priority

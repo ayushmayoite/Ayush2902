@@ -95,6 +95,7 @@ export function Hero({
             src={backgroundImage}
             alt="Hero Background"
             fill
+            sizes="100vw"
             className="object-cover scale-105"
             priority
           />

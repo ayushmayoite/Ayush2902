@@ -269,6 +269,7 @@ export default function ProductsPage() {
                 src="/images/afc/oando-seating--fluid-x/image-1.webp"
                 alt="Ergonomic Seating System"
                 fill
+                sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>

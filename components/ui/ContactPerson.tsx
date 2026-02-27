@@ -26,6 +26,7 @@ export function ContactPerson({
                     src={imageSrc}
                     alt={name}
                     fill
+                    sizes="128px"
                     className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
             </div>

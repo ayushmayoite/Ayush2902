@@ -36,7 +36,7 @@ export default async function Home() {
           description="The office is the central home base for personal exchanges and meetings with colleagues. With our modular furniture systems, versatile communication spaces can be created to foster innovation."
           buttonText="Explore Workspace Solutions"
           buttonLink="/products/oando-seating"
-          posterSrc="/images/products/imported/cabin/image-1.webp"
+          posterSrc="/images/afc/oando-workstations--deskpro/image-1.webp"
           lightMode={true}
         />
       </div>
@@ -46,7 +46,7 @@ export default async function Home() {
           title="AFC India — Engineered for Work"
           subtitle="Premium Office Systems"
           description="As an authorised AFC India franchise partner, we bring German-engineered office furniture systems to corporate India. Trusted by Titan, TVS, Usha and DMRC — now available in Patna and across Eastern India."
-          imageSrc="/images/products/imported/cabin/image-1.webp"
+          imageSrc="/images/afc/oando-workstations--deskpro/image-1.webp"
           imageAlt="AFC India Premium Workstation System"
           reversed={false}
           lightMode={false}

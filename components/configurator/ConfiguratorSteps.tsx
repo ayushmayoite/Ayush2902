@@ -218,7 +218,7 @@ export function ConfiguratorSteps() {
                         <h2 className="text-2xl font-light">Select Finishes</h2>
                         <div>
                             <label className="block text-sm font-medium mb-3">Top Finish</label>
-                            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
                                 {finishOptions.map((finish) => (
                                     <button
                                         key={finish}

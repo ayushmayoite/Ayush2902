@@ -19,6 +19,12 @@ export function SafeImage({
   const imgSrc = error || !src ? fallbackSrc : src;
 
   return (
-    <Image {...props} src={imgSrc} alt={alt} onError={() => setError(true)} />
+    <Image
+      {...props}
+      src={imgSrc}
+      alt={alt}
+      sizes={props.sizes ?? "100vw"}
+      onError={() => setError(true)}
+    />
   );
 }

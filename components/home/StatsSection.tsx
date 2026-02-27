@@ -31,7 +31,7 @@ export function StatsSection({ title, subtitle, stats }: StatsSectionProps) {
                     </div>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16">
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-8 gap-y-16">
                     {stats.map((stat, index) => (
                         <motion.div
                             key={index}

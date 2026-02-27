@@ -162,7 +162,7 @@ export function Navbar() {
                   )}
                 >
                   <div
-                    className={`bg-white shadow-[0_20px_40px_-5px_rgba(0,0,0,0.08)] border border-neutral-100 p-10 grid gap-12 ${section.columns.length <= 2 ? "grid-cols-2" : "grid-cols-4"}`}
+                    className={`bg-white shadow-[0_20px_40px_-5px_rgba(0,0,0,0.08)] border border-neutral-100 p-10 grid grid-cols-1 gap-12 ${section.columns.length <= 2 ? "md:grid-cols-2" : "md:grid-cols-4"}`}
                   >
                     {section.columns.map((col, idx) => (
                       <div key={idx} className="space-y-6">

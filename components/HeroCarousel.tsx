@@ -1,10 +1,10 @@
 "use client";
-import { useCallback } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Pause, Play } from "lucide-react";
 
 const slides = [
   {
@@ -43,12 +43,40 @@ const slides = [
 ];
 
 export function HeroCarousel() {
+  const autoplay = useMemo(
+    () => Autoplay({ delay: 5000, stopOnInteraction: false }),
+    [],
+  );
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true }, [
-    Autoplay({ delay: 5000, stopOnInteraction: false }),
+    autoplay,
   ]);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(true);
 
   const scrollNext = useCallback(() => emblaApi?.scrollNext(), [emblaApi]);
   const scrollPrev = useCallback(() => emblaApi?.scrollPrev(), [emblaApi]);
+  const toggleAutoplay = useCallback(() => {
+    if (!emblaApi) return;
+    if (isPlaying) {
+      autoplay.stop();
+      setIsPlaying(false);
+      return;
+    }
+    autoplay.play();
+    setIsPlaying(true);
+  }, [autoplay, emblaApi, isPlaying]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const onSelect = () => setSelectedIndex(emblaApi.selectedScrollSnap());
+    onSelect();
+    emblaApi.on("select", onSelect);
+
+    return () => {
+      emblaApi.off("select", onSelect);
+    };
+  }, [emblaApi]);
 
   return (
     <div className="hero-section relative w-full h-dvh min-h-[560px] overflow-hidden">
@@ -71,9 +99,15 @@ export function HeroCarousel() {
               {/* Slide content — bottom-aligned, left-aligned, max-width constrained */}
               <div className="absolute inset-0 flex flex-col justify-end pb-16 md:pb-24 px-6 md:px-16 lg:px-24">
                 <div className="max-w-[1400px] w-full mx-auto">
-                  <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight leading-[1.05] whitespace-pre-line mb-4 md:mb-6 max-w-2xl">
-                    {slide.headline}
-                  </h1>
+                  {i === 0 ? (
+                    <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight leading-[1.05] whitespace-pre-line mb-4 md:mb-6 max-w-2xl">
+                      {slide.headline}
+                    </h1>
+                  ) : (
+                    <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light text-white tracking-tight leading-[1.05] whitespace-pre-line mb-4 md:mb-6 max-w-2xl">
+                      {slide.headline}
+                    </h2>
+                  )}
                   <p className="text-sm md:text-base text-white/75 font-light mb-8 md:mb-10 max-w-md leading-relaxed">
                     {slide.sub}
                   </p>
@@ -106,10 +140,37 @@ export function HeroCarousel() {
       >
         <ArrowRight className="w-4 h-4" />
       </button>
+      <button
+        onClick={toggleAutoplay}
+        aria-label={isPlaying ? "Pause autoplay" : "Play autoplay"}
+        className="hidden md:flex absolute right-6 top-[58%] -translate-y-1/2 w-12 h-12 items-center justify-center border border-white/30 text-white hover:bg-white/10 transition-colors backdrop-blur-sm"
+      >
+        {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
+      </button>
 
       {/* Slide counter bottom-right */}
-      <div className="absolute bottom-6 right-6 md:right-16 lg:right-24 text-white/40 text-xs tracking-widest font-light">
+      <div
+        aria-live="polite"
+        className="absolute bottom-6 right-6 md:right-16 lg:right-24 text-white/40 text-xs tracking-widest font-light"
+      >
+        {(selectedIndex + 1).toString().padStart(2, "0")} /{" "}
         {slides.length.toString().padStart(2, "0")}
+      </div>
+
+      {/* Dot navigation for touch devices */}
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex justify-center gap-2">
+        {slides.map((_, i) => (
+          <button
+            key={i}
+            onClick={() => emblaApi?.scrollTo(i)}
+            className={
+              i === selectedIndex
+                ? "w-2.5 h-2.5 rounded-full bg-white"
+                : "w-2.5 h-2.5 rounded-full bg-white/40"
+            }
+            aria-label={`Go to slide ${i + 1}`}
+          />
+        ))}
       </div>
     </div>
   );

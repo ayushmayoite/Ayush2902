@@ -80,7 +80,7 @@ export function Footer() {
           </div>
 
           {/* Nav columns */}
-          <div className="md:col-span-3 grid grid-cols-2 md:grid-cols-2 gap-10 md:gap-16">
+          <div className="md:col-span-3 grid grid-cols-1 sm:grid-cols-2 gap-10 md:gap-16">
             {NAV.map((col) => (
               <div key={col.heading}>
                 <p className="text-xs font-semibold uppercase tracking-[0.2em] text-neutral-500 mb-5">

@@ -78,12 +78,12 @@ export function ServiceSection() {
         <div className="mb-16 text-center space-y-4">
           <Reveal>
             <h2 className="text-4xl md:text-5xl font-light text-neutral-900">
-              Our Work
+              Featured Projects
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="text-neutral-600 max-w-2xl mx-auto">
-              Explore our recent projects and the spaces we&apos;ve transformed.
+              Explore recent installations and spaces we&apos;ve delivered.
             </p>
           </Reveal>
         </div>
@@ -110,6 +110,7 @@ export function ServiceSection() {
                     src={currentImage}
                     alt={item.title}
                     fill
+                    sizes="100vw"
                     className="object-cover transition-transform duration-700 group-hover:scale-105"
                   />
 
@@ -117,7 +118,7 @@ export function ServiceSection() {
                   <div className="absolute inset-0 bg-neutral-900/10 group-hover:bg-neutral-900/20 transition-colors duration-500" />
 
                   {/* Pill Button */}
-                  <div className="absolute left-1/2 top-[450px] -translate-x-1/2">
+                  <div className="absolute bottom-6 left-1/2 -translate-x-1/2">
                     <span className="inline-flex items-center justify-center px-6 py-3 rounded-full bg-white text-neutral-900 text-sm font-medium tracking-wide shadow-lg transition-transform duration-300 group-hover:scale-105">
                       {item.title}
                     </span>

@@ -18,6 +18,7 @@ export function PartnerSection() {
                 alt="Logo"
                 width={120}
                 height={40}
+                sizes="120px"
                 className="h-8 w-auto grayscale"
               />
             </div>

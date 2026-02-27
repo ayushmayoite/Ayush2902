@@ -1,85 +1,123 @@
 import { Hero } from "@/components/home/Hero";
+import { ClientBadge, type ClientBadgeData } from "@/components/ClientBadge";
+
+const ALL_CLIENTS: ClientBadgeData[] = [
+  { name: "Adani Power", sector: "Energy" },
+  { name: "Adecco", sector: "Corporate" },
+  { name: "Ambuja Neotia", sector: "Corporate" },
+  { name: "Annapurna Finance", sector: "Finance" },
+  { name: "Asian Paints", sector: "FMCG" },
+  { name: "Azim Premji Foundation", sector: "NGO / UN" },
+  { name: "BBC Media Action", sector: "NGO / UN" },
+  { name: "BHEL", sector: "Energy" },
+  { name: "Bureau of Indian Standards", sector: "Government" },
+  { name: "BNP Paribas", sector: "Finance" },
+  { name: "BSPHCL", sector: "Energy", location: "Bihar" },
+  { name: "Bandhan Bank", sector: "Finance" },
+  { name: "Big Bazaar", sector: "FMCG" },
+  { name: "Government of Bihar", sector: "Government", location: "Patna" },
+  { name: "Indian Army", sector: "Government" },
+  { name: "Birla School", sector: "Education" },
+  { name: "CIMP", sector: "Education", location: "Patna" },
+  { name: "CRI Pumps", sector: "Manufacturing" },
+  { name: "Canara Bank", sector: "Finance" },
+  { name: "Coca-Cola", sector: "FMCG" },
+  { name: "DMRC", sector: "Government", location: "New Delhi" },
+  { name: "Dalmia Bharat Cement", sector: "Manufacturing" },
+  { name: "Essel Utilities", sector: "Energy" },
+  { name: "FHI 360", sector: "NGO / UN" },
+  { name: "Franklin Templeton Investments", sector: "Finance" },
+  { name: "D. Goenka School", sector: "Education" },
+  { name: "Government of India", sector: "Government" },
+  { name: "HDFC", sector: "Finance" },
+  { name: "HelpAge India", sector: "NGO / UN" },
+  { name: "Hyundai", sector: "Automotive" },
+  { name: "IDBI Bank", sector: "Finance" },
+  { name: "ITC Limited", sector: "FMCG" },
+  { name: "Income Tax Department", sector: "Government" },
+  { name: "Indian Bank", sector: "Finance" },
+  { name: "IndianOil", sector: "Energy" },
+  { name: "Amara Raja", sector: "Manufacturing" },
+  { name: "JSW", sector: "Manufacturing" },
+  { name: "Janalakshmi", sector: "Finance" },
+  { name: "L&T", sector: "Manufacturing" },
+  { name: "Maruti Suzuki", sector: "Automotive" },
+  { name: "NTPC", sector: "Energy" },
+  { name: "NABARD", sector: "Finance" },
+  { name: "SAIL", sector: "Manufacturing" },
+  { name: "State Bank of India", sector: "Finance" },
+  { name: "SITI Networks", sector: "Telecom" },
+  { name: "Shriram", sector: "Finance" },
+  { name: "Sonalika International", sector: "Manufacturing" },
+  { name: "Survey of India", sector: "Government" },
+  { name: "Syndicate Bank", sector: "Finance" },
+  { name: "Tata Steel", sector: "Manufacturing" },
+  { name: "Tata Motors", sector: "Automotive" },
+  { name: "Titan", sector: "Manufacturing", location: "Patna, Bihar" },
+  { name: "TVS Group", sector: "Automotive" },
+  { name: "United Nations", sector: "NGO / UN" },
+  { name: "Usha International", sector: "Manufacturing", location: "Gurgaon" },
+  { name: "Ujjivan Small Finance Bank", sector: "Finance" },
+  { name: "UNICEF", sector: "NGO / UN" },
+  { name: "United Spirits", sector: "FMCG" },
+  { name: "Vodafone", sector: "Telecom" },
+  { name: "World Health Organization", sector: "NGO / UN" },
+  { name: "ZTE", sector: "Telecom" },
+];
+
+const SECTORS = [
+  "All",
+  "Government",
+  "Finance",
+  "Manufacturing",
+  "Energy",
+  "Automotive",
+  "FMCG",
+  "NGO / UN",
+  "Education",
+  "Telecom",
+  "Corporate",
+];
 
 export default function ProjectsPage() {
   return (
     <main className="flex min-h-screen flex-col items-center bg-white">
       <Hero
         variant="small"
-        title="Our Projects"
-        subtitle="Featured office design projects and case studies"
+        title="Our Work"
+        subtitle="60+ organisations trust One and Only Furniture across Government, Finance, Energy, Manufacturing and more."
         showButton={false}
         backgroundImage="/hero/franklin-hero.webp"
       />
-      
-      <section className="container px-6 2xl:px-0 py-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <div className="bg-teal-50 rounded-2xl p-12 border border-teal-100">
-            <div className="text-6xl mb-6">🏗️</div>
-            <h2 className="text-3xl font-bold text-neutral-900 mb-4">Coming Soon</h2>
-            <p className="text-xl text-neutral-600 mb-8">
-              Our projects portfolio section is currently under development.
-            </p>
-            <p className="text-lg text-neutral-500">
-              Soon you'll be able to explore our completed office projects, 
-              see before-and-after transformations, and read detailed case studies 
-              showcasing our furniture solutions in real-world environments.
-            </p>
-          </div>
-          
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="text-center p-8 bg-white rounded-xl border border-neutral-100">
-              <div className="text-4xl mb-4">🏢</div>
-              <h3 className="text-xl font-semibold text-neutral-900 mb-3">Corporate Offices</h3>
-              <p className="text-neutral-600 mb-4">
-                Modern workspace solutions for businesses
+
+      <section className="container-wide py-16 md:py-24">
+        {/* Stats row */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-16 border-b border-neutral-100 pb-16">
+          {[
+            { value: "60+", label: "Client Organisations" },
+            { value: "500+", label: "Projects Delivered" },
+            { value: "18+", label: "Sectors Served" },
+          ].map((stat) => (
+            <div key={stat.label} className="text-center">
+              <p className="text-3xl md:text-4xl font-light text-neutral-900 mb-1">
+                {stat.value}
               </p>
-              <div className="text-sm text-neutral-500 space-y-1">
-                <p>• Tech company headquarters</p>
-                <p>• Financial institutions</p>
-                <p>• Professional services firms</p>
-              </div>
-            </div>
-            
-            <div className="text-center p-8 bg-white rounded-xl border border-neutral-100">
-              <div className="text-4xl mb-4">🎓</div>
-              <h3 className="text-xl font-semibold text-neutral-900 mb-3">Education & Healthcare</h3>
-              <p className="text-neutral-600 mb-4">
-                Specialized furniture for institutions
+              <p className="text-xs font-bold uppercase tracking-[0.2em] text-neutral-400">
+                {stat.label}
               </p>
-              <div className="text-sm text-neutral-500 space-y-1">
-                <p>• University campuses</p>
-                <p>• Hospitals and clinics</p>
-                <p>• Research facilities</p>
-              </div>
             </div>
-          </div>
-          
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="text-center p-8 bg-white rounded-xl border border-neutral-100">
-              <div className="text-4xl mb-4">🛋️</div>
-              <h3 className="text-xl font-semibold text-neutral-900 mb-3">Hospitality</h3>
-              <p className="text-neutral-600 mb-4">
-                Luxury furniture for hotels and resorts
-              </p>
-              <div className="text-sm text-neutral-500 space-y-1">
-                <p>• Hotel lobbies</p>
-                <p>• Conference centers</p>
-                <p>• Restaurant seating</p>
-              </div>
-            </div>
-            
-            <div className="text-center p-8 bg-white rounded-xl border border-neutral-100">
-              <div className="text-4xl mb-4">🚀</div>
-              <h3 className="text-xl font-semibold text-neutral-900 mb-3">Startups & Co-working</h3>
-              <p className="text-neutral-600 mb-4">
-                Flexible solutions for modern workspaces
-              </p>
-              <div className="text-sm text-neutral-500 space-y-1">
-                <p>• Co-working spaces</p>
-                <p>• Startup offices</p>
-                <p>• Creative studios</p>
-              </div>
-            </div>
+          ))}
+        </div>
+
+        {/* All clients grid */}
+        <div className="mb-8">
+          <p className="text-xs font-bold tracking-[0.25em] uppercase text-neutral-400 mb-8">
+            All Clients
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3">
+            {ALL_CLIENTS.map((client) => (
+              <ClientBadge key={client.name} {...client} />
+            ))}
           </div>
         </div>
       </section>

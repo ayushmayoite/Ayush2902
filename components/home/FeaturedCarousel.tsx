@@ -18,13 +18,13 @@ const FEATURED_PRODUCTS = [
     theme: "light",
   },
   {
-    id: "cabin",
-    name: "Cabin Workstation",
+    id: "deskpro",
+    name: "DeskPro",
     category: "Workstations",
     description:
       "Modular architecture to support any way of working, anywhere.",
-    image: "/images/products/imported/cabin/image-1.webp",
-    link: "/products/oando-workstations/cabin-l-shape",
+    image: "/images/afc/oando-workstations--deskpro/image-1.webp",
+    link: "/products/oando-workstations/oando-workstations--deskpro",
     theme: "dark",
   },
   {
@@ -114,6 +114,7 @@ export function FeaturedCarousel() {
               src={FEATURED_PRODUCTS[0].image}
               alt={FEATURED_PRODUCTS[0].name}
               fill
+              sizes="(max-width: 768px) 100vw, 66vw"
               className="object-contain p-6 transition-transform duration-1000 group-hover:scale-105"
             />
             <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-stone-200/50 to-transparent pointer-events-none" />
@@ -151,6 +152,7 @@ export function FeaturedCarousel() {
                   src={product.image}
                   alt={product.name}
                   fill
+                  sizes="(max-width: 768px) 100vw, 33vw"
                   className="object-contain p-6 transition-transform duration-1000 group-hover:scale-105"
                 />
                 <div className="absolute inset-x-0 bottom-0 h-1/3 bg-linear-to-t from-stone-200/50 to-transparent pointer-events-none" />
