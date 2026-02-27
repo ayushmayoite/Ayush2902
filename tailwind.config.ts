@@ -49,7 +49,8 @@ const config: Config = {
       // ONE consistent font family — Inter for everything
       fontFamily: {
         sans: ['var(--font-inter)', 'sans-serif'],
-        serif: ['var(--font-inter)', 'sans-serif'],
+        serif: ['var(--font-playfair)', 'Playfair Display', 'Georgia', 'serif'],
+        heading: ['var(--font-playfair)', 'Playfair Display', 'Georgia', 'serif'],
         slogan: ['var(--font-inter)', 'sans-serif'],
         mono: ['var(--font-inter)', 'monospace'],
       },

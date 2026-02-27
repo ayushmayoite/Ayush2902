@@ -14,7 +14,7 @@ export function Recommendations() {
       <section className="py-20 bg-neutral-50 border-y border-neutral-100">
         <div className="container-wide px-6 2xl:px-0">
           <div className="max-w-xl">
-            <h2 className="text-3xl font-light text-neutral-900 tracking-tight mb-4">
+            <h2 className="text-3xl md:text-4xl text-neutral-900 tracking-tight mb-4">
               Recommended for You
             </h2>
             <p className="text-sm text-neutral-500 leading-relaxed font-light mb-6">
@@ -48,7 +48,7 @@ export function Recommendations() {
     <section className="py-24 bg-neutral-50 border-y border-neutral-100">
       <div className="container-wide px-6 2xl:px-0">
         <div className="max-w-xl mb-12">
-          <h2 className="text-3xl font-light text-neutral-900 tracking-tight mb-4">
+          <h2 className="text-3xl md:text-4xl text-neutral-900 tracking-tight mb-4">
             Recommended for You
           </h2>
           <p className="text-sm text-neutral-500 leading-relaxed font-light">

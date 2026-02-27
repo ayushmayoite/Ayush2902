@@ -20,7 +20,7 @@ export function StatsSection({ title, subtitle, stats }: StatsSectionProps) {
             <div className="container px-6 2xl:px-0">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-12 mb-20">
                     <div className="max-w-2xl space-y-6">
-                        <h2 className="text-4xl md:text-5xl font-light tracking-tight leading-tight">
+                        <h2 className="text-3xl md:text-4xl tracking-tight leading-tight">
                             {title}
                         </h2>
                         {subtitle && (

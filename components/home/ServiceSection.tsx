@@ -77,7 +77,7 @@ export function ServiceSection() {
       <div className="container px-6 2xl:px-0">
         <div className="mb-16 text-center space-y-4">
           <Reveal>
-            <h2 className="text-4xl md:text-5xl font-light text-neutral-900">
+            <h2 className="text-3xl md:text-4xl text-neutral-900">
               Featured Projects
             </h2>
           </Reveal>

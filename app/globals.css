@@ -7,7 +7,7 @@
   --color-primary-hover: #f7b600;
 
   --font-sans: var(--font-inter), "Inter", "Helvetica Neue", sans-serif;
-  --font-serif: var(--font-inter), "Inter", "Helvetica Neue", sans-serif;
+  --font-serif: var(--font-playfair), "Playfair Display", Georgia, serif;
 
   --radius-default: 0px;
   --radius-none: 0px;
@@ -87,9 +87,9 @@
   h4,
   h5,
   h6 {
-    @apply font-light tracking-tight text-neutral-900;
-    font-family: var(--font-sans);
-    font-weight: 300;
+    @apply tracking-tight text-neutral-900;
+    font-family: var(--font-playfair), "Playfair Display", Georgia, serif;
+    font-weight: 400;
   }
 
   a {
@@ -157,7 +157,7 @@
   }
   .card-lift:hover {
     transform: translateY(-4px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
   }
 
   /* Skeleton shimmer */

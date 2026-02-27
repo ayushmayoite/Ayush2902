@@ -31,7 +31,7 @@ export function OurWork() {
             <p className="text-xs font-bold tracking-[0.25em] uppercase text-neutral-400 mb-4">
               Trusted Clients
             </p>
-            <h2 className="text-3xl md:text-4xl font-light text-neutral-900 tracking-tight leading-tight">
+            <h2 className="text-3xl md:text-4xl text-neutral-900 tracking-tight leading-tight">
               Trusted by India&apos;s most respected organisations.
             </h2>
           </div>

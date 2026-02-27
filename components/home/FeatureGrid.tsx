@@ -60,7 +60,7 @@ export function FeatureGrid() {
         <section className="w-full py-24 bg-white">
             <div className="container px-6 2xl:px-0">
                 <div className="mb-20 space-y-4">
-                    <h2 className="text-3xl md:text-5xl font-light text-neutral-900 tracking-tight">
+                    <h2 className="text-3xl md:text-4xl text-neutral-900 tracking-tight">
                         Our Competence. <br />
                         <span className="text-primary">Your Advantage.</span>
                     </h2>

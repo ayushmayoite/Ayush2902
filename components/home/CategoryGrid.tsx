@@ -30,7 +30,7 @@ export async function CategoryGrid() {
           <p className="text-label-xs text-neutral-400 uppercase tracking-[0.25em] mb-3">
             Product Range
           </p>
-          <h2 className="text-heading-2 font-light text-neutral-900">
+          <h2 className="text-3xl md:text-4xl text-neutral-900">
             Explore Solutions
           </h2>
         </div>
@@ -48,7 +48,7 @@ export async function CategoryGrid() {
               <Link
                 key={category.id}
                 href={`/products/${category.id}`}
-                className="group relative bg-white block overflow-hidden"
+                className="group relative bg-white block overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
               >
                 {/* Uniform square image */}
                 <div className="relative aspect-square overflow-hidden bg-neutral-50">

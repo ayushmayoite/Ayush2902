@@ -45,7 +45,7 @@ export function WhyChooseUs() {
           <p className="text-xs font-bold tracking-[0.25em] uppercase text-neutral-400 mb-4">
             Why One &amp; Only
           </p>
-          <h2 className="text-4xl md:text-5xl font-light text-neutral-900 tracking-tight mb-6">
+          <h2 className="text-3xl md:text-4xl text-neutral-900 tracking-tight mb-6">
             We engineer workspace systems
             <br />
             <span className="italic text-primary">not just furniture.</span>

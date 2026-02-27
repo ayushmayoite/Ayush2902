@@ -36,7 +36,7 @@ export function ProcessSection() {
         <section className="w-full py-24 bg-neutral-50">
             <div className="container px-6 2xl:px-0">
                 <div className="text-center max-w-3xl mx-auto mb-20 space-y-6">
-                    <h2 className="text-4xl md:text-5xl font-light text-neutral-900 tracking-tight">
+                    <h2 className="text-3xl md:text-4xl text-neutral-900 tracking-tight">
                         Our Way to Your <span className="text-primary italic">Perfect Office.</span>
                     </h2>
                     <p className="text-xl text-neutral-500 font-light">

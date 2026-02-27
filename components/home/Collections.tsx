@@ -47,7 +47,7 @@ export function Collections() {
     <section className="py-24 bg-white border-b border-neutral-100">
       <div className="container mx-auto px-6 lg:px-12">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-12 gap-6">
-          <h2 className="text-4xl md:text-5xl font-serif text-neutral-900">
+          <h2 className="text-3xl md:text-4xl text-neutral-900">
             Our{" "}
             <span className="font-bold border-b-4 border-amber-600/20">
               Collections
