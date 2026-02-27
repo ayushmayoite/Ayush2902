@@ -1,5 +1,29 @@
 const nextConfig = {
   trailingSlash: true,
+  async redirects() {
+    return [
+      {
+        source: "/products/oando-chairs",
+        destination: "/products/oando-seating",
+        permanent: false,
+      },
+      {
+        source: "/products/oando-chairs/:slug",
+        destination: "/products/oando-seating/:slug",
+        permanent: false,
+      },
+      {
+        source: "/products/oando-other-seating",
+        destination: "/products/oando-seating",
+        permanent: false,
+      },
+      {
+        source: "/products/oando-other-seating/:slug",
+        destination: "/products/oando-seating/:slug",
+        permanent: false,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
