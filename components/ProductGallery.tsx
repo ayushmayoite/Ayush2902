@@ -80,7 +80,6 @@ export function ProductGallery({ images, productName }: ProductGalleryProps) {
           sizes="(max-width: 768px) 100vw, 70vw"
           style={{ objectFit: "contain" }}
           className="p-8 lg:p-16 transition-opacity duration-500"
-          priority
         />
 
         {/* Image count badge */}

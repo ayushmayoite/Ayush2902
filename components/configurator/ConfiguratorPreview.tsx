@@ -32,7 +32,6 @@ export function ConfiguratorPreview() {
           fill
           sizes="100vw"
           className="object-contain p-4"
-          priority
         />
         {/* Overlay Info */}
         {config.layout && (
