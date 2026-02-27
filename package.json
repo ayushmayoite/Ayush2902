@@ -10,7 +10,10 @@
     "lint": "eslint .",
     "test": "jest --forceExit",
     "test:watch": "jest --watch",
-    "test:coverage": "jest --coverage --forceExit"
+    "test:coverage": "jest --coverage --forceExit",
+    "afc:organize:dry": "tsx scripts/organize-afc-images.ts --dry-run",
+    "afc:organize:apply": "tsx scripts/organize-afc-images.ts --apply",
+    "afc:organize:sync": "tsx scripts/organize-afc-images.ts --sync-db --sync-catalog"
   },
   "dependencies": {
     "@fancyapps/ui": "^6.1.11",
@@ -32,6 +35,8 @@
     "embla-carousel-autoplay": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "framer-motion": "^12.34.3",
+    "fs-extra": "^11.3.3",
+    "fuse.js": "^7.1.0",
     "gsap": "^3.14.2",
     "lenis": "^1.3.17",
     "lucide-react": "^0.575.0",
@@ -58,6 +63,7 @@
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
+    "@types/fs-extra": "^11.0.4",
     "@types/jest": "^30.0.0",
     "@types/node": "^20",
     "@types/nprogress": "^0.2.3",
