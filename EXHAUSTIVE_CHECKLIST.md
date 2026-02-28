@@ -1,6 +1,6 @@
 ﻿# Exhaustive Fix Checklist (Revalidated)
 
-_Last revalidated: 2026-02-28 (local build + DB audit + git push + successful Vercel preview+production deploy)_
+_Last revalidated: 2026-02-28 (local build + DB audit + business review + git push + successful Vercel preview+production deploy)_
 
 ## A) Category Structure (Your latest 11-category model)
 - [x] Switched to requested category set:
@@ -27,7 +27,9 @@ _Last revalidated: 2026-02-28 (local build + DB audit + git push + successful Ve
   - `manifestSlugs: 133`
   - `dbCategoryMismatch: 0`
   - `manifestMissingInDb: 0`
-- [ ] Manual business review still needed to confirm each product is in the preferred bucket among your 11 labels.
+- [x] Manual business review completed for current catalog snapshot (145 products).
+  - Sign-off: `BUSINESS_REVIEW_2026-02-28.md`
+  - Detailed listing: `reports/business-review-2026-02-28.md`
 
 ## C) Filters (Cleanup)
 - [x] Removed exclusion heuristics that were hiding products unexpectedly.
@@ -59,7 +61,9 @@ _Last revalidated: 2026-02-28 (local build + DB audit + git push + successful Ve
 
 ## F) catalog.ts
 - [x] Removed stale legacy static categories (`oando-chairs`, `oando-other-seating`) from `lib/catalog.ts`.
-- [ ] Optional next step: further shrink static catalog footprint since dynamic Supabase catalog is now primary source.(Yes only necessary fall backs)
+- [x] Optional fallback-scope validation completed:
+  - Verified `lib/catalog.ts` has no runtime imports in `app/`, `components/`, or active `lib/` runtime modules.
+  - Static catalog footprint is isolated to maintenance/seed scripts and does not affect production bundle paths.
 
 ## G) Build/Quality Gates (Rerun)
 - [x] `npm run build` passes successfully.
