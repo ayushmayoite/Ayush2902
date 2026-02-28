@@ -2,7 +2,11 @@ import Link from "next/link";
 import { getCatalog } from "@/lib/getProducts";
 import { CategoryImage } from "@/components/home/CategoryImage";
 import { unstable_cache } from "next/cache";
-import { getAfcCategoryHref, getAfcCategoryLabel } from "@/lib/afcCategories";
+import {
+  buildRequestedCategoryCatalog,
+  getAfcCategoryHref,
+  getAfcCategoryLabel,
+} from "@/lib/afcCategories";
 
 const getCachedCatalog = unstable_cache(
   async () => getCatalog(),
@@ -11,7 +15,7 @@ const getCachedCatalog = unstable_cache(
 );
 
 export async function CategoryGrid() {
-  const oandoCatalog = await getCachedCatalog();
+  const requestedCatalog = buildRequestedCategoryCatalog(await getCachedCatalog());
 
   return (
     <section className="w-full bg-white py-20 md:py-28">
@@ -28,7 +32,7 @@ export async function CategoryGrid() {
 
         {/* Uniform 3-col grid — 1 col mobile / 2 col tablet / 3 col desktop */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-px bg-neutral-100">
-          {oandoCatalog.map((category) => {
+          {requestedCatalog.map((category) => {
             const allProducts = category.series.flatMap((s) => s.products);
             const categoryName = getAfcCategoryLabel(category.id, category.name);
             const categoryHref = getAfcCategoryHref(category.id);

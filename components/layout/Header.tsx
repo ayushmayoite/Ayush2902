@@ -20,20 +20,20 @@ const discoverMenuCards = [
     description:
       "Ergonomic seating systems designed for long-hour performance.",
     image: "/images/products/imported/fluid/image-1.webp",
-    href: "/products/oando-seating",
+    href: "/products/chairs-mesh",
   },
   {
     title: "Workstation",
     description: "Desking systems and modular workstation solutions.",
     image: "/images/products/imported/cabin/image-1.webp",
-    href: "/products/oando-workstations",
+    href: "/products/workstations",
   },
   {
     title: "Soft Seating",
     description:
       "Comfortable seating solutions for collaborative environments.",
     image: "/images/products/imported/cocoon/image-1.webp",
-    href: "/products/oando-soft-seating",
+    href: "/products/soft-seating",
   },
 ];
 

@@ -11,19 +11,19 @@ const PREVIEW_ITEMS = [
     name: "DeskPro Workstations",
     category: "Workstations",
     image: "/images/hero/workstations.webp",
-    href: "/products/oando-workstations",
+    href: "/products/workstations",
   },
   {
     name: "Fluid X Chairs",
-    category: "Chairs",
-    image: "/images/hero/chairs.webp",
-    href: "/products/oando-chairs",
+    category: "Seating Solution",
+    image: "/images/hero/seating.webp",
+    href: "/products/chairs-mesh",
   },
   {
     name: "Convene Tables",
     category: "Tables",
     image: "/images/hero/tables.webp",
-    href: "/products/oando-tables",
+    href: "/products/meeting-conference-tables",
   },
 ];
 

@@ -8,16 +8,16 @@ interface LogoProps {
   variant?: "orange" | "white";
 }
 
-const AFC_LOGO_SRC = "/afc-logo.webp";
+const ONE_AND_ONLY_LOGO_SRC = "/images/brand/logo.webp";
 
 export function OneAndOnlyLogo({ className, variant = "orange" }: LogoProps) {
   return (
     <div className={cn("relative flex items-center", className)}>
       <Image
-        src={AFC_LOGO_SRC}
-        alt="AFC"
+        src={ONE_AND_ONLY_LOGO_SRC}
+        alt="One and Only Furniture"
         width={214}
-        height={142}
+        height={70}
         priority
         sizes="(max-width: 768px) 120px, 160px"
         className={cn(

@@ -1,4 +1,4 @@
-import { CategoryGrid } from "@/components/home/CategoryGrid";
+﻿import { CategoryGrid } from "@/components/home/CategoryGrid";
 import { Hero } from "@/components/home/Hero";
 import { Newsletter } from "@/components/shared/Newsletter";
 import { ContactTeaser } from "@/components/shared/ContactTeaser";
@@ -34,7 +34,7 @@ export default function ProductsPage() {
             <span className="text-primary italic">Performance.</span>
           </h2>
           <p className="text-xl md:text-2xl font-light text-neutral-600 leading-relaxed">
-            Every product we offer is part of a wider workspace system —
+            Every product we offer is part of a wider workspace system â€”
             designed to scale, adapt, and perform across your entire
             organisation.
           </p>
@@ -86,7 +86,7 @@ export default function ProductsPage() {
         </div>
       </section>
 
-      {/* ── SIGNATURE SYSTEMS ─────────────────────────────────── */}
+      {/* â”€â”€ SIGNATURE SYSTEMS â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <section className="w-full py-24 bg-neutral-900 text-white relative overflow-hidden">
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_30%_50%,#ffffff,transparent_60%)]" />
         <div className="container-wide relative z-10">
@@ -105,7 +105,7 @@ export default function ProductsPage() {
                 </span>
               </h2>
               <p className="text-lg text-neutral-400 font-light max-w-2xl">
-                Curated system bundles for enterprise deployments — combining
+                Curated system bundles for enterprise deployments â€” combining
                 ergonomic seating, modular desking, storage, and acoustic
                 solutions with extended warranties and dedicated project
                 support.
@@ -119,7 +119,7 @@ export default function ProductsPage() {
                 {
                   icon: Layers,
                   tier: "Signature Essential",
-                  tagline: "20–50 workpoints",
+                  tagline: "20â€“50 workpoints",
                   desc: "Modular desking + ergonomic seating system with 5-year warranty and installation.",
                   features: [
                     "Curvivo or Adaptable desking",
@@ -133,8 +133,8 @@ export default function ProductsPage() {
                 {
                   icon: ShieldCheck,
                   tier: "Signature Enterprise",
-                  tagline: "50–200 workpoints",
-                  desc: "Full-floor workspace engineering — desking, seating, collaborative zones, and acoustic management.",
+                  tagline: "50â€“200 workpoints",
+                  desc: "Full-floor workspace engineering â€” desking, seating, collaborative zones, and acoustic management.",
                   features: [
                     "Custom floor plan engineering",
                     "Ergonomic assessment included",
@@ -204,7 +204,7 @@ export default function ProductsPage() {
                       : "border border-white/20 text-white hover:bg-white/10"
                   }`}
                 >
-                  Request Bundle →
+                  Request Bundle â†’
                 </Link>
               </div>
             ))}
@@ -223,10 +223,10 @@ export default function ProductsPage() {
                 productive solo work at scale.
               </p>
               <Link
-                href="/products/oando-workstations"
+                href="/products/workstations"
                 className="inline-flex items-center gap-2 border-b border-neutral-900 pb-1"
               >
-                Explore <span className="text-xl">→</span>
+                Explore <span className="text-xl">â†’</span>
               </Link>
             </div>
             <div className="p-8 bg-white rounded-2xl border border-neutral-200">
@@ -237,24 +237,24 @@ export default function ProductsPage() {
                 dynamic team interaction.
               </p>
               <Link
-                href="/products/oando-soft-seating"
+                href="/products/soft-seating"
                 className="inline-flex items-center gap-2 border-b border-neutral-900 pb-1"
               >
-                Explore <span className="text-xl">→</span>
+                Explore <span className="text-xl">â†’</span>
               </Link>
             </div>
             <div className="p-8 bg-white rounded-2xl border border-neutral-200">
               <p className="typ-eyebrow mb-2">Organized Spaces</p>
               <h3 className="typ-h3 mb-4">Storage &amp; Accessories</h3>
               <p className="text-neutral-600 mb-6">
-                Engineered storage infrastructure — secure, scalable, and
+                Engineered storage infrastructure â€” secure, scalable, and
                 integrated with your workspace system.
               </p>
               <Link
-                href="/products/oando-storage"
+                href="/products/storages"
                 className="inline-flex items-center gap-2 border-b border-neutral-900 pb-1"
               >
-                Explore <span className="text-xl">→</span>
+                Explore <span className="text-xl">â†’</span>
               </Link>
             </div>
           </div>
@@ -278,7 +278,7 @@ export default function ProductsPage() {
                 Engineered for health &amp; productivity.
               </h3>
               <p className="text-lg text-neutral-500 font-light leading-relaxed">
-                Ergonomics is an engineering discipline — not a marketing claim.
+                Ergonomics is an engineering discipline â€” not a marketing claim.
                 Every product in our catalog is specified for measurable impact
                 on posture, focus, and long-term wellbeing.
               </p>
@@ -323,3 +323,4 @@ export default function ProductsPage() {
     </main>
   );
 }
+

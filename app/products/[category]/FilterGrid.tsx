@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import type {
   CompatCategory as Category,
@@ -19,7 +19,7 @@ import {
 import { useState, useMemo, useCallback, Suspense } from "react";
 import clsx from "clsx";
 
-// ─── Types ──────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Types â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 interface FlatProduct extends Product {
   seriesId: string;
@@ -31,7 +31,6 @@ type SortOption = "az" | "za";
 interface ActiveFilters {
   series: string;
   subcategory: string[];
-  useCase: string[];
   priceRange: string[];
   material: string[];
   hasHeadrest: boolean;
@@ -40,14 +39,9 @@ interface ActiveFilters {
   isStackable: boolean;
   sort: SortOption;
   query: string;
-  minEcoScore: number;
 }
 
-const CATEGORY_EXCLUSION_KEYWORDS: Record<string, string[]> = {
-  "oando-workstations": ["chair", "seating", "sofa", "table"],
-};
-
-// ─── Helpers ─────────────────────────────────────────────────────────────────
+// â”€â”€â”€ Helpers â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function buildUrl(pathname: string, filters: ActiveFilters): string {
   const params = new URLSearchParams();
@@ -55,15 +49,12 @@ function buildUrl(pathname: string, filters: ActiveFilters): string {
   if (filters.query) params.set("q", filters.query);
   if (filters.sort !== "az") params.set("sort", filters.sort);
   filters.subcategory.forEach((v) => params.append("sub", v));
-  filters.useCase.forEach((v) => params.append("use", v));
   filters.priceRange.forEach((v) => params.append("price", v));
   filters.material.forEach((v) => params.append("mat", v));
   if (filters.hasHeadrest) params.set("headrest", "1");
   if (filters.isHeightAdjustable) params.set("height-adj", "1");
   if (filters.bifmaCertified) params.set("bifma", "1");
   if (filters.isStackable) params.set("stackable", "1");
-  if (filters.minEcoScore > 0)
-    params.set("eco", filters.minEcoScore.toString());
   const qs = params.toString();
   return qs ? `${pathname}?${qs}` : pathname;
 }
@@ -78,14 +69,12 @@ function parseFilters(sp: URLSearchParams): ActiveFilters {
     query: sp.get("q") ?? "",
     sort: parseSortOption(sp.get("sort")),
     subcategory: sp.getAll("sub"),
-    useCase: sp.getAll("use"),
     priceRange: sp.getAll("price"),
     material: sp.getAll("mat"),
     hasHeadrest: sp.get("headrest") === "1",
     isHeightAdjustable: sp.get("height-adj") === "1",
     bifmaCertified: sp.get("bifma") === "1",
     isStackable: sp.get("stackable") === "1",
-    minEcoScore: parseInt(sp.get("eco") || "0", 10),
   };
 }
 
@@ -93,43 +82,20 @@ function countActive(f: ActiveFilters): number {
   let n = 0;
   if (f.series !== "all") n++;
   if (f.subcategory.length) n += f.subcategory.length;
-  if (f.useCase.length) n += f.useCase.length;
   if (f.priceRange.length) n += f.priceRange.length;
   if (f.material.length) n += f.material.length;
   if (f.hasHeadrest) n++;
   if (f.isHeightAdjustable) n++;
   if (f.bifmaCertified) n++;
   if (f.isStackable) n++;
-  if (f.minEcoScore > 0) n++;
   return n;
-}
-
-function containsKeywordToken(value: string, keyword: string): boolean {
-  const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-  const re = new RegExp(`(^|[^a-z0-9])${escaped}([^a-z0-9]|$)`, "i");
-  return re.test(value.toLowerCase());
-}
-
-function shouldExcludeByCategory(categoryId: string, product: FlatProduct): boolean {
-  const blocked = CATEGORY_EXCLUSION_KEYWORDS[categoryId] || [];
-  if (blocked.length === 0) return false;
-
-  const haystack = [
-    product.name || "",
-    product.slug || "",
-    product.description || "",
-    product.metadata?.subcategory || "",
-    product.metadata?.category || "",
-  ].join(" ");
-
-  return blocked.some((kw) => containsKeywordToken(haystack, kw));
 }
 
 function normalizeOptionValue(value?: string | null): string {
   return (value || "").trim().replace(/\s+/g, " ").toLowerCase();
 }
 
-// ─── Accordion Section ───────────────────────────────────────────────────────
+// â”€â”€â”€ Accordion Section â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function AccordionSection({
   title,
@@ -169,7 +135,7 @@ function AccordionSection({
   );
 }
 
-// ─── Multi-checkbox list ──────────────────────────────────────────────────────
+// â”€â”€â”€ Multi-checkbox list â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function CheckList({
   options,
@@ -205,7 +171,7 @@ function CheckList({
   );
 }
 
-// ─── Price Range Buttons ─────────────────────────────────────────────────────
+// â”€â”€â”€ Price Range Buttons â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 const PRICE_RANGES = ["budget", "mid", "premium", "luxury"];
 function PriceButtons({
@@ -237,7 +203,7 @@ function PriceButtons({
   );
 }
 
-// ─── Feature Toggle ───────────────────────────────────────────────────────────
+// â”€â”€â”€ Feature Toggle â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function Toggle({
   label,
@@ -271,7 +237,7 @@ function Toggle({
   );
 }
 
-// ─── Product Card ─────────────────────────────────────────────────────────────
+// â”€â”€â”€ Product Card â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function ProductCard({
   product,
@@ -357,7 +323,7 @@ function ProductCard({
   );
 }
 
-// ─── Active Filter Chips ─────────────────────────────────────────────────────
+// â”€â”€â”€ Active Filter Chips â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function ActiveChips({
   filters,
@@ -377,9 +343,6 @@ function ActiveChips({
   filters.subcategory.forEach((v) =>
     chips.push({ label: v, key: "subcategory", value: v }),
   );
-  filters.useCase.forEach((v) =>
-    chips.push({ label: v, key: "useCase", value: v }),
-  );
   filters.priceRange.forEach((v) =>
     chips.push({ label: `${v} range`, key: "priceRange", value: v }),
   );
@@ -394,11 +357,6 @@ function ActiveChips({
     chips.push({ label: "BIFMA certified", key: "bifmaCertified" });
   if (filters.isStackable)
     chips.push({ label: "Stackable", key: "isStackable" });
-  if (filters.minEcoScore > 0)
-    chips.push({
-      label: `Eco Score >= ${filters.minEcoScore}`,
-      key: "minEcoScore",
-    });
 
   return (
     <div className="flex flex-wrap items-center gap-2 py-3 border-b border-neutral-100">
@@ -425,7 +383,7 @@ function ActiveChips({
   );
 }
 
-// ─── Inner Component (needs useSearchParams) ──────────────────────────────────
+// â”€â”€â”€ Inner Component (needs useSearchParams) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 function AdvancedFilterGridInner({
   category,
@@ -448,25 +406,20 @@ function AdvancedFilterGridInner({
       category.series
         .flatMap((s) =>
           s.products.map((p) => ({ ...p, seriesId: s.id, seriesName: s.name })),
-        )
-        .filter((p) => !shouldExcludeByCategory(categoryId, p)),
-    [category, categoryId],
+        ),
+    [category],
   );
 
   // Build filter option lists from available products
   const options = useMemo(() => {
     const series = new Map<string, string>();
     const sub = new Map<string, string>();
-    const useCase = new Map<string, string>();
     const material = new Map<string, string>();
     const priceRange = new Set<string>();
     let headrestCount = 0;
     let heightAdjustableCount = 0;
     let bifmaCount = 0;
     let stackableCount = 0;
-    let minEcoScore = Number.POSITIVE_INFINITY;
-    let maxEcoScore = Number.NEGATIVE_INFINITY;
-
     allProducts.forEach((p) => {
       const seriesName = p.seriesName?.trim();
       if (seriesName) {
@@ -477,10 +430,6 @@ function AdvancedFilterGridInner({
         const key = normalizeOptionValue(p.metadata.subcategory);
         if (key && !sub.has(key)) sub.set(key, p.metadata.subcategory.trim());
       }
-      p.metadata?.useCase?.forEach((u) => {
-        const key = normalizeOptionValue(u);
-        if (key && !useCase.has(key)) useCase.set(key, u.trim());
-      });
       p.metadata?.material?.forEach((m) => {
         const key = normalizeOptionValue(m);
         if (key && !material.has(key)) material.set(key, m.trim());
@@ -490,16 +439,12 @@ function AdvancedFilterGridInner({
       if (p.metadata?.isHeightAdjustable) heightAdjustableCount++;
       if (p.metadata?.bifmaCertified) bifmaCount++;
       if (p.metadata?.isStackable) stackableCount++;
-      const score = p.metadata?.sustainabilityScore ?? 0;
-      minEcoScore = Math.min(minEcoScore, score);
-      maxEcoScore = Math.max(maxEcoScore, score);
     });
     const total = allProducts.length;
 
     return {
       series: [...series.values()].sort(),
       subcategory: [...sub.values()].sort(),
-      useCase: [...useCase.values()].sort(),
       material: [...material.values()].sort(),
       priceRange: PRICE_RANGES.filter((range) => priceRange.has(range)),
       featureAvailability: {
@@ -509,11 +454,6 @@ function AdvancedFilterGridInner({
         bifmaCertified: bifmaCount > 0 && bifmaCount < total,
         isStackable: stackableCount > 0 && stackableCount < total,
       },
-      hasSustainability:
-        total > 1 &&
-        Number.isFinite(minEcoScore) &&
-        Number.isFinite(maxEcoScore) &&
-        maxEcoScore > minEcoScore,
     };
   }, [allProducts]);
 
@@ -561,17 +501,6 @@ function AdvancedFilterGridInner({
       );
     }
 
-    // Use case
-    if (filters.useCase.length && options.useCase.length > 1) {
-      list = list.filter((p) =>
-        p.metadata?.useCase?.some((u) =>
-          filters.useCase.some(
-            (value) => normalizeOptionValue(value) === normalizeOptionValue(u),
-          ),
-        ),
-      );
-    }
-
     // Price range
     if (filters.priceRange.length && options.priceRange.length > 1) {
       list = list.filter(
@@ -609,13 +538,6 @@ function AdvancedFilterGridInner({
       list = list.filter((p) => p.metadata?.isStackable);
     }
 
-    // Eco Score
-    if (filters.minEcoScore > 0 && options.hasSustainability) {
-      list = list.filter(
-        (p) => (p.metadata?.sustainabilityScore || 0) >= filters.minEcoScore,
-      );
-    }
-
     // Sort
     list.sort((a, b) =>
       filters.sort === "za"
@@ -637,7 +559,7 @@ function AdvancedFilterGridInner({
 
   const toggleArray = useCallback(
     (
-      key: "subcategory" | "useCase" | "priceRange" | "material",
+      key: "subcategory" | "priceRange" | "material",
       value: string,
     ) => {
       const current = filters[key] as string[];
@@ -653,7 +575,6 @@ function AdvancedFilterGridInner({
     (key: string, value?: string) => {
       if (
         key === "subcategory" ||
-        key === "useCase" ||
         key === "priceRange" ||
         key === "material"
       ) {
@@ -666,8 +587,6 @@ function AdvancedFilterGridInner({
         key === "isStackable"
       ) {
         updateFilters({ [key]: false });
-      } else if (key === "minEcoScore") {
-        updateFilters({ minEcoScore: 0 });
       } else if (key === "series") {
         updateFilters({ series: "all" });
       }
@@ -681,7 +600,7 @@ function AdvancedFilterGridInner({
 
   const activeCount = countActive(filters);
 
-  // ── Sidebar content (shared between desktop + drawer) ──
+  // â”€â”€ Sidebar content (shared between desktop + drawer) â”€â”€
   const SidebarContent = (
     <div className="bg-white border border-neutral-200 rounded-sm overflow-hidden">
       {/* Header */}
@@ -757,21 +676,6 @@ function AdvancedFilterGridInner({
         </AccordionSection>
       )}
 
-      {/* Use Case */}
-      {options.useCase.length > 1 && (
-        <AccordionSection
-          title="Use Case"
-          count={filters.useCase.length}
-          defaultOpen={filters.useCase.length > 0}
-        >
-          <CheckList
-            options={options.useCase}
-            selected={filters.useCase}
-            onToggle={(v) => toggleArray("useCase", v)}
-          />
-        </AccordionSection>
-      )}
-
       {/* Price Range */}
       {options.priceRange.length > 1 && (
         <AccordionSection
@@ -806,7 +710,11 @@ function AdvancedFilterGridInner({
       {(options.featureAvailability.hasHeadrest ||
         options.featureAvailability.isHeightAdjustable ||
         options.featureAvailability.bifmaCertified ||
-        options.featureAvailability.isStackable) && (
+        options.featureAvailability.isStackable) &&
+        (categoryId === "chairs-mesh" ||
+          categoryId === "chairs-others" ||
+          categoryId === "cafe-seating" ||
+          categoryId === "oando-seating") && (
         <AccordionSection
           title="Features"
           count={
@@ -849,34 +757,7 @@ function AdvancedFilterGridInner({
         </AccordionSection>
       )}
 
-      {/* Eco Score Slider */}
-      {options.hasSustainability && (
-        <AccordionSection
-          title="Sustainability"
-          count={filters.minEcoScore > 0 ? 1 : 0}
-        >
-          <div className="space-y-3 pt-1">
-            <label
-              htmlFor="eco-score-range"
-              className="text-sm text-neutral-600 block"
-            >
-              Min Eco-Score: {filters.minEcoScore}
-            </label>
-            <input
-              id="eco-score-range"
-              type="range"
-              min="0"
-              max="10"
-              step="1"
-              value={filters.minEcoScore}
-              onChange={(e) =>
-                updateFilters({ minEcoScore: parseInt(e.target.value, 10) })
-              }
-              className="w-full accent-neutral-900"
-            />
-          </div>
-        </AccordionSection>
-      )}
+      {/* Sustainability slider removed for a cleaner filter set. */}
     </div>
   );
 
@@ -885,7 +766,7 @@ function AdvancedFilterGridInner({
       className="w-full bg-neutral-50"
       aria-label={`${category.name} product catalog`}
     >
-      {/* ── Top Toolbar ── */}
+      {/* â”€â”€ Top Toolbar â”€â”€ */}
       <div className="w-full bg-white border-b border-neutral-200 sticky top-16 z-20">
         <div className="container-wide py-4">
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
@@ -909,7 +790,7 @@ function AdvancedFilterGridInner({
               <SearchIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
               <input
                 type="text"
-                placeholder={`Search ${category.name.toLowerCase()}…`}
+                placeholder={`Search ${category.name.toLowerCase()}...`}
                 aria-label={`Search ${category.name}`}
                 className="w-full h-10 pl-9 pr-8 bg-white border border-neutral-200 rounded-sm text-sm focus:outline-none focus:border-neutral-800 transition-colors"
                 value={filters.query}
@@ -943,8 +824,8 @@ function AdvancedFilterGridInner({
                   updateFilters({ sort: e.target.value as SortOption })
                 }
               >
-                <option value="az">Name A–Z</option>
-                <option value="za">Name Z–A</option>
+                <option value="az">Name A-Z</option>
+                <option value="za">Name Z-A</option>
               </select>
             </div>
           </div>
@@ -959,7 +840,7 @@ function AdvancedFilterGridInner({
         </div>
       </div>
 
-      {/* ── Main layout ── */}
+      {/* â”€â”€ Main layout â”€â”€ */}
       <div className="container-wide py-8 flex gap-8">
         {/* Desktop sidebar */}
         <aside className="hidden lg:block w-64 shrink-0 self-start sticky top-32">
@@ -1001,7 +882,7 @@ function AdvancedFilterGridInner({
         </div>
       </div>
 
-      {/* ── Mobile Drawer ── */}
+      {/* â”€â”€ Mobile Drawer â”€â”€ */}
       {drawerOpen && (
         <>
           {/* Backdrop */}
@@ -1061,7 +942,7 @@ function AdvancedFilterGridInner({
   );
 }
 
-// ─── Exported wrapper (Suspense for useSearchParams) ─────────────────────────
+// â”€â”€â”€ Exported wrapper (Suspense for useSearchParams) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
 export function FilterGrid({
   category,
@@ -1074,7 +955,7 @@ export function FilterGrid({
     <Suspense
       fallback={
         <div className="w-full h-64 flex items-center justify-center text-neutral-400 text-sm">
-          Loading products…
+          Loading products...
         </div>
       }
     >
@@ -1082,3 +963,4 @@ export function FilterGrid({
     </Suspense>
   );
 }
+

@@ -55,7 +55,7 @@ export function ProductViewer({
     product["3d_model"] ||
     product.threeDModelUrl ||
     "";
-  const is3DSupported = modelPath.length > 0;
+  const hasModelPath = modelPath.length > 0;
 
   const allImages = [
     ...(product.images || []),
@@ -89,6 +89,43 @@ export function ProductViewer({
   };
 
   const [is3DMode, setIs3DMode] = useState(false);
+  const [isModelAvailable, setIsModelAvailable] = useState(false);
+  const [isCheckingModel, setIsCheckingModel] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    if (!hasModelPath) {
+      setIsModelAvailable(false);
+      setIsCheckingModel(false);
+      setIs3DMode(false);
+      return;
+    }
+
+    const validateModel = async () => {
+      setIsCheckingModel(true);
+      try {
+        const response = await fetch(modelPath, { method: "HEAD" });
+        if (!cancelled) {
+          const ok = response.ok;
+          setIsModelAvailable(ok);
+          if (!ok) setIs3DMode(false);
+        }
+      } catch {
+        if (!cancelled) {
+          setIsModelAvailable(false);
+          setIs3DMode(false);
+        }
+      } finally {
+        if (!cancelled) setIsCheckingModel(false);
+      }
+    };
+
+    validateModel();
+    return () => {
+      cancelled = true;
+    };
+  }, [hasModelPath, modelPath]);
 
   const overview = product.detailedInfo?.overview || product.description;
   const dimensions =
@@ -179,18 +216,41 @@ export function ProductViewer({
           </div>
 
           {/* 3D viewer toggle wrapper */}
-          {is3DSupported && (
+          {hasModelPath && (
             <div className="w-full aspect-video bg-neutral-50 border-t border-neutral-200 relative group">
               <div className="absolute top-4 left-4 z-20 flex gap-2">
                 <button
-                  onClick={() => setIs3DMode(!is3DMode)}
-                  className="bg-white/90 backdrop-blur text-[10px] font-bold tracking-widest text-neutral-800 uppercase px-3 py-1.5 rounded-sm hover:bg-neutral-900 hover:text-white transition-colors border border-neutral-200"
+                  onClick={() => {
+                    if (!isModelAvailable) return;
+                    setIs3DMode((prev) => !prev);
+                  }}
+                  disabled={!isModelAvailable}
+                  className={clsx(
+                    "bg-white/90 backdrop-blur text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-sm border border-neutral-200",
+                    isModelAvailable
+                      ? "text-neutral-800 hover:bg-neutral-900 hover:text-white transition-colors"
+                      : "text-neutral-400 cursor-not-allowed",
+                  )}
                 >
                   {is3DMode ? "View Image" : "View in 3D/AR"}
                 </button>
               </div>
+              {!isModelAvailable && !isCheckingModel && (
+                <div className="absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
+                  <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
+                    3D model currently unavailable for this product.
+                  </p>
+                </div>
+              )}
+              {isCheckingModel && (
+                <div className="absolute inset-0 z-10 flex items-center justify-center px-6 text-center">
+                  <p className="text-xs uppercase tracking-[0.14em] text-neutral-500">
+                    Checking 3D model availability...
+                  </p>
+                </div>
+              )}
 
-              {is3DMode ? (
+              {is3DMode && isModelAvailable ? (
                 <div className="w-full h-full absolute inset-0 z-10 flex items-center justify-center bg-transparent">
                   <div className="hidden md:block w-full h-full">
                     <ThreeViewer

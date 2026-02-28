@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { ProductViewer } from "./ProductViewer";
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import type { Product, CompatProduct } from "@/lib/getProducts";
+import type { Product, CompatProduct, ProductVariant } from "@/lib/getProducts";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.oando.co.in";
 
@@ -96,8 +96,36 @@ async function ProductContent({
   const p = rawProduct as Product & {
     alt_text?: string;
     metadata?: (Product["metadata"] & { ai_alt_text?: string }) | null;
+    scene_images?: string[] | null;
+    detailed_info?: {
+      overview?: string;
+      features?: string[];
+      dimensions?: string;
+      materials?: string[];
+    } | null;
+    variants?: unknown;
   };
   const aiOverview = p.alt_text || p.metadata?.ai_alt_text || p.description || "";
+  const variantList: ProductVariant[] = Array.isArray(p.variants)
+    ? p.variants
+        .map((variant, idx) => {
+          const v = variant as {
+            id?: string;
+            variantName?: string;
+            galleryImages?: string[];
+            threeDModelUrl?: string;
+          };
+          return {
+            id: v.id || `variant-${idx + 1}`,
+            variantName: v.variantName || `Option ${idx + 1}`,
+            galleryImages: Array.isArray(v.galleryImages)
+              ? v.galleryImages.filter(Boolean)
+              : [],
+            threeDModelUrl: v.threeDModelUrl || undefined,
+          };
+        })
+        .filter((variant) => variant.galleryImages.length > 0 || variant.threeDModelUrl)
+    : [];
 
   const compatProduct: CompatProduct = {
     id: p.id,
@@ -105,19 +133,22 @@ async function ProductContent({
     name: p.name,
     description: p.description || "",
     flagshipImage: p.flagship_image || "",
-    sceneImages: [],
+    sceneImages: Array.isArray(p.scene_images) ? p.scene_images.filter(Boolean) : [],
     images: p.images || [],
-    "3d_model": p["3d_model"],
-    threeDModelUrl: p["3d_model"],
-    variants: [],
+    threeDModelUrl: variantList.find((v) => v.threeDModelUrl)?.threeDModelUrl,
+    variants: variantList,
     detailedInfo: {
-      overview: aiOverview,
+      overview: p.detailed_info?.overview || aiOverview,
       features:
+        p.detailed_info?.features?.filter(Boolean) ||
         p.specs?.features?.filter(Boolean) ||
         p.features?.filter(Boolean) ||
         [],
-      dimensions: p.specs?.dimensions || "",
-      materials: p.specs?.materials?.filter(Boolean) || [],
+      dimensions: p.detailed_info?.dimensions || p.specs?.dimensions || "",
+      materials:
+        p.detailed_info?.materials?.filter(Boolean) ||
+        p.specs?.materials?.filter(Boolean) ||
+        [],
     },
     metadata: p.metadata || {},
   };

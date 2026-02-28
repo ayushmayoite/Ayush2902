@@ -8,6 +8,8 @@ import { supabase } from "@/lib/db";
 import type { Metadata } from "next";
 import { Suspense } from "react";
 import {
+  AFC_CATEGORY_ORDER,
+  buildRequestedCategoryCatalog,
   getAfcCategoryDescription,
   getAfcCategoryLabel,
 } from "@/lib/afcCategories";
@@ -20,8 +22,10 @@ export async function generateMetadata({
   params: Promise<{ category: string }>;
 }): Promise<Metadata> {
   const { category: categoryId } = await params;
-  const catalog = await getCatalog();
-  const category = catalog.find((c: CompatCategory) => c.id === categoryId);
+  const requestedCatalog = buildRequestedCategoryCatalog(await getCatalog());
+  const category = requestedCatalog.find(
+    (c: CompatCategory) => c.id === categoryId,
+  );
   if (!category) return {};
   const displayName = getAfcCategoryLabel(categoryId, category.name);
   const displayDescription = getAfcCategoryDescription(
@@ -40,13 +44,14 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const { data, error } = await supabase.from("products").select("category_id");
-  if (error || !data) {
-    console.error("Error fetching categories for static params:", error);
-    return [];
-  }
-  const categoryIds = [...new Set(data.map((p) => p.category_id).filter(Boolean))];
-  return categoryIds.map((category) => ({ category }));
+  const legacyCategoryIdsPromise = supabase.from("products").select("category_id");
+  const { data, error } = await legacyCategoryIdsPromise;
+  const legacyCategoryIds =
+    error || !data
+      ? []
+      : [...new Set(data.map((p) => p.category_id).filter(Boolean))];
+  const merged = [...new Set([...AFC_CATEGORY_ORDER, ...legacyCategoryIds])];
+  return merged.map((category) => ({ category }));
 }
 
 // Loading skeleton for the grid while Supabase data resolves
@@ -71,10 +76,10 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>;
 }) {
   const { category: categoryId } = await params;
-  const catalog = await getCatalog();
-  const category = catalog.find((c: CompatCategory) => c.id === categoryId);
+  const requestedCatalog = buildRequestedCategoryCatalog(await getCatalog());
+  const category = requestedCatalog.find((c: CompatCategory) => c.id === categoryId);
 
-  if (catalog.length === 0) {
+  if (requestedCatalog.length === 0) {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center bg-white">
         <h1 className="text-2xl font-light mb-4 text-neutral-900">

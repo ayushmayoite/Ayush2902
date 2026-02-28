@@ -23,13 +23,13 @@ const slides = [
     src: "/images/hero/hero-3.webp",
     headline: "Inspire Every\nConversation",
     sub: "Conference and meeting solutions that command attention.",
-    cta: { label: "Explore Chairs", href: "/products/oando-chairs" },
+    cta: { label: "Explore Seating Solutions", href: "/products/chairs-mesh" },
   },
   {
     src: "/images/hero/hero-4.webp",
     headline: "Built for\nFocused Work",
     sub: "Modular workstations for heads-down, high-performance teams.",
-    cta: { label: "See Workstations", href: "/products/oando-workstations" },
+    cta: { label: "See Workstations", href: "/products/workstations" },
   },
   {
     src: "/images/hero/hero-5.webp",
@@ -37,7 +37,7 @@ const slides = [
     sub: "Soft seating collections that redefine collaborative spaces.",
     cta: {
       label: "Explore Soft Seating",
-      href: "/products/oando-soft-seating",
+      href: "/products/soft-seating",
     },
   },
 ];
