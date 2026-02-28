@@ -25,12 +25,14 @@ const MAIN_LINKS = [
   { label: "About", href: "/about", description: "Company information" },
 ];
 
-const PRODUCT_CATEGORIES = [
+const DEFAULT_PRODUCT_CATEGORIES = [
   { label: "Workstations", href: "/products/oando-workstations" },
   { label: "Chairs", href: "/products/oando-chairs" },
   { label: "Tables", href: "/products/oando-tables" },
   { label: "Storage", href: "/products/oando-storage" },
   { label: "Soft Seating", href: "/products/oando-soft-seating" },
+  { label: "Collaborative", href: "/products/oando-collaborative" },
+  { label: "Educational", href: "/products/oando-educational" },
 ];
 
 const SECONDARY_LINKS = [
@@ -41,6 +43,9 @@ const SECONDARY_LINKS = [
 
 export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
   const [searchQuery, setSearchQuery] = useState("");
+  const [productCategories, setProductCategories] = useState(
+    DEFAULT_PRODUCT_CATEGORIES,
+  );
 
   useEffect(() => {
     if (!isOpen) return;
@@ -58,6 +63,25 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       window.removeEventListener("keydown", handleEsc);
     };
   }, [isOpen, onClose]);
+
+  useEffect(() => {
+    fetch("/api/categories")
+      .then((r) => r.json())
+      .then((cats: { id: string; name: string }[]) => {
+        if (!Array.isArray(cats) || cats.length === 0) return;
+        const mapped = cats.map((c) => ({
+          label: c.id === "oando-seating" ? "Chairs" : c.name,
+          href:
+            c.id === "oando-seating"
+              ? "/products/oando-chairs"
+              : `/products/${c.id}`,
+        }));
+        setProductCategories(mapped);
+      })
+      .catch(() => {
+        setProductCategories(DEFAULT_PRODUCT_CATEGORIES);
+      });
+  }, []);
 
   return (
     <AnimatePresence>
@@ -146,7 +170,7 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
               <div className="px-6 pb-6">
                 <h3 className="typ-eyebrow mb-3">Categories</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                  {PRODUCT_CATEGORIES.map((category) => (
+                  {productCategories.map((category) => (
                     <Link
                       key={category.href}
                       href={category.href}

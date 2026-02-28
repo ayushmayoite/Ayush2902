@@ -36,12 +36,13 @@ export async function generateMetadata({
 }
 
 export async function generateStaticParams() {
-  const { data, error } = await supabase.from("categories").select("id");
+  const { data, error } = await supabase.from("products").select("category_id");
   if (error || !data) {
     console.error("Error fetching categories for static params:", error);
     return [];
   }
-  return data.map((c) => ({ category: c.id }));
+  const categoryIds = [...new Set(data.map((p) => p.category_id).filter(Boolean))];
+  return categoryIds.map((category) => ({ category }));
 }
 
 // Loading skeleton for the grid while Supabase data resolves
