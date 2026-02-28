@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const VALUES = [
     {
         title: "Quality",
-        description: "Made in Germany. Durable materials and precise craftsmanship for long-lasting office solutions.",
+        description: "Made for India. Durable materials and precise craftsmanship for long-lasting office solutions.",
     },
     {
         title: "Innovation",

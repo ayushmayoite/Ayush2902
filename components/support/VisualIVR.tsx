@@ -31,13 +31,13 @@ const IVR_TREE: IVRNode = {
             options: [
                 {
                     id: "sales_de",
-                    label: "Domestic (Germany)",
-                    action: { type: "contact", value: "+49 (0) 5156 979-0", detail: "sales-de@oando.co.in" }
+                    label: "Domestic (India)",
+                    action: { type: "contact", value: "+91 124 403 1666", detail: "sales@oando.co.in" }
                 },
                 {
                     id: "sales_int",
                     label: "International Sales",
-                    action: { type: "contact", value: "+49 (0) 5156 979-xxx", detail: "export@oando.co.in" }
+                    action: { type: "contact", value: "+91 124 403 1666", detail: "export@oando.co.in" }
                 },
                 {
                     id: "dealer",
@@ -78,7 +78,7 @@ const IVR_TREE: IVRNode = {
                 {
                     id: "reception",
                     label: "Reception / Switchboard",
-                    action: { type: "contact", value: "+49 (0) 5156 979-0", detail: "Mon-Fri 8:00 - 17:00" }
+                    action: { type: "contact", value: "+91 124 403 1666", detail: "Mon-Sat 9:30 - 18:30 IST" }
                 },
                 {
                     id: "hr",

@@ -154,7 +154,7 @@ export function Header() {
                 aria-label="One and Only Home"
               >
                 <OneAndOnlyLogo
-                  className="h-8 md:h-10"
+                  className="h-8 md:h-10 lg:h-[52px]"
                   variant={isScrolled ? "orange" : "orange"}
                 />
               </Link>

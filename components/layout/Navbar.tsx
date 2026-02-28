@@ -120,7 +120,7 @@ export function Navbar() {
           <Link href="/" className="relative z-50 group">
             <OneAndOnlyLogo
               variant={scrolled || isMobileMenuOpen ? "orange" : "orange"}
-              className="h-[42px] md:h-[48px] transition-transform duration-500 group-hover:scale-105"
+              className="h-[42px] md:h-[48px] lg:h-[62px] transition-transform duration-500 group-hover:scale-105"
             />
           </Link>
 

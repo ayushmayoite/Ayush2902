@@ -156,11 +156,15 @@ export function AdvancedBot() {
             closeBot();
           }
         }}
-        className="fixed bottom-6 right-6 z-60 w-14 h-14 rounded-full bg-primary text-white shadow-lg flex items-center justify-center hover:bg-primary-hover transition-colors"
+        className="fixed bottom-24 right-6 z-40 inline-flex h-12 items-center gap-2 rounded-full bg-[#25D366] px-4 text-white shadow-xl hover:bg-[#1fb557] transition-colors"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
+        aria-label="Open WhatsApp project assistant"
+        title="Open WhatsApp project assistant"
       >
-        <MessageCircle className="w-7 h-7" />
+        <MessageCircle className="h-5 w-5" />
+        <span className="text-xs font-semibold tracking-wide">WhatsApp</span>
+        <span className="h-2 w-2 rounded-full bg-white/90" />
       </motion.button>
 
       <AnimatePresence>
@@ -170,15 +174,15 @@ export function AdvancedBot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 260, damping: 22 }}
-            className="fixed bottom-24 right-6 z-60 w-80 max-w-[90vw] rounded-2xl bg-white shadow-2xl border border-neutral-200"
+            className="fixed bottom-40 right-6 z-40 w-80 max-w-[90vw] rounded-2xl bg-white shadow-2xl border border-neutral-200"
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-200">
               <div>
                 <p className="text-sm font-semibold text-neutral-900">
-                  One and Only Assistant
+                  WhatsApp Project Assistant
                 </p>
                 <p className="text-xs text-neutral-500">
-                  Share a few details about your project
+                  Share your requirement in under 60 seconds
                 </p>
               </div>
               <button

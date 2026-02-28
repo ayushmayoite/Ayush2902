@@ -3,6 +3,7 @@ import { Newsletter } from "@/components/shared/Newsletter";
 import { ContactTeaser } from "@/components/shared/ContactTeaser";
 import { ContentBlock } from "@/components/shared/ContentBlock";
 import { Reveal } from "@/components/shared/Reveal";
+import Image from "next/image";
 
 export default function SolutionsPage() {
   return (
@@ -11,13 +12,13 @@ export default function SolutionsPage() {
         variant="cinema"
         title={
           <>
-            Shaping the <br />
-            <span className="text-primary italic">Future</span> of work.
+            Workspace <br />
+            <span className="text-primary italic">Solutions</span> that fit.
           </>
         }
-        subtitle="We don't just supply furniture. We develop holistic concepts for modern, healthy, and productive working environments."
+        subtitle="From planning to installation, we design practical office environments tailored to your teams, workflows, and growth."
         showButton={false}
-        backgroundImage="https://images.unsplash.com/photo-1497215842964-2229243e8a01?auto=format&fit=crop&q=80&w=2000"
+        backgroundImage="/images/hero/hero-3.webp"
       />
 
       <section className="container px-6 2xl:px-0 py-32">
@@ -25,23 +26,25 @@ export default function SolutionsPage() {
           <div className="space-y-8">
             <Reveal>
               <h2 className="text-5xl md:text-7xl font-slogan text-neutral-900 leading-[0.9] tracking-tight">
-                More than <br />
-                just <span className="text-primary italic">Furniture.</span>
+                Built around <br />
+                your <span className="text-primary italic">workflow.</span>
               </h2>
             </Reveal>
             <Reveal delay={0.4}>
               <p className="text-xl md:text-2xl font-light text-neutral-500 leading-relaxed">
-                Whether it is an agile project room, a concentration zone, or a
-                representative conference room - we create space for your
-                success. Our approach is holistic, combining ergonomics,
-                acoustics, and modularity.
+                Whether you are setting up focus zones, collaboration areas, or
+                client-facing meeting rooms, we combine ergonomics, acoustics,
+                and modular systems to deliver spaces that work every day.
               </p>
             </Reveal>
           </div>
           <div className="relative group">
-            <img
-              src="https://images.unsplash.com/photo-1556761175-5973dc0f32e7?auto=format&fit=crop&q=80&w=1200"
-              alt="Office Atmosphere"
+            <Image
+              src="/images/hero/hero-2.webp"
+              alt="Modern workspace planning"
+              width={1400}
+              height={1000}
+              sizes="(max-width: 768px) 100vw, 50vw"
               className="w-full h-auto grayscale hover:grayscale-0 transition-all duration-1000 shadow-2xl"
             />
             <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-primary/10 -z-10 group-hover:translate-x-4 group-hover:translate-y-4 transition-transform duration-700" />
@@ -53,7 +56,7 @@ export default function SolutionsPage() {
         <div className="container px-6 2xl:px-0">
           <Reveal>
             <h2 className="text-4xl md:text-6xl font-slogan text-white mb-20">
-              The OandO <span className="text-primary italic">Process.</span>
+              How we <span className="text-primary italic">Deliver.</span>
             </h2>
           </Reveal>
         </div>
@@ -61,8 +64,8 @@ export default function SolutionsPage() {
         <ContentBlock
           title="Analysis & Strategy."
           subtitle="Step 01"
-          description="We understand your organization. Our workplace experts analyze your workflows, communication structures, and acoustic requirements to create a solid foundation for your new office."
-          imageSrc="/images/products/60x30-workstation-1.webp"
+          description="We audit your current layout, team patterns, and usage needs to define the right space plan before procurement begins."
+          imageSrc="/images/afc/oando-workstations--deskpro/image-1.webp"
           align="left"
           linkText="Book Consultation"
           linkHref="/contact"
@@ -71,18 +74,18 @@ export default function SolutionsPage() {
         <ContentBlock
           title="Holistic Planning."
           subtitle="Step 02"
-          description="Visualizing the future. We create detailed 3D plans, lighting concepts, and acoustic simulations. You'll see exactly how your new office will look and feel before a single piece of furniture is moved."
-          imageSrc="/images/products/deskpro-workstation-1.webp"
+          description="We convert your requirements into practical plans with product mixes, zoning, and finish options aligned to budget and timelines."
+          imageSrc="/images/afc/oando-tables--curvivo-meet/image-1.webp"
           align="right"
-          linkText="View References"
-          linkHref="/references"
+          linkText="View Projects"
+          linkHref="/projects"
         />
 
         <ContentBlock
           title="Realization & Service."
           subtitle="Step 03"
-          description="Precision in execution. Our certified assembly teams ensure everything is installed perfectly. And we stay by your side long after the project is done, with maintenance services and future adaptations."
-          imageSrc="/images/products/softseating-solace-1.webp"
+          description="Our team executes installation, handover, and after-sales support so your workspace remains reliable as your business evolves."
+          imageSrc="/images/afc/oando-soft-seating--accent/image-1.webp"
           align="left"
           linkText="Contact Service"
           linkHref="/service"
@@ -93,19 +96,19 @@ export default function SolutionsPage() {
         <div className="container px-6 2xl:px-0 text-center space-y-12">
           <Reveal>
             <h2 className="text-5xl md:text-7xl font-slogan text-neutral-900 leading-none">
-              Ready to <span className="text-primary italic">transform?</span>
+              Plan your next <span className="text-primary italic">workspace.</span>
             </h2>
           </Reveal>
           <p className="text-xl md:text-2xl text-neutral-500 font-light max-w-2xl mx-auto">
-            Join hundreds of companies that have created inspiring workplaces
-            with OandO.
+            Tell us your scope, seat count, and timeline. We will share a
+            practical proposal built for your use case.
           </p>
           <div className="pt-8">
             <a
               href="/contact"
               className="px-12 py-6 bg-neutral-900 text-white hover:bg-primary transition-all uppercase tracking-widest font-bold inline-block"
             >
-              Start your Project
+              Request Proposal
             </a>
           </div>
         </div>
