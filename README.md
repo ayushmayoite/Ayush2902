@@ -43,6 +43,15 @@ To avoid 404 errors on product pages and 500 errors in the AI Advisor, you **MUS
 2. `NEXT_PUBLIC_SUPABASE_ANON_KEY`: Your Supabase Anon Key.
 3. `OPENROUTER_API_KEY`: Your OpenRouter API Key (sk-or-...).
 
+### Vercel Setup In This Repo
+
+1. Install dependencies: `npm install`
+2. Link project (first time): `npx vercel link`
+3. Preview deploy: `npm run vercel:preview`
+4. Production deploy: `npm run vercel:prod`
+
+This repository also includes `.vercelignore` to keep local artifacts out of Vercel uploads.
+
 ### Supabase RLS Warnings
 
 During the `npm run seed` process, you may see RLS (Row Level Security) warnings. These are **informational only** and expected because the seed script uses the `SUPABASE_SERVICE_ROLE_KEY` to bypass restrictions for bulk data management. In production, anonymous users have read-only access to the products table.
