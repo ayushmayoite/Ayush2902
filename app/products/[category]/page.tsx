@@ -7,6 +7,10 @@ import Link from "next/link";
 import { supabase } from "@/lib/db";
 import type { Metadata } from "next";
 import { Suspense } from "react";
+import {
+  getAfcCategoryDescription,
+  getAfcCategoryLabel,
+} from "@/lib/afcCategories";
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.oando.co.in";
 
@@ -19,11 +23,11 @@ export async function generateMetadata({
   const catalog = await getCatalog();
   const category = catalog.find((c: CompatCategory) => c.id === categoryId);
   if (!category) return {};
-  const displayName = categoryId === "oando-seating" ? "Chairs" : category.name;
-  const displayDescription =
-    categoryId === "oando-seating"
-      ? "Professional furniture systems for chairs"
-      : category.description;
+  const displayName = getAfcCategoryLabel(categoryId, category.name);
+  const displayDescription = getAfcCategoryDescription(
+    categoryId,
+    category.description,
+  );
   const title = `${displayName} | One and Only Furniture`;
   const description = `${displayDescription} Browse our full range of ${displayName.toLowerCase()} in Patna, Bihar.`;
   const url = `${BASE_URL}/products/${categoryId}`;
@@ -99,14 +103,11 @@ export default async function CategoryPage({
   if (!category) {
     notFound();
   }
-  const normalizedCategory: CompatCategory =
-    categoryId === "oando-seating"
-      ? {
-          ...category,
-          name: "Chairs",
-          description: "Professional furniture systems for chairs",
-        }
-      : category;
+  const normalizedCategory: CompatCategory = {
+    ...category,
+    name: getAfcCategoryLabel(categoryId, category.name),
+    description: getAfcCategoryDescription(categoryId, category.description),
+  };
 
   const firstProductWithImage = normalizedCategory.series
     .flatMap((series) => series.products)

@@ -3,18 +3,17 @@
 
 import Link from "next/link";
 import { MessageCircle } from "lucide-react";
+import { AFC_CATEGORY_ORDER, buildAfcCategoryNav } from "@/lib/afcCategories";
 
 const NAV = [
   {
     heading: "Products",
     links: [
       { href: "/products", label: "All Products" },
-      { href: "/products/oando-chairs", label: "Chairs" },
-      { href: "/products/oando-workstations", label: "Workstations" },
-      { href: "/products/oando-tables", label: "Tables" },
-      { href: "/products/oando-storage", label: "Storage" },
-      { href: "/products/oando-soft-seating", label: "Soft Seating" },
-      { href: "/products/oando-collaborative", label: "Collaborative" },
+      ...buildAfcCategoryNav(AFC_CATEGORY_ORDER).map((item) => ({
+        href: item.href,
+        label: item.label,
+      })),
     ],
   },
   {

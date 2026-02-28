@@ -4,6 +4,7 @@ import { X, ChevronRight, Globe, Search } from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import { AFC_CATEGORY_ORDER, buildAfcCategoryNav } from "@/lib/afcCategories";
 
 type MobileMenuProps = {
   isOpen: boolean;
@@ -25,15 +26,12 @@ const MAIN_LINKS = [
   { label: "About", href: "/about", description: "Company information" },
 ];
 
-const DEFAULT_PRODUCT_CATEGORIES = [
-  { label: "Workstations", href: "/products/oando-workstations" },
-  { label: "Chairs", href: "/products/oando-chairs" },
-  { label: "Tables", href: "/products/oando-tables" },
-  { label: "Storage", href: "/products/oando-storage" },
-  { label: "Soft Seating", href: "/products/oando-soft-seating" },
-  { label: "Collaborative", href: "/products/oando-collaborative" },
-  { label: "Educational", href: "/products/oando-educational" },
-];
+const DEFAULT_PRODUCT_CATEGORIES = buildAfcCategoryNav(AFC_CATEGORY_ORDER).map(
+  (item) => ({
+    label: item.label,
+    href: item.href,
+  }),
+);
 
 const SECONDARY_LINKS = [
   { label: "Contact", href: "/contact" },
@@ -70,11 +68,8 @@ export function MobileMenu({ isOpen, onClose }: MobileMenuProps) {
       .then((cats: { id: string; name: string }[]) => {
         if (!Array.isArray(cats) || cats.length === 0) return;
         const mapped = cats.map((c) => ({
-          label: c.id === "oando-seating" ? "Chairs" : c.name,
-          href:
-            c.id === "oando-seating"
-              ? "/products/oando-chairs"
-              : `/products/${c.id}`,
+          label: c.name,
+          href: `/products/${c.id}`,
         }));
         setProductCategories(mapped);
       })

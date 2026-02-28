@@ -40,7 +40,7 @@ export default async function Home() {
             }
             description="The office is the central home base for personal exchanges and meetings with colleagues. With our modular furniture systems, versatile communication spaces can be created to foster innovation."
             buttonText="Explore Workspace Solutions"
-            buttonLink="/products/oando-chairs"
+            buttonLink="/products/oando-seating"
             posterSrc="/images/hero/workstations.webp"
             lightMode={true}
           />
