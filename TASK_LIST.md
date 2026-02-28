@@ -6,7 +6,7 @@ Date: 2026-02-28
 2. Phase 2: Categories and products seeded - Completed
 3. Phase 3: Server fetches revised - Completed
 4. Phase 4: Rendering fallback logic added - Completed
-5. Phase 5: Audit complete; deployment verification currently blocked on Vercel upload/prebuilt errors (2026-02-28)
+5. Phase 5: Audit and deployment verification - Completed (`https://ourwebsitecopy2026-02-21.vercel.app`, 2026-02-28)
 
 ## Tooling and Environment Tasks
 1. Validate project dependencies - Completed (`npm install`)
@@ -42,8 +42,8 @@ Date: 2026-02-28
 2. Local result: no bad pages, no hidden sections, no horizontal scroll - Completed (`BAD=0`, `HOME_HIDDEN_SECTIONS=0`)
 3. Legacy route behavior checked locally (`/products/oando-*`) - Completed (redirects in place, `REDIRECTED_LEGACY=14`)
 4. Live Vercel sweep rerun on `antigravity26022026.vercel.app` - Completed (`reports/visual-check-prod-now/report.json`)
-5. Live result mismatch: legacy `/products/oando-*` routes still 404 on deployed build - Open (new commit pushed; fresh production deploy is blocked by Vercel CLI limits on 2026-02-28)
-6. Live home 400 asset error identified (`/images/hero/seating.webp`) - Open (fixed in repo; pending fresh production deploy)
+5. Live legacy route verification rerun after fresh deploy - Completed
+6. Live home asset verification rerun after fresh deploy - Completed
 
 ## 3D Model Completion
 

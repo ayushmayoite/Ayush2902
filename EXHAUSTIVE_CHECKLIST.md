@@ -1,6 +1,6 @@
 ﻿# Exhaustive Fix Checklist (Revalidated)
 
-_Last revalidated: 2026-02-28 (local build + DB audit + git push + deploy attempt)_
+_Last revalidated: 2026-02-28 (local build + DB audit + git push + successful Vercel preview+production deploy)_
 
 ## A) Category Structure (Your latest 11-category model)
 - [x] Switched to requested category set:
@@ -64,9 +64,9 @@ _Last revalidated: 2026-02-28 (local build + DB audit + git push + deploy attemp
 ## G) Build/Quality Gates (Rerun)
 - [x] `npm run build` passes successfully.
 - [x] Full visual regression pass (desktop + mobile) rerun (`scripts/local-visual-check.mjs`).
-- [~] Deployed-site verification attempted but blocked on 2026-02-28:
-  - `Too many requests (api-upload-free)` during `vercel --prod`.
-  - `vercel build --prod` succeeded, but `vercel deploy --prebuilt --prod --yes` failed on legacy product lambda mapping.
+- [x] Deployed-site verification completed on 2026-02-28:
+  - Preview deploy: `https://ourwebsitecopy2026-02-21-dwdjq6xvr-ayushs-projects-850dfd33.vercel.app`
+  - Production deploy: `https://ourwebsitecopy2026-02-21.vercel.app`
 
 ## H) Git / Push
 - [x] Previous checkpoint already pushed: `abb2b566`.
