@@ -39,6 +39,7 @@ export function GsapAnimations() {
           y: 42,
           duration: 0.52,
           ease: "power3.out",
+          immediateRender: false,
           overwrite: "auto",
           scrollTrigger: {
             trigger: el,
@@ -54,6 +55,7 @@ export function GsapAnimations() {
         y: 24,
         duration: 0.35,
         ease: "power2.out",
+        immediateRender: false,
         overwrite: "auto",
         scrollTrigger: {
           trigger: ".footer",

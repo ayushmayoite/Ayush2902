@@ -16,7 +16,7 @@ const PREVIEW_ITEMS = [
   {
     name: "Fluid X Chairs",
     category: "Seating Solution",
-    image: "/images/hero/seating.webp",
+    image: "/images/hero/chairs.webp",
     href: "/products/chairs-mesh",
   },
   {

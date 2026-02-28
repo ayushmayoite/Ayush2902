@@ -104,14 +104,17 @@ export function AIAdvisor() {
         id="ai-advisor-trigger"
         onClick={() => setOpen(true)}
         aria-label="Open AI Workspace Advisor"
-        className={`fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-neutral-900 text-white px-5 py-3.5 rounded-full shadow-2xl shadow-black/30 hover:bg-primary transition-all duration-300 group ${
+        className={`fixed bottom-4 right-3 sm:bottom-6 sm:right-6 z-50 flex items-center gap-2 bg-neutral-900 text-white px-3.5 sm:px-5 py-2.5 sm:py-3.5 rounded-full shadow-2xl shadow-black/30 hover:bg-primary transition-all duration-300 group ${
           open
             ? "opacity-0 pointer-events-none scale-90"
             : "opacity-100 scale-100"
         }`}
       >
         <Sparkles className="w-4 h-4 text-primary group-hover:text-white transition-colors" />
-        <span className="text-sm font-bold tracking-wide">AI Advisor</span>
+        <span className="hidden sm:inline text-sm font-bold tracking-wide">
+          AI Advisor
+        </span>
+        <span className="sm:hidden text-xs font-bold tracking-wide">AI</span>
       </button>
 
       {/* Modal overlay */}

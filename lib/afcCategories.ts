@@ -86,7 +86,17 @@ export function classifyToRequestedCategory(
 
   if (baseCategoryId === "oando-educational") return "education";
   if (baseCategoryId === "oando-storage") return "storages";
-  if (baseCategoryId === "oando-tables") return "meeting-conference-tables";
+  if (baseCategoryId === "oando-tables") {
+    if (
+      hasToken(text, "cabin") ||
+      hasToken(text, "desk") ||
+      hasToken(text, "l-shape") ||
+      hasToken(text, "executive")
+    ) {
+      return "desks-cabin-tables";
+    }
+    return "meeting-conference-tables";
+  }
   if (baseCategoryId === "oando-collaborative") return "others-1";
 
   if (
@@ -102,6 +112,7 @@ export function classifyToRequestedCategory(
   if (baseCategoryId === "oando-workstations") {
     if (
       hasToken(text, "desk") ||
+      hasToken(text, "deskpro") ||
       hasToken(text, "cabin") ||
       hasToken(text, "executive table")
     ) {

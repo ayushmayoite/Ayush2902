@@ -4,7 +4,7 @@ const nextConfig = {
     return [
       {
         source: "/products/oando-chairs",
-        destination: "/products/oando-seating",
+        destination: "/products/chairs-others",
         permanent: false,
       },
       {
@@ -14,12 +14,47 @@ const nextConfig = {
       },
       {
         source: "/products/oando-other-seating",
-        destination: "/products/oando-seating",
+        destination: "/products/chairs-others",
         permanent: false,
       },
       {
         source: "/products/oando-other-seating/:slug",
         destination: "/products/oando-seating/:slug",
+        permanent: false,
+      },
+      {
+        source: "/products/oando-seating",
+        destination: "/products/chairs-others",
+        permanent: false,
+      },
+      {
+        source: "/products/oando-workstations",
+        destination: "/products/workstations",
+        permanent: false,
+      },
+      {
+        source: "/products/oando-tables",
+        destination: "/products/meeting-conference-tables",
+        permanent: false,
+      },
+      {
+        source: "/products/oando-storage",
+        destination: "/products/storages",
+        permanent: false,
+      },
+      {
+        source: "/products/oando-soft-seating",
+        destination: "/products/soft-seating",
+        permanent: false,
+      },
+      {
+        source: "/products/oando-collaborative",
+        destination: "/products/others-1",
+        permanent: false,
+      },
+      {
+        source: "/products/oando-educational",
+        destination: "/products/education",
         permanent: false,
       },
     ];

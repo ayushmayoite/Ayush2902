@@ -23,6 +23,10 @@
 # misc
 .DS_Store
 *.pem
+*.old
+*.bak
+*.orig
+.tmp-start.err
 
 # debug
 npm-debug.log*
@@ -36,8 +40,12 @@ local.env
 
 # vercel
 .vercel
+.lh-chrome-manual/
+.lh-profiles/
 
 # typescript
 *.tsbuildinfo
 next-env.d.ts
 lib/backup/
+reports/
+backup/

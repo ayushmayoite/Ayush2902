@@ -1,6 +1,6 @@
 import { getCatalog } from "@/lib/getProducts";
 import type { CompatCategory } from "@/lib/getProducts";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Hero } from "@/components/home/Hero";
 import { FilterGrid } from "./FilterGrid";
 import Link from "next/link";
@@ -16,25 +16,38 @@ import {
 
 const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://www.oando.co.in";
 
+const LEGACY_CATEGORY_REDIRECTS: Record<string, string> = {
+  "oando-seating": "chairs-others",
+  "oando-workstations": "workstations",
+  "oando-tables": "meeting-conference-tables",
+  "oando-storage": "storages",
+  "oando-soft-seating": "soft-seating",
+  "oando-collaborative": "others-1",
+  "oando-educational": "education",
+  "oando-chairs": "chairs-others",
+  "oando-other-seating": "chairs-others",
+};
+
 export async function generateMetadata({
   params,
 }: {
   params: Promise<{ category: string }>;
 }): Promise<Metadata> {
   const { category: categoryId } = await params;
+  const redirectedId = LEGACY_CATEGORY_REDIRECTS[categoryId] || categoryId;
   const requestedCatalog = buildRequestedCategoryCatalog(await getCatalog());
   const category = requestedCatalog.find(
-    (c: CompatCategory) => c.id === categoryId,
+    (c: CompatCategory) => c.id === redirectedId,
   );
   if (!category) return {};
-  const displayName = getAfcCategoryLabel(categoryId, category.name);
+  const displayName = getAfcCategoryLabel(redirectedId, category.name);
   const displayDescription = getAfcCategoryDescription(
-    categoryId,
+    redirectedId,
     category.description,
   );
   const title = `${displayName} | One and Only Furniture`;
   const description = `${displayDescription} Browse our full range of ${displayName.toLowerCase()} in Patna, Bihar.`;
-  const url = `${BASE_URL}/products/${categoryId}`;
+  const url = `${BASE_URL}/products/${redirectedId}`;
   return {
     title,
     description,
@@ -76,6 +89,10 @@ export default async function CategoryPage({
   params: Promise<{ category: string }>;
 }) {
   const { category: categoryId } = await params;
+  const redirectedId = LEGACY_CATEGORY_REDIRECTS[categoryId];
+  if (redirectedId) {
+    redirect(`/products/${redirectedId}`);
+  }
   const requestedCatalog = buildRequestedCategoryCatalog(await getCatalog());
   const category = requestedCatalog.find((c: CompatCategory) => c.id === categoryId);
 

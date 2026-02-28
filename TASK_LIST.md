@@ -35,3 +35,19 @@ Date: 2026-02-27
 
 1. Commit created: `74b590f6`
 2. Pushed to existing repository `Antigravity26022026` on `main` - Completed
+
+## Visual QA (Latest Pass)
+
+1. Local visual sweep rerun (desktop + mobile, 27 key routes) - Completed (`reports/visual-check-local-latest/report.json`)
+2. Local result: no bad pages, no hidden sections, no horizontal scroll - Completed (`BAD=0`, `HOME_HIDDEN_SECTIONS=0`)
+3. Legacy route behavior checked locally (`/products/oando-*`) - Completed (redirects in place, `REDIRECTED_LEGACY=14`)
+4. Live Vercel sweep rerun on `antigravity26022026.vercel.app` - Completed (`reports/visual-check-prod-now/report.json`)
+5. Live result mismatch: legacy `/products/oando-*` routes still 404 on deployed build - Open (requires push + deploy)
+6. Live home 400 asset error identified (`/images/hero/seating.webp`) - Open (fixed in local code, pending deploy)
+
+## Repository Hygiene / Backup
+
+1. Moved legacy `*.old` / `*.bak` files into local `backup/legacy/` - Completed
+2. Moved local report artifacts into `backup/reports/` - Completed
+3. Removed generated `.next` + `reports` artifacts from Git tracked set (`git rm --cached`) - Completed
+4. Added ignore guards for generated/local-only artifacts in `.gitignore` - Completed

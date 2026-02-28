@@ -156,15 +156,17 @@ export function AdvancedBot() {
             closeBot();
           }
         }}
-        className="fixed bottom-24 right-6 z-40 inline-flex h-12 items-center gap-2 rounded-full bg-[#25D366] px-4 text-white shadow-xl hover:bg-[#1fb557] transition-colors"
+        className="fixed z-40 right-3 bottom-20 sm:right-6 sm:bottom-24 inline-flex h-11 sm:h-12 items-center gap-1.5 sm:gap-2 rounded-full bg-[#25D366] px-3 sm:px-4 text-white shadow-xl hover:bg-[#1fb557] transition-colors"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Open WhatsApp project assistant"
         title="Open WhatsApp project assistant"
       >
         <MessageCircle className="h-5 w-5" />
-        <span className="text-xs font-semibold tracking-wide">WhatsApp</span>
-        <span className="h-2 w-2 rounded-full bg-white/90" />
+        <span className="hidden sm:inline text-xs font-semibold tracking-wide">
+          WhatsApp
+        </span>
+        <span className="hidden sm:inline h-2 w-2 rounded-full bg-white/90" />
       </motion.button>
 
       <AnimatePresence>
@@ -174,7 +176,7 @@ export function AdvancedBot() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ type: "spring", stiffness: 260, damping: 22 }}
-            className="fixed bottom-40 right-6 z-40 w-80 max-w-[90vw] rounded-2xl bg-white shadow-2xl border border-neutral-200"
+            className="fixed z-40 right-3 bottom-32 sm:right-6 sm:bottom-40 w-[min(22rem,calc(100vw-1.5rem))] sm:w-80 rounded-2xl bg-white shadow-2xl border border-neutral-200"
           >
             <div className="flex items-center justify-between px-4 py-3 border-b border-neutral-200">
               <div>

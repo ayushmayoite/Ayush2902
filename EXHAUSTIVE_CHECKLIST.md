@@ -34,7 +34,7 @@ _Last revalidated: 2026-02-28 (local build + DB audit rerun)_
 - [x] Simplified filter surface by removing noisy Use Case and Sustainability slider sections.
 - [x] Kept practical filters (Series, Type, Price, Material, key feature toggles).
 - [x] Fixed broken/garbled filter text labels (`A-Z`, `Z-A`, loading/search copy).
-- [ ] Visual pass per-category still pending to verify options feel correct with real data.
+- [x] Visual pass rerun on key categories (desktop + mobile) completed via automation.
 
 ## D) 3D Viewer
 - [x] Wired `variants`, `scene_images`, and `detailed_info` from DB into product detail view.
@@ -42,21 +42,31 @@ _Last revalidated: 2026-02-28 (local build + DB audit rerun)_
 - [x] Root-cause confirmed: model files missing on disk for all products with model URLs.
   - `productsWith3D: 7`
   - `productsWithMissingLocalModel: 7`
-- [ ] To fully restore 3D, add valid `.glb` assets (or valid hosted URLs) for those 7 products.
+- [~] Partial restore completed:
+  - Added local workstation GLBs under `public/models/task4a/oando-workstations/`.
+  - Synced Supabase variant `threeDModelUrl` for `adaptable`, `deskpro`, and `fenix`.
+- [ ] Remaining: provide valid GLBs/URLs for the other model-enabled categories to reach 7/7.
 
 ## E) Logo / Branding
 - [x] Reverted main `OneAndOnlyLogo` to One&Only asset (AFC logo no longer used as global site logo).
-- [ ] Final visual confirmation pending on deployed environment.
+- [x] Local visual confirmation rerun after latest patch batch.
 
 ## F) catalog.ts
 - [x] Removed stale legacy static categories (`oando-chairs`, `oando-other-seating`) from `lib/catalog.ts`.
-- [ ] Optional next step: further shrink static catalog footprint since dynamic Supabase catalog is now primary source.
+- [ ] Optional next step: further shrink static catalog footprint since dynamic Supabase catalog is now primary source.(Yes only necessary fall backs)
 
 ## G) Build/Quality Gates (Rerun)
 - [x] `npm run build` passes successfully.
-- [ ] Full visual regression pass (desktop + mobile) pending.
-- [ ] Deployed-site verification pending.
+- [x] Full visual regression pass (desktop + mobile) rerun (`scripts/local-visual-check.mjs`).
+- [ ] Deployed-site verification pending latest push/deploy.
 
 ## H) Git / Push
 - [x] Previous checkpoint already pushed: `abb2b566`.
-- [ ] Current patch batch commit + push pending (next immediate step).
+- [~] Current patch batch prepared:
+  - legacy redirects + category cleanup
+  - mobile overlap fixes
+  - recommendation image fix
+  - GSAP visibility fix
+  - workstation GLB integration
+  - generated artifact cleanup (`.next`, `reports`) from git tracking
+  - Pending: commit + push + deploy verification
